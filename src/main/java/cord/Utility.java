@@ -67,12 +67,28 @@ public class Utility {
   public static Roles getRoleFromString(String roleName, Boolean isMember){
 
     switch (roleName){
-      case "Administrator":                       return Roles.Administrator;
-      case "ProjectManager":    if (isMember)     return Roles.ProjectManagerOnProject;
-                                                  return Roles.ProjectManagerGlobal;
+      case "Administrator":                                           return Roles.Administrator;
+      case "Consultant":                                              return Roles.Consultant;
+      case "ConsultantManager":                                       return Roles.ConsultantManager;
+      case "Controller":                                              return Roles.Controller;
+      case "FieldOperationsDirector":                                 return Roles.FieldOperationsDirector;
+      case "FinancialAnalyst":                    if (isMember)       return Roles.FinancialAnalystGlobal;
+                                                                      return Roles.FinancialAnalystOnProject;
+      case "Fundraising":                                             return Roles.Fundraising;
+      case "Intern":                                                  return Roles.Intern;
+      case "Leadership":                                              return Roles.Leadership;
+      case "Liason":                                                  return Roles.Liason;
+      case "Marketing":                                               return Roles.Marketing;
+      case "ProjectManager":                      if (isMember)       return Roles.ProjectManagerGlobal;
+                                                                      return Roles.ProjectManagerOnProject;
+      case "RegionalCommunicationCoordinator":                        return Roles.RegionalCommunicationCoordinator;
+      case "RegionalDirector":                    if (isMember)       return Roles.RegionalDirectorGlobal;
+                                                  if (isMember)       return Roles.RegionalDirectorOnProject;       
+      case "StaffMember":                                             return Roles.StaffMember;
+      case "Translator":                                              return Roles.Translator;
     }
 
-    return Roles.Administrator;
+    return null;
   }
 
   public static Boolean isProjectChildNode(BaseNodeLabels label){

@@ -14,6 +14,7 @@ import org.neo4j.logging.Log;
 import org.neo4j.procedure.*;
 
 import cord.common.BaseNodeLabels;
+import cord.common.Roles;
 import cord.model.Budget;
 import cord.model.Permission;
 import cord.roles.Administrator;
@@ -40,7 +41,7 @@ public class Authorization {
       BaseNodeLabels label = Utility.baseNodeClassStringToEnum(baseNodeLabel);
       // ArrayList<BaseNodeLabels> labels = Utility.getBaseNodeLabels(db, baseNodeId);
 
-      this.mergeSecurityGroupForRole();
+      this.mergeSecurityGroupForRole(baseNodeId);
       
       return Stream.of(new ProcessNewBaseNodeResponse(true));
     }
@@ -53,10 +54,16 @@ public class Authorization {
       }
     }
 
-    private void mergeSecurityGroupForRole(){
+    private void mergeSecurityGroupForRole(String baseNodeId){
 
       Permission perm = Administrator.Role.Budget(Budget.records);
 
+      this.createSecurityGroup(Roles.Administrator, baseNodeId);
+
+    }
+
+    private void createSecurityGroup(Roles role, String baseNodeId){
+      
     }
 
   }
