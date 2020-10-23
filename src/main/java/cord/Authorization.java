@@ -38,7 +38,6 @@ public class Authorization {
       // get the base node's labels
       ArrayList<BaseNodeLabels> labels = Utility.getBaseNodeLabels(db, baseNodeId);
 
-      
       this.mergeSecurityGroupForRole();
       
       return Stream.of(new ProcessNewBaseNodeResponse(true));

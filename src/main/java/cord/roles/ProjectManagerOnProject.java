@@ -1,5 +1,5 @@
 package cord.roles;
 
-public class ProjectManagerOnProject {
+public enum ProjectManagerOnProject {
   
 }
