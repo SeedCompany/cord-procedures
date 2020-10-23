@@ -1,6 +1,6 @@
 package cord.model;
 
-public enum EthonologueLanguage {
+public enum EthnologueLanguage {
   code,           
 name,           
 population,     

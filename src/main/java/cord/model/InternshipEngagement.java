@@ -1,6 +1,6 @@
 package cord.model;
 
-public enum InternshipEngagements {
+public enum InternshipEngagement {
   ceremony,                  
 communicationsCompleteDate,
 completeDate,              

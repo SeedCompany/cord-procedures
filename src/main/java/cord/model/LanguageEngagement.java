@@ -20,5 +20,6 @@ startDate,
 startDateOverride,         
 statusModifiedAt,          
 modifiedAt,                
-product        
+product,
+status
 }
