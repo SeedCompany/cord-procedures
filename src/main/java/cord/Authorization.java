@@ -14,6 +14,9 @@ import org.neo4j.logging.Log;
 import org.neo4j.procedure.*;
 
 import cord.model.BaseNode;
+import cord.model.Budget;
+import cord.model.Permission;
+import cord.roles.Administrator;
 
 public class Authorization {
 
@@ -34,6 +37,8 @@ public class Authorization {
       
       // get the base node's labels
       ArrayList<String> labels = Utility.getBaseNodeLabels(db, baseNodeId);
+
+      Permission perm = Administrator.Role.Budget(Budget.records);
 
       this.mergeSecurityGroupForRole();
       
