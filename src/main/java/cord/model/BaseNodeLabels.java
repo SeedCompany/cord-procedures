@@ -1,6 +1,7 @@
 package cord.model;
 
-public enum BaseNode {
+public enum BaseNodeLabels {
+  BaseNode,
   Budget,
   BudgetRecord,
   Ceremony, 

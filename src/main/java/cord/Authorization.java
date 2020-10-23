@@ -13,7 +13,7 @@ import org.neo4j.kernel.api.exceptions.Status;
 import org.neo4j.logging.Log;
 import org.neo4j.procedure.*;
 
-import cord.model.BaseNode;
+import cord.model.BaseNodeLabels;
 import cord.model.Budget;
 import cord.model.Permission;
 import cord.roles.Administrator;
@@ -36,10 +36,9 @@ public class Authorization {
       this.log.info("cord.processNewBaseNode");
       
       // get the base node's labels
-      ArrayList<String> labels = Utility.getBaseNodeLabels(db, baseNodeId);
+      ArrayList<BaseNodeLabels> labels = Utility.getBaseNodeLabels(db, baseNodeId);
 
-      Permission perm = Administrator.Role.Budget(Budget.records);
-
+      
       this.mergeSecurityGroupForRole();
       
       return Stream.of(new ProcessNewBaseNodeResponse(true));
@@ -54,6 +53,8 @@ public class Authorization {
     }
 
     private void mergeSecurityGroupForRole(){
+
+      Permission perm = Administrator.Role.Budget(Budget.records);
 
     }
 
