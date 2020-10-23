@@ -1,6 +1,6 @@
 package cord.common;
 
-public enum Roles {
+public enum RoleNames {
   Administrator,
   Consultant,
   ConsultantManager,

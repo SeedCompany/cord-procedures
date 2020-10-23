@@ -1,23 +1,14 @@
 package cord;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDateTime;
 import java.util.stream.Stream;
 
 import org.neo4j.graphdb.*;
-import org.neo4j.internal.kernel.api.exceptions.ProcedureException;
-import org.neo4j.kernel.api.exceptions.Status;
 import org.neo4j.logging.Log;
 import org.neo4j.procedure.*;
 
 import cord.common.BaseNodeLabels;
-import cord.common.Roles;
-import cord.model.Budget;
-import cord.model.Permission;
-import cord.roles.Administrator;
+import cord.common.RoleNames;
 
 public class Authorization {
 
@@ -35,13 +26,29 @@ public class Authorization {
       @Name("creatorUserId") String creatorUserId
     ) throws RuntimeException {
 
-      this.log.info("cord.processNewBaseNode");
+      this.log.info("cord.processNewBaseNode start");
       
       // get the base node's labels
       BaseNodeLabels label = Utility.baseNodeClassStringToEnum(baseNodeLabel);
-      // ArrayList<BaseNodeLabels> labels = Utility.getBaseNodeLabels(db, baseNodeId);
 
-      this.mergeSecurityGroupForRole(baseNodeId);
+      // create SGs for all the global roles
+      this.mergeSecurityGroupForRole(RoleNames.Administrator, baseNodeId, label);
+      this.mergeSecurityGroupForRole(RoleNames.ProjectManagerGlobal, baseNodeId, label);
+      this.mergeSecurityGroupForRole(RoleNames.RegionalDirectorGlobal, baseNodeId, label);
+      this.mergeSecurityGroupForRole(RoleNames.FieldOperationsDirector, baseNodeId, label);
+      this.mergeSecurityGroupForRole(RoleNames.FinancialAnalystGlobal, baseNodeId, label);
+      this.mergeSecurityGroupForRole(RoleNames.Controller, baseNodeId, label);
+      this.mergeSecurityGroupForRole(RoleNames.ConsultantManager, baseNodeId, label);
+      this.mergeSecurityGroupForRole(RoleNames.Fundraising, baseNodeId, label);
+      this.mergeSecurityGroupForRole(RoleNames.Marketing, baseNodeId, label);
+      this.mergeSecurityGroupForRole(RoleNames.StaffMember, baseNodeId, label);
+      this.mergeSecurityGroupForRole(RoleNames.Leadership, baseNodeId, label);
+      
+      // determine if the creator should be added to the admin group for this node
+      Boolean addToAdmin = Utility.isProjectChildNode(label);
+
+      // if (addToAdmin) 
+
       
       return Stream.of(new ProcessNewBaseNodeResponse(true));
     }
@@ -54,16 +61,45 @@ public class Authorization {
       }
     }
 
-    private void mergeSecurityGroupForRole(String baseNodeId){
-
-      Permission perm = Administrator.Role.Budget(Budget.records);
-
-      this.createSecurityGroup(Roles.Administrator, baseNodeId);
-
+    private Long mergeSecurityGroupForRole(RoleNames role, String baseNodeId, BaseNodeLabels label){
+      Long sgId = Utility.getSecurityGroupNode(db, role, baseNodeId, label);
+      if (sgId == null){
+        sgId = this.createSecurityGroup(RoleNames.Administrator, baseNodeId, label);
+      } 
+      return sgId;
     }
 
-    private void createSecurityGroup(Roles role, String baseNodeId){
-      
+
+    private Long createSecurityGroup(RoleNames role, String baseNodeId, BaseNodeLabels label){
+
+      Long sgId = null;
+      try ( Transaction tx = db.beginTx() )
+      {
+        // create the security group node and connect it to the base node
+        Node sgNode = tx.createNode(Label.label(label.name()));
+        sgId = sgNode.getId();
+        sgNode.setProperty("id", "n" + Long.valueOf(sgId)); // todo, replace with nanoid like impl
+        sgNode.setProperty("createdAt", LocalDateTime.now());
+        sgNode.setProperty("role", role.name());
+
+        Node baseNode = tx.findNode(Label.label(label.name()), "id", baseNodeId);
+        if (baseNode == null) throw new RuntimeException("did not find base node when creating SG");
+
+        sgNode.createRelationshipTo(baseNode, RelationshipType.withName("baseNode"));
+        
+        // add all permissions to the SG according to the role and base node class
+
+
+        tx.commit();
+      } catch(Exception e){
+        throw new RuntimeException("failed to create security group");
+      }
+
+      return sgId;
+    }
+
+    private void addPermsToSg(Node sgNode, Node baseNode){
+
     }
 
   }

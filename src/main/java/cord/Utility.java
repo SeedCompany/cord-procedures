@@ -4,10 +4,13 @@ import org.neo4j.internal.kernel.api.exceptions.ProcedureException;
 import org.neo4j.kernel.api.exceptions.Status;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.neo4j.cypher.result.QueryResult.Record;
 import org.neo4j.graphdb.*;
 import cord.common.BaseNodeLabels;
-import cord.common.Roles;
+import cord.common.RoleNames;
 import cord.roles.Administrator;
 
 public class Utility {
@@ -64,28 +67,28 @@ public class Utility {
     }
   }
 
-  public static Roles getRoleFromString(String roleName, Boolean isMember){
+  public static RoleNames getRoleFromString(String roleName, Boolean isMember){
 
     switch (roleName){
-      case "Administrator":                                           return Roles.Administrator;
-      case "Consultant":                                              return Roles.Consultant;
-      case "ConsultantManager":                                       return Roles.ConsultantManager;
-      case "Controller":                                              return Roles.Controller;
-      case "FieldOperationsDirector":                                 return Roles.FieldOperationsDirector;
-      case "FinancialAnalyst":                    if (isMember)       return Roles.FinancialAnalystGlobal;
-                                                                      return Roles.FinancialAnalystOnProject;
-      case "Fundraising":                                             return Roles.Fundraising;
-      case "Intern":                                                  return Roles.Intern;
-      case "Leadership":                                              return Roles.Leadership;
-      case "Liason":                                                  return Roles.Liason;
-      case "Marketing":                                               return Roles.Marketing;
-      case "ProjectManager":                      if (isMember)       return Roles.ProjectManagerGlobal;
-                                                                      return Roles.ProjectManagerOnProject;
-      case "RegionalCommunicationCoordinator":                        return Roles.RegionalCommunicationCoordinator;
-      case "RegionalDirector":                    if (isMember)       return Roles.RegionalDirectorGlobal;
-                                                  if (isMember)       return Roles.RegionalDirectorOnProject;       
-      case "StaffMember":                                             return Roles.StaffMember;
-      case "Translator":                                              return Roles.Translator;
+      case "Administrator":                                           return RoleNames.Administrator;
+      case "Consultant":                                              return RoleNames.Consultant;
+      case "ConsultantManager":                                       return RoleNames.ConsultantManager;
+      case "Controller":                                              return RoleNames.Controller;
+      case "FieldOperationsDirector":                                 return RoleNames.FieldOperationsDirector;
+      case "FinancialAnalyst":                    if (isMember)       return RoleNames.FinancialAnalystGlobal;
+                                                                      return RoleNames.FinancialAnalystOnProject;
+      case "Fundraising":                                             return RoleNames.Fundraising;
+      case "Intern":                                                  return RoleNames.Intern;
+      case "Leadership":                                              return RoleNames.Leadership;
+      case "Liason":                                                  return RoleNames.Liason;
+      case "Marketing":                                               return RoleNames.Marketing;
+      case "ProjectManager":                      if (isMember)       return RoleNames.ProjectManagerGlobal;
+                                                                      return RoleNames.ProjectManagerOnProject;
+      case "RegionalCommunicationCoordinator":                        return RoleNames.RegionalCommunicationCoordinator;
+      case "RegionalDirector":                    if (isMember)       return RoleNames.RegionalDirectorGlobal;
+                                                  if (isMember)       return RoleNames.RegionalDirectorOnProject;       
+      case "StaffMember":                                             return RoleNames.StaffMember;
+      case "Translator":                                              return RoleNames.Translator;
     }
 
     return null;
@@ -116,5 +119,35 @@ public class Utility {
       default:                    return false;
     }
   }
+
+  public static Long getSecurityGroupNode(GraphDatabaseService db, RoleNames role, String baseNodeId, BaseNodeLabels label) throws RuntimeException {
+
+    Map<String, Object> params = new HashMap<>();
+    params.put("role", role.name());
+    params.put("baseNodeId", baseNodeId);
+
+    Long sgId = null;
+
+    try ( 
+      Transaction tx = db.beginTx();
+      Result result = tx.execute(
+        "MATCH (sg:SecurityGroup {role: $role})-[:baseNode]->(baseNode:"+label.name()+" {id:$baseNodeId}) " +
+        "RETURN id(sg) as id",
+        params
+      )
+    ) {
+      while (result.hasNext()){
+        Map<String, Object> row = result.next();
+        sgId = (Long) row.get("id");
+      }
+
+      return sgId;
+
+    } catch(Exception e){
+      e.printStackTrace();
+      throw new RuntimeException("error in finding security group for base node: " + baseNodeId + " with role " + role + "Error " + e.getMessage());
+    }
+  }
+
 
 }
