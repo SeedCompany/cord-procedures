@@ -13,7 +13,7 @@ import org.neo4j.kernel.api.exceptions.Status;
 import org.neo4j.logging.Log;
 import org.neo4j.procedure.*;
 
-import cord.model.BaseNodeLabels;
+import cord.common.BaseNodeLabels;
 import cord.model.Budget;
 import cord.model.Permission;
 import cord.roles.Administrator;
@@ -30,13 +30,15 @@ public class Authorization {
     @Description("Do the thing.")
     public Stream<ProcessNewBaseNodeResponse> processNewBaseNode(
       @Name("baseNodeId") String baseNodeId,
+      @Name("baseNodeLabel") String baseNodeLabel,
       @Name("creatorUserId") String creatorUserId
     ) throws RuntimeException {
 
       this.log.info("cord.processNewBaseNode");
       
       // get the base node's labels
-      ArrayList<BaseNodeLabels> labels = Utility.getBaseNodeLabels(db, baseNodeId);
+      BaseNodeLabels label = Utility.baseNodeClassStringToEnum(baseNodeLabel);
+      // ArrayList<BaseNodeLabels> labels = Utility.getBaseNodeLabels(db, baseNodeId);
 
       this.mergeSecurityGroupForRole();
       

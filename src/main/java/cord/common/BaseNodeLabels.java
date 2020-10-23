@@ -1,4 +1,4 @@
-package cord.model;
+package cord.common;
 
 public enum BaseNodeLabels {
   BaseNode,
