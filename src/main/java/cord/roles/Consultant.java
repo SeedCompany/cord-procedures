@@ -1,11 +1,47 @@
 package cord.roles;
 import cord.model.*;
+import cord.common.BaseNodeLabels;
+import cord.common.RoleNames;
 import cord.model.Permission;
 
-public enum Consultant {
-  Role;
+public class Consultant extends BaseRole {
+  public static final RoleNames roleName = RoleNames.Consultant;
 
-  public Permission Budget(Budget property){
+  public static Permission permission(BaseNodeLabels label, Object property){
+    switch(label){
+      case Budget:                return Consultant.Budget(                 (Budget)property);
+      case BudgetRecord:          return Consultant.BudgetRecord(           (BudgetRecord)property);
+      case Ceremony:              return Consultant.Ceremony(               (Ceremony)property);
+      case Directory:             return Consultant.Directory(              (Directory)property);
+      case Education:             return Consultant.Education(              (Education)property);
+      case EthnologueLanguage:    return Consultant.EthnologueLanguage(     (EthnologueLanguage)property);
+      case FieldRegion:           return Consultant.FieldRegion(            (FieldRegion)property);
+      case FieldZone:             return Consultant.FieldZone(              (FieldZone)property);
+      case File:                  return Consultant.File(                   (File)property);
+      case FileVersion:           return Consultant.FileVersion(            (FileVersion)property);
+      case Film:                  return Consultant.Film(                   (Film)property);
+      case FundingAccount:        return Consultant.FundingAccount(         (FundingAccount)property);
+      case InternshipEngagement:  return Consultant.InternshipEngagement(   (InternshipEngagement)property);
+      case Language:              return Consultant.Language(               (Language)property);
+      case LanguageEngagement:    return Consultant.LanguageEngagement(     (LanguageEngagement)property);
+      case LiteracyMaterial:      return Consultant.LiteracyMaterial(       (LiteracyMaterial)property);
+      case Location:              return Consultant.Location(               (Location)property);
+      case Organization:          return Consultant.Organization(           (Organization)property);
+      case Partner:               return Consultant.Partner(                (Partner)property);
+      case Partnership:           return Consultant.Partnership(            (Partnership)property);
+      case Project:               return Consultant.Project(                (Project)property);
+      case ProjectMember:         return Consultant.ProjectMember(          (ProjectMember)property);
+      case Product:               return Consultant.Product(                (Product)property);
+      case Song:                  return Consultant.Song(                   (Song)property);
+      case Story:                 return Consultant.Story(                  (Story)property);
+      case Unavailability:        return Consultant.Unavailability(         (Unavailability)property);
+      case User:                  return Consultant.User(                   (User)property);
+
+      default: return Permission.None;
+    }
+  }
+
+  private static Permission Budget(Budget property){
     switch(property){
       case universalTemplateFile:      return Permission.ReadWrite;
       case records:                    return Permission.ReadWrite;
@@ -14,7 +50,7 @@ public enum Consultant {
     }
   }
 
-  public Permission BudgetRecord(BudgetRecord property){
+  private static Permission BudgetRecord(BudgetRecord property){
     switch(property){
       case amount:                     return Permission.ReadWrite;
       case fiscalYear:                 return Permission.ReadWrite;
@@ -23,7 +59,7 @@ public enum Consultant {
     }
   }  
   
-  public Permission Ceremony(Ceremony property){
+  private static Permission Ceremony(Ceremony property){
     switch(property){
       case actualDate:                 return Permission.ReadWrite;
       case estimatedDate:              return Permission.ReadWrite;
@@ -32,7 +68,7 @@ public enum Consultant {
     }
   }
 
-  public Permission Directory(Directory property){
+  private static Permission Directory(Directory property){
     switch(property){
       case name:                       return Permission.ReadWrite;
       case createdBy:                  return Permission.ReadWrite;
@@ -41,7 +77,7 @@ public enum Consultant {
     }
   }
 
-  public Permission Education(Education property){
+  private static Permission Education(Education property){
     switch(property){
       case degree:                     return Permission.ReadWrite;
       case institution:                return Permission.ReadWrite;
@@ -50,7 +86,7 @@ public enum Consultant {
     }
   }
 
-  public Permission EthnologueLanguage(EthnologueLanguage property){
+  private static Permission EthnologueLanguage(EthnologueLanguage property){
     switch(property){
       case code:                       return Permission.ReadWrite;
       case name:                       return Permission.ReadWrite;
@@ -60,7 +96,7 @@ public enum Consultant {
     }
   }
 
-  public Permission FieldRegion(FieldRegion property){
+  private static Permission FieldRegion(FieldRegion property){
     switch(property){
       case director:                   return Permission.ReadWrite;
       case name:                       return Permission.ReadWrite;
@@ -69,7 +105,7 @@ public enum Consultant {
     }
   }  
   
-  public Permission FieldZone(FieldZone property){
+  private static Permission FieldZone(FieldZone property){
     switch(property){
       case director:                   return Permission.ReadWrite;
       case name:                       return Permission.ReadWrite;
@@ -77,7 +113,7 @@ public enum Consultant {
     }
   }
 
-  public Permission File(File property){
+  private static Permission File(File property){
     switch(property){
       case name:                       return Permission.ReadWrite;
       case createdBy:                  return Permission.ReadWrite;
@@ -87,7 +123,7 @@ public enum Consultant {
     }
   }
 
-  public Permission FileVersion(FileVersion property){
+  private static Permission FileVersion(FileVersion property){
     switch(property){
       case name:                       return Permission.ReadWrite;
       case createdBy:                  return Permission.ReadWrite;
@@ -98,7 +134,7 @@ public enum Consultant {
     }
   }
 
-  public Permission Film(Film property){
+  private static Permission Film(Film property){
     switch(property){
       case name:                       return Permission.ReadWrite;
       case scriptureReferences:        return Permission.ReadWrite;
@@ -106,7 +142,7 @@ public enum Consultant {
     }
   }
 
-  public Permission FundingAccount(FundingAccount property){
+  private static Permission FundingAccount(FundingAccount property){
     switch(property){
       case name:                       return Permission.ReadWrite;
       case accountNumber:              return Permission.ReadWrite;
@@ -114,7 +150,7 @@ public enum Consultant {
     }
   }  
   
-  public Permission InternshipEngagement(InternshipEngagement property){
+  private static Permission InternshipEngagement(InternshipEngagement property){
     switch(property){
       case ceremony:                   return Permission.ReadWrite;
       case communicationsCompleteDate: return Permission.ReadWrite;
@@ -140,7 +176,7 @@ public enum Consultant {
     }
   }
 
-  public Permission Language(Language property){
+  private static Permission Language(Language property){
     switch(property){
       case displayName:                return Permission.ReadWrite;
       case displayNamePronunciation:   return Permission.ReadWrite;
@@ -161,7 +197,7 @@ public enum Consultant {
     }
   }
 
-  public Permission LanguageEngagement(LanguageEngagement property){
+  private static Permission LanguageEngagement(LanguageEngagement property){
     switch(property){
       case ceremony:                   return Permission.ReadWrite;
       case communicationsCompleteDate: return Permission.ReadWrite;
@@ -188,7 +224,7 @@ public enum Consultant {
     }
   }
 
-  public Permission LiteracyMaterial(LiteracyMaterial property){
+  private static Permission LiteracyMaterial(LiteracyMaterial property){
     switch(property){
       case name:                       return Permission.ReadWrite;
       case scriptureReferences:        return Permission.ReadWrite;
@@ -196,7 +232,7 @@ public enum Consultant {
     }
   }
 
-  public Permission Location(Location property){
+  private static Permission Location(Location property){
     switch(property){
       case name:                       return Permission.ReadWrite;
       case type:                       return Permission.ReadWrite;
@@ -207,7 +243,7 @@ public enum Consultant {
     }
   }
   
-  public Permission Organization(Organization property){
+  private static Permission Organization(Organization property){
     switch(property){
       case name:                       return Permission.ReadWrite;
       case address:                    return Permission.ReadWrite;
@@ -216,7 +252,7 @@ public enum Consultant {
     }
   }
 
-  public Permission Partner(Partner property){
+  private static Permission Partner(Partner property){
     switch(property){
       case organization:               return Permission.ReadWrite;
       case pointOfContact:             return Permission.ReadWrite;
@@ -231,7 +267,7 @@ public enum Consultant {
     }
   }
 
-  public Permission Partnership(Partnership property){
+  private static Permission Partnership(Partnership property){
     switch(property){
       case agreement:                  return Permission.ReadWrite;
       case agreementStatus:            return Permission.ReadWrite;
@@ -249,7 +285,7 @@ public enum Consultant {
     }
   }
 
-  public Permission Product(Product property){
+  private static Permission Product(Product property){
     switch(property){
       case mediums:                    return Permission.ReadWrite;
       case methodology:                return Permission.ReadWrite;
@@ -262,7 +298,7 @@ public enum Consultant {
     }
   }
 
-  public Permission Project(Project property){
+  private static Permission Project(Project property){
     switch(property){
       case estimatedSubmission:        return Permission.ReadWrite;
       case step:                       return Permission.ReadWrite;
@@ -286,7 +322,7 @@ public enum Consultant {
     }
   }
 
-  public Permission ProjectMember(ProjectMember property){
+  private static Permission ProjectMember(ProjectMember property){
     switch(property){
       case roles:                      return Permission.ReadWrite;
       case user:                       return Permission.ReadWrite;
@@ -295,7 +331,7 @@ public enum Consultant {
     }
   }
 
-  public Permission Song(Song property){
+  private static Permission Song(Song property){
     switch(property){
       case name:                       return Permission.ReadWrite;
       case scriptureReferences:        return Permission.ReadWrite;
@@ -303,7 +339,7 @@ public enum Consultant {
     }
   }
 
-  public Permission Story(Story property){
+  private static Permission Story(Story property){
     switch(property){
       case name:                       return Permission.ReadWrite;
       case scriptureReferences:        return Permission.ReadWrite;
@@ -311,7 +347,7 @@ public enum Consultant {
     }
   }
 
-  public Permission Unavailability(Unavailability property){
+  private static Permission Unavailability(Unavailability property){
     switch(property){
       case description:                return Permission.ReadWrite;
       case end:                        return Permission.ReadWrite;
@@ -320,7 +356,7 @@ public enum Consultant {
     }
   }
 
-  public Permission User(User property){
+  private static Permission User(User property){
     switch(property){
       case about:                      return Permission.ReadWrite;
       case displayFirstName:           return Permission.ReadWrite;
@@ -340,4 +376,5 @@ public enum Consultant {
       default:                         return Permission.None;
     }
   }
+
 }

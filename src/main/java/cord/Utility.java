@@ -1,17 +1,13 @@
 package cord;
 
-import org.neo4j.internal.kernel.api.exceptions.ProcedureException;
-import org.neo4j.kernel.api.exceptions.Status;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.neo4j.cypher.result.QueryResult.Record;
 import org.neo4j.graphdb.*;
 import cord.common.BaseNodeLabels;
 import cord.common.RoleNames;
-import cord.roles.Administrator;
+import cord.roles.BaseRole;
 
 public class Utility {
 
@@ -120,10 +116,10 @@ public class Utility {
     }
   }
 
-  public static Long getSecurityGroupNode(GraphDatabaseService db, RoleNames role, String baseNodeId, BaseNodeLabels label) throws RuntimeException {
+  public static Long getSecurityGroupNode(GraphDatabaseService db, BaseRole role, String baseNodeId, BaseNodeLabels label) throws RuntimeException {
 
     Map<String, Object> params = new HashMap<>();
-    params.put("role", role.name());
+    // params.put("role", role);                      // todo
     params.put("baseNodeId", baseNodeId);
 
     Long sgId = null;

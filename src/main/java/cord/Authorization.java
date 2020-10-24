@@ -7,8 +7,10 @@ import org.neo4j.graphdb.*;
 import org.neo4j.logging.Log;
 import org.neo4j.procedure.*;
 
+import cord.common.AllRoles;
 import cord.common.BaseNodeLabels;
 import cord.common.RoleNames;
+import cord.roles.*;
 
 public class Authorization {
 
@@ -32,17 +34,17 @@ public class Authorization {
       BaseNodeLabels label = Utility.baseNodeClassStringToEnum(baseNodeLabel);
 
       // create SGs for all the global roles
-      this.mergeSecurityGroupForRole(RoleNames.Administrator, baseNodeId, label);
-      this.mergeSecurityGroupForRole(RoleNames.ProjectManagerGlobal, baseNodeId, label);
-      this.mergeSecurityGroupForRole(RoleNames.RegionalDirectorGlobal, baseNodeId, label);
-      this.mergeSecurityGroupForRole(RoleNames.FieldOperationsDirector, baseNodeId, label);
-      this.mergeSecurityGroupForRole(RoleNames.FinancialAnalystGlobal, baseNodeId, label);
-      this.mergeSecurityGroupForRole(RoleNames.Controller, baseNodeId, label);
-      this.mergeSecurityGroupForRole(RoleNames.ConsultantManager, baseNodeId, label);
-      this.mergeSecurityGroupForRole(RoleNames.Fundraising, baseNodeId, label);
-      this.mergeSecurityGroupForRole(RoleNames.Marketing, baseNodeId, label);
-      this.mergeSecurityGroupForRole(RoleNames.StaffMember, baseNodeId, label);
-      this.mergeSecurityGroupForRole(RoleNames.Leadership, baseNodeId, label);
+      this.mergeSecurityGroupForRole(AllRoles.Administrator, baseNodeId, label);
+      this.mergeSecurityGroupForRole(AllRoles.ProjectManagerGlobal, baseNodeId, label);
+      this.mergeSecurityGroupForRole(AllRoles.RegionalDirectorGlobal, baseNodeId, label);
+      this.mergeSecurityGroupForRole(AllRoles.FieldOperationsDirector, baseNodeId, label);
+      this.mergeSecurityGroupForRole(AllRoles.FinancialAnalystGlobal, baseNodeId, label);
+      this.mergeSecurityGroupForRole(AllRoles.Controller, baseNodeId, label);
+      this.mergeSecurityGroupForRole(AllRoles.ConsultantManager, baseNodeId, label);
+      this.mergeSecurityGroupForRole(AllRoles.Fundraising, baseNodeId, label);
+      this.mergeSecurityGroupForRole(AllRoles.Marketing, baseNodeId, label);
+      this.mergeSecurityGroupForRole(AllRoles.StaffMember, baseNodeId, label);
+      this.mergeSecurityGroupForRole(AllRoles.Leadership, baseNodeId, label);
       
       // determine if the creator should be added to the admin group for this node
       Boolean addToAdmin = Utility.isProjectChildNode(label);
@@ -61,7 +63,9 @@ public class Authorization {
       }
     }
 
-    private Long mergeSecurityGroupForRole(RoleNames role, String baseNodeId, BaseNodeLabels label){
+    private Long mergeSecurityGroupForRole( BaseRole role, String baseNodeId, BaseNodeLabels label){
+      // role.permission(label, property)
+      
       Long sgId = Utility.getSecurityGroupNode(db, role, baseNodeId, label);
       if (sgId == null){
         sgId = this.createSecurityGroup(RoleNames.Administrator, baseNodeId, label);
