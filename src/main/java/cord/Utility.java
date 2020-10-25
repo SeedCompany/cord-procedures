@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -127,6 +128,23 @@ public class Utility {
       throw new RuntimeException("error in finding project node");
     }
   }
+
+  public static ArrayList<Node> getProjectMembers(GraphDatabaseService db, Node projectNode) throws RuntimeException {
+    ArrayList<Node> members = new ArrayList<Node>();
+    try ( Transaction tx = db.beginTx() )
+    {
+        Iterable<Relationship> iter = projectNode.getRelationships(Direction.OUTGOING, 
+          RelationshipType.withName(AllProperties.member.name()));
+
+        iter.forEach(rel -> members.add(rel.getEndNode()));
+        
+        tx.commit();
+        return members;
+    } catch(Exception e){
+      throw new RuntimeException("error in finding project member: " + projectNode.getId());
+    }
+  }
+
 
   public static BaseNodeLabels baseNodeClassStringToEnum(String className) throws RuntimeException {
     switch (className){

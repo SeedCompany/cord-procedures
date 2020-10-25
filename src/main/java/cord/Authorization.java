@@ -82,7 +82,7 @@ public class Authorization {
 
       // get project members
       Node projectNode = Utility.getProjectNode(db, baseNode, label);
-      
+      ArrayList<Node> members = Utility.getProjectMembers(db, projectNode);
 
         BaseRole[] projectRoles = {
           AllRoles.Consultant,
