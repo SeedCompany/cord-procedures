@@ -48,24 +48,48 @@ public class Authorization {
       // create permission nodes for each property
       HashMap<String, Node> permMap = this.createAllPermissionNodes(baseNode, label, model);
 
-      // create SGs for all the global roles
-      this.mergeSecurityGroupForRole(AllRoles.Administrator, baseNodeId, baseNode, label, model, permMap);
-      this.mergeSecurityGroupForRole(AllRoles.ProjectManagerGlobal, baseNodeId, baseNode, label, model, permMap);
-      this.mergeSecurityGroupForRole(AllRoles.RegionalDirectorGlobal, baseNodeId, baseNode, label, model, permMap);
-      this.mergeSecurityGroupForRole(AllRoles.FieldOperationsDirector, baseNodeId, baseNode, label, model, permMap);
-      this.mergeSecurityGroupForRole(AllRoles.FinancialAnalystGlobal, baseNodeId, baseNode, label, model, permMap);
-      this.mergeSecurityGroupForRole(AllRoles.Controller, baseNodeId, baseNode, label, model, permMap);
-      this.mergeSecurityGroupForRole(AllRoles.ConsultantManager, baseNodeId, baseNode, label, model, permMap);
-      this.mergeSecurityGroupForRole(AllRoles.Fundraising, baseNodeId, baseNode, label, model, permMap);
-      this.mergeSecurityGroupForRole(AllRoles.Marketing, baseNodeId, baseNode, label, model, permMap);
-      this.mergeSecurityGroupForRole(AllRoles.StaffMember, baseNodeId, baseNode, label, model, permMap);
-      this.mergeSecurityGroupForRole(AllRoles.Leadership, baseNodeId, baseNode, label, model, permMap);
-      
+      // create SGs for all the global roles      
+      BaseRole[] globalRoles = {
+        AllRoles.Administrator,
+        AllRoles.ConsultantManager,
+        AllRoles.Controller,
+        AllRoles.Leadership,
+        AllRoles.FieldOperationsDirector,
+        AllRoles.FinancialAnalystGlobal,
+        AllRoles.Fundraising,
+        AllRoles.Marketing,
+        AllRoles.ProjectManagerGlobal,
+        AllRoles.RegionalDirectorGlobal,
+        AllRoles.StaffMember,
+      };
+
+      for (BaseRole role: globalRoles){
+        this.mergeSecurityGroupForRole(role, baseNodeId, baseNode, label, model, permMap);
+      }
+
       // determine if the creator should be added to the admin group for this node
+      // and if to create project role SGs
       Boolean isProjectNode = Utility.isProjectChildNode(label);
 
-      if (!isProjectNode) {
-        
+      if (isProjectNode) {
+
+        BaseRole[] projectRoles = {
+          AllRoles.Consultant,
+          AllRoles.FinancialAnalystOnProject,
+          AllRoles.Intern,
+          AllRoles.Liason,
+          AllRoles.ProjectManagerOnProject,
+          AllRoles.RegionalCommunicationCoordinator,
+          AllRoles.RegionalDirectorOnProject,
+          AllRoles.Translator
+        };
+  
+        for (BaseRole role: projectRoles){
+          this.mergeSecurityGroupForRole(role, baseNodeId, baseNode, label, model, permMap);
+        }
+
+      } else {
+        // add creator to admin group
       }
 
       
