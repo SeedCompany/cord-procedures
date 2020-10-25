@@ -36,11 +36,10 @@ public class Authorization {
       
       // get the base node's labels and model
       BaseNodeLabels label = Utility.baseNodeClassStringToEnum(baseNodeLabel);
-
-      // create permission nodes for each property
       ArrayList<String> model = Utility.getBaseNodePropertiesByLabel(label);
 
-
+      // create permission nodes for each property
+      Utility.createAllPermissionNodes(db, baseNode, label, model);
 
       // create SGs for all the global roles
       this.mergeSecurityGroupForRole(AllRoles.Administrator, baseNodeId, label);

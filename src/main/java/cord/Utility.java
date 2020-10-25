@@ -8,7 +8,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.neo4j.graphdb.*;
+
+import cord.common.AllProperties;
 import cord.common.BaseNodeLabels;
+import cord.common.NonBaseNodeLabels;
+import cord.common.NonPropertyRelationshipTypes;
 import cord.common.RoleNames;
 import cord.model.*;
 import cord.roles.BaseRole;
@@ -276,4 +280,41 @@ public class Utility {
     }
   }
 
+  public static void createAllPermissionNodes(GraphDatabaseService db, Node baseNode, BaseNodeLabels label, ArrayList<String> propertyList) throws RuntimeException {
+
+    try ( Transaction tx = db.beginTx() )
+    {
+      propertyList.forEach(property -> {
+
+        String propertyLabelForPerm = label.name() + property;
+
+        Node permRead = tx.createNode(
+          Label.label(NonBaseNodeLabels.Permission.name()), 
+          Label.label(propertyLabelForPerm),
+          Label.label(NonBaseNodeLabels.canRead.name())
+          );
+        permRead.setProperty(AllProperties.property.name(), property);
+        permRead.setProperty(AllProperties.read.name(), true);
+        permRead.createRelationshipTo(baseNode, 
+          RelationshipType.withName(NonPropertyRelationshipTypes.baseNode.name()));
+
+        Node permEdit = tx.createNode(
+          Label.label(NonBaseNodeLabels.Permission.name()), 
+          Label.label(propertyLabelForPerm),
+          Label.label(NonBaseNodeLabels.canRead.name()),
+          Label.label(NonBaseNodeLabels.canEdit.name())
+          );
+        permEdit.setProperty(AllProperties.property.name(), property);
+        permEdit.setProperty(AllProperties.read.name(), true);
+        permEdit.setProperty(AllProperties.edit.name(), true);
+        permEdit.createRelationshipTo(baseNode, 
+          RelationshipType.withName(NonPropertyRelationshipTypes.baseNode.name()));
+
+      });
+
+        tx.commit();
+    } catch(Exception e){
+      throw new RuntimeException("error in creating permission nodes");
+    }
+  }
 }
