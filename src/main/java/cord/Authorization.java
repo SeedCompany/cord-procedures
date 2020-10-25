@@ -81,6 +81,8 @@ public class Authorization {
       if (isProjectNode) {
 
       // get project members
+      Node projectNode = Utility.getProjectNode(db, baseNode, label);
+      
 
         BaseRole[] projectRoles = {
           AllRoles.Consultant,
@@ -271,5 +273,7 @@ public class Authorization {
         throw new RuntimeException("error in adding role members to SG: " + sgNode + " " + role.roleName.name());
       }
     }
+
+    
 
   }

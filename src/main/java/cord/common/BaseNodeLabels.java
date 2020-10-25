@@ -12,6 +12,7 @@ public enum BaseNodeLabels {
   FieldRegion,
   FieldZone,
   File,
+  FileNode,
   FileVersion,
   Film,
   FundingAccount,
