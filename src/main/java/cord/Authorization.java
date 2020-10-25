@@ -2,16 +2,23 @@ package cord;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.stream.Stream;
+
+import javax.management.relation.Relation;
 
 import org.neo4j.graphdb.*;
 import org.neo4j.logging.Log;
 import org.neo4j.procedure.*;
 
 import cord.common.AllBaseNodes;
+import cord.common.AllProperties;
 import cord.common.AllRoles;
 import cord.common.BaseNodeLabels;
+import cord.common.NonBaseNodeLabels;
+import cord.common.NonPropertyRelationshipTypes;
 import cord.common.RoleNames;
+import cord.model.Permission;
 import cord.roles.*;
 
 public class Authorization {
@@ -39,25 +46,27 @@ public class Authorization {
       ArrayList<String> model = Utility.getBaseNodePropertiesByLabel(label);
 
       // create permission nodes for each property
-      Utility.createAllPermissionNodes(db, baseNode, label, model);
+      HashMap<String, Node> permMap = this.createAllPermissionNodes(baseNode, label, model);
 
       // create SGs for all the global roles
-      this.mergeSecurityGroupForRole(AllRoles.Administrator, baseNodeId, label);
-      this.mergeSecurityGroupForRole(AllRoles.ProjectManagerGlobal, baseNodeId, label);
-      this.mergeSecurityGroupForRole(AllRoles.RegionalDirectorGlobal, baseNodeId, label);
-      this.mergeSecurityGroupForRole(AllRoles.FieldOperationsDirector, baseNodeId, label);
-      this.mergeSecurityGroupForRole(AllRoles.FinancialAnalystGlobal, baseNodeId, label);
-      this.mergeSecurityGroupForRole(AllRoles.Controller, baseNodeId, label);
-      this.mergeSecurityGroupForRole(AllRoles.ConsultantManager, baseNodeId, label);
-      this.mergeSecurityGroupForRole(AllRoles.Fundraising, baseNodeId, label);
-      this.mergeSecurityGroupForRole(AllRoles.Marketing, baseNodeId, label);
-      this.mergeSecurityGroupForRole(AllRoles.StaffMember, baseNodeId, label);
-      this.mergeSecurityGroupForRole(AllRoles.Leadership, baseNodeId, label);
+      this.mergeSecurityGroupForRole(AllRoles.Administrator, baseNodeId, baseNode, label, model, permMap);
+      this.mergeSecurityGroupForRole(AllRoles.ProjectManagerGlobal, baseNodeId, baseNode, label, model, permMap);
+      this.mergeSecurityGroupForRole(AllRoles.RegionalDirectorGlobal, baseNodeId, baseNode, label, model, permMap);
+      this.mergeSecurityGroupForRole(AllRoles.FieldOperationsDirector, baseNodeId, baseNode, label, model, permMap);
+      this.mergeSecurityGroupForRole(AllRoles.FinancialAnalystGlobal, baseNodeId, baseNode, label, model, permMap);
+      this.mergeSecurityGroupForRole(AllRoles.Controller, baseNodeId, baseNode, label, model, permMap);
+      this.mergeSecurityGroupForRole(AllRoles.ConsultantManager, baseNodeId, baseNode, label, model, permMap);
+      this.mergeSecurityGroupForRole(AllRoles.Fundraising, baseNodeId, baseNode, label, model, permMap);
+      this.mergeSecurityGroupForRole(AllRoles.Marketing, baseNodeId, baseNode, label, model, permMap);
+      this.mergeSecurityGroupForRole(AllRoles.StaffMember, baseNodeId, baseNode, label, model, permMap);
+      this.mergeSecurityGroupForRole(AllRoles.Leadership, baseNodeId, baseNode, label, model, permMap);
       
       // determine if the creator should be added to the admin group for this node
-      Boolean addToAdmin = Utility.isProjectChildNode(label);
+      Boolean isProjectNode = Utility.isProjectChildNode(label);
 
-      // if (addToAdmin) 
+      if (!isProjectNode) {
+        
+      }
 
       
       return Stream.of(new ProcessNewBaseNodeResponse(true));
@@ -71,18 +80,29 @@ public class Authorization {
       }
     }
 
-    private Long mergeSecurityGroupForRole( BaseRole role, String baseNodeId, BaseNodeLabels label){
-      // role.permission(label, property)
+    private Long mergeSecurityGroupForRole( 
+      BaseRole role, 
+      String baseNodeId, 
+      Node baseNode, 
+      BaseNodeLabels label, 
+      ArrayList<String> model,
+      HashMap<String, Node> permMap
+    ){
       
       Long sgId = Utility.getSecurityGroupNode(db, role, baseNodeId, label);
       if (sgId == null){
-        sgId = this.createSecurityGroup(RoleNames.Administrator, baseNodeId, label);
+        sgId = this.createSecurityGroup(role, baseNode, label, model, permMap);
       } 
       return sgId;
     }
 
-
-    private Long createSecurityGroup(RoleNames role, String baseNodeId, BaseNodeLabels label){
+    private Long createSecurityGroup(
+      BaseRole role, 
+      Node baseNode, 
+      BaseNodeLabels label, 
+      ArrayList<String> model, 
+      HashMap<String, Node> permMap
+    ){
 
       Long sgId = null;
       try ( Transaction tx = db.beginTx() )
@@ -90,17 +110,47 @@ public class Authorization {
         // create the security group node and connect it to the base node
         Node sgNode = tx.createNode(Label.label(label.name()));
         sgId = sgNode.getId();
-        sgNode.setProperty("id", "n" + Long.valueOf(sgId)); // todo, replace with nanoid like impl
-        sgNode.setProperty("createdAt", LocalDateTime.now());
-        sgNode.setProperty("role", role.name());
-
-        Node baseNode = tx.findNode(Label.label(label.name()), "id", baseNodeId);
-        if (baseNode == null) throw new RuntimeException("did not find base node when creating SG");
-
-        sgNode.createRelationshipTo(baseNode, RelationshipType.withName("baseNode"));
+        sgNode.setProperty(AllProperties.id.name(), this.getUniqueIdFromNeo4jId(sgId)); // todo, replace with nanoid like impl
+        sgNode.setProperty(AllProperties.createdAt.name(), LocalDateTime.now());
+        sgNode.setProperty(AllProperties.role.name(), role.roleName.name() );
+        sgNode.createRelationshipTo(baseNode, 
+          RelationshipType.withName(NonPropertyRelationshipTypes.baseNode.name()));
         
         // add all permissions to the SG according to the role and base node class
+        // cycle through properties of base node
+        model.forEach(property -> {
+          // determine if the role grants the prop
+          // static access not possible without gloriously large switch, ignore yellow squiggles
+          Permission grant = role.permission(label, property); 
 
+          // get permision nodes and connect them if permitted
+          Node readPerm = permMap.get(property+"Read");
+          Node editPerm = permMap.get(property+"Edit");
+
+          if (readPerm != null && editPerm != null){
+            
+            switch (grant){
+              case Read: 
+                sgNode.createRelationshipTo(readPerm, 
+                  RelationshipType.withName(NonPropertyRelationshipTypes.permission.name()));
+              return;
+              case Write: 
+                sgNode.createRelationshipTo(readPerm, 
+                  RelationshipType.withName(NonPropertyRelationshipTypes.permission.name()));
+                sgNode.createRelationshipTo(editPerm, 
+                  RelationshipType.withName(NonPropertyRelationshipTypes.permission.name()));
+              return;
+              case ReadWrite: 
+                sgNode.createRelationshipTo(readPerm, 
+                  RelationshipType.withName(NonPropertyRelationshipTypes.permission.name()));
+                sgNode.createRelationshipTo(editPerm, 
+                  RelationshipType.withName(NonPropertyRelationshipTypes.permission.name()));
+              return;
+              default: return;
+            }
+          }
+        });
+        
 
         tx.commit();
       } catch(Exception e){
@@ -110,8 +160,55 @@ public class Authorization {
       return sgId;
     }
 
-    private void addPermsToSg(Node sgNode, Node baseNode){
-
+    private String getUniqueIdFromNeo4jId(Long id){
+      return "n" + Long.valueOf(id);
     }
 
+    private HashMap<String, Node> createAllPermissionNodes(Node baseNode, BaseNodeLabels label, ArrayList<String> propertyList) throws RuntimeException {
+
+      try ( Transaction tx = db.beginTx() )
+      {
+        HashMap<String, Node> map = new HashMap<String, Node>();
+
+        propertyList.forEach(property -> {
+  
+          String propertyLabelForPerm = label.name() + property;
+  
+          Node permRead = tx.createNode(
+            Label.label(NonBaseNodeLabels.Permission.name()), 
+            Label.label(propertyLabelForPerm),
+            Label.label(NonBaseNodeLabels.canRead.name())
+            );
+          permRead.setProperty(AllProperties.property.name(), property);
+          permRead.setProperty(AllProperties.read.name(), true);
+          permRead.createRelationshipTo(baseNode, 
+            RelationshipType.withName(NonPropertyRelationshipTypes.baseNode.name()));
+
+          map.put(property+"Read", permRead);
+  
+          Node permEdit = tx.createNode(
+            Label.label(NonBaseNodeLabels.Permission.name()), 
+            Label.label(propertyLabelForPerm),
+            Label.label(NonBaseNodeLabels.canRead.name()),
+            Label.label(NonBaseNodeLabels.canEdit.name())
+            );
+          permEdit.setProperty(AllProperties.property.name(), property);
+          permEdit.setProperty(AllProperties.read.name(), true);
+          permEdit.setProperty(AllProperties.edit.name(), true);
+          permEdit.createRelationshipTo(baseNode, 
+            RelationshipType.withName(NonPropertyRelationshipTypes.baseNode.name()));
+
+          map.put(property+"Edit", permEdit);
+            
+        });
+        
+        tx.commit();
+        
+        return map;
+
+      } catch(Exception e){
+        throw new RuntimeException("error in creating permission nodes");
+      }
+    }
+  
   }
