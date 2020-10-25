@@ -94,11 +94,13 @@ public class Authorization {
 
       } else {
         // add creator to admin group
-        this.addMemberToSg(creatorUserId, sgMap.get(RoleNames.Administrator));
+        this.addMemberToSg(creatorUserId, sgMap.get(RoleNames.AdministratorRole));
       }
 
       // add any user that needs to have access to this group
+      // global role users
 
+      // project member role users
       
       return Stream.of(new ProcessNewBaseNodeResponse(true));
     }

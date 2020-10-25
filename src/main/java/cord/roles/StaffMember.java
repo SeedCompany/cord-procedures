@@ -4,7 +4,7 @@ import cord.common.RoleNames;
 import cord.model.*;
 
 public class StaffMember extends BaseRole {
-  public static final RoleNames roleName = RoleNames.StaffMember;
+  public static final RoleNames roleName = RoleNames.StaffMemberRole;
 
   public static Permission permission(BaseNodeLabels label, Object property){
     switch(label){

@@ -85,25 +85,25 @@ public class Utility {
   public static RoleNames getRoleFromString(String roleName, Boolean isMember){
 
     switch (roleName){
-      case "Administrator":                                           return RoleNames.Administrator;
-      case "Consultant":                                              return RoleNames.Consultant;
-      case "ConsultantManager":                                       return RoleNames.ConsultantManager;
-      case "Controller":                                              return RoleNames.Controller;
-      case "FieldOperationsDirector":                                 return RoleNames.FieldOperationsDirector;
-      case "FinancialAnalyst":                    if (isMember)       return RoleNames.FinancialAnalystGlobal;
-                                                                      return RoleNames.FinancialAnalystOnProject;
-      case "Fundraising":                                             return RoleNames.Fundraising;
-      case "Intern":                                                  return RoleNames.Intern;
-      case "Leadership":                                              return RoleNames.Leadership;
-      case "Liason":                                                  return RoleNames.Liason;
-      case "Marketing":                                               return RoleNames.Marketing;
-      case "ProjectManager":                      if (isMember)       return RoleNames.ProjectManagerGlobal;
-                                                                      return RoleNames.ProjectManagerOnProject;
-      case "RegionalCommunicationCoordinator":                        return RoleNames.RegionalCommunicationCoordinator;
-      case "RegionalDirector":                    if (isMember)       return RoleNames.RegionalDirectorGlobal;
-                                                  if (isMember)       return RoleNames.RegionalDirectorOnProject;       
-      case "StaffMember":                                             return RoleNames.StaffMember;
-      case "Translator":                                              return RoleNames.Translator;
+      case "Administrator":                                           return RoleNames.AdministratorRole;
+      case "Consultant":                                              return RoleNames.ConsultantRole;
+      case "ConsultantManager":                                       return RoleNames.ConsultantManagerRole;
+      case "Controller":                                              return RoleNames.ControllerRole;
+      case "FieldOperationsDirector":                                 return RoleNames.FieldOperationsDirectorRole;
+      case "FinancialAnalyst":                    if (isMember)       return RoleNames.FinancialAnalystGlobalRole;
+                                                                      return RoleNames.FinancialAnalystOnProjectRole;
+      case "Fundraising":                                             return RoleNames.FundraisingRole;
+      case "Intern":                                                  return RoleNames.InternRole;
+      case "Leadership":                                              return RoleNames.LeadershipRole;
+      case "Liason":                                                  return RoleNames.LiasonRole;
+      case "Marketing":                                               return RoleNames.MarketingRole;
+      case "ProjectManager":                      if (isMember)       return RoleNames.ProjectManagerGlobalRole;
+                                                                      return RoleNames.ProjectManagerOnProjectRole;
+      case "RegionalCommunicationCoordinator":                        return RoleNames.RegionalCommunicationCoordinatorRole;
+      case "RegionalDirector":                    if (isMember)       return RoleNames.RegionalDirectorGlobalRole;
+                                                  if (isMember)       return RoleNames.RegionalDirectorOnProjectRole;
+      case "StaffMember":                                             return RoleNames.StaffMemberRole;
+      case "Translator":                                              return RoleNames.TranslatorRole;
     }
 
     return null;

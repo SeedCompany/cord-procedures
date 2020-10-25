@@ -4,7 +4,7 @@ import cord.common.RoleNames;
 import cord.model.*;
 
 public class Administrator extends BaseRole {
-  public final RoleNames roleName = RoleNames.Administrator;
+  public final RoleNames roleName = RoleNames.AdministratorRole;
 
   public static Permission permission(BaseNodeLabels label, Object property){
     switch(label){

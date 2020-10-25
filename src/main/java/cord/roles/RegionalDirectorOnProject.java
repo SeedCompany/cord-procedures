@@ -4,7 +4,7 @@ import cord.common.RoleNames;
 import cord.model.*;
 
 public class RegionalDirectorOnProject extends BaseRole {
-  public static final RoleNames roleName = RoleNames.RegionalDirectorOnProject;
+  public static final RoleNames roleName = RoleNames.RegionalDirectorOnProjectRole;
 
   public static Permission permission(BaseNodeLabels label, Object property){
     switch(label){

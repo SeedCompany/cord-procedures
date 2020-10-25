@@ -4,7 +4,7 @@ import cord.common.RoleNames;
 import cord.model.*;
 
 public class Translator extends BaseRole {
-  public static final RoleNames roleName = RoleNames.Translator;
+  public static final RoleNames roleName = RoleNames.TranslatorRole;
 
   public static Permission permission(BaseNodeLabels label, Object property){
     switch(label){
