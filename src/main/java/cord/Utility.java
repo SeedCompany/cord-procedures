@@ -135,28 +135,28 @@ public class Utility {
     }
   }
 
-  public static Long getSecurityGroupNode(GraphDatabaseService db, BaseRole role, String baseNodeId, BaseNodeLabels label) throws RuntimeException {
+  public static Node getSecurityGroupNode(GraphDatabaseService db, BaseRole role, String baseNodeId, BaseNodeLabels label) throws RuntimeException {
 
     Map<String, Object> params = new HashMap<>();
     // params.put("role", role);                      // todo
     params.put("baseNodeId", baseNodeId);
 
-    Long sgId = null;
+    Node sg = null;
 
     try ( 
       Transaction tx = db.beginTx();
       Result result = tx.execute(
         "MATCH (sg:SecurityGroup {role: $role})-[:baseNode]->(baseNode:"+label.name()+" {id:$baseNodeId}) " +
-        "RETURN id(sg) as id",
+        "RETURN sg",
         params
       )
     ) {
       while (result.hasNext()){
         Map<String, Object> row = result.next();
-        sgId = (Long) row.get("id");
+        sg = (Node) row.get("sg");
       }
 
-      return sgId;
+      return sg;
 
     } catch(Exception e){
       e.printStackTrace();
