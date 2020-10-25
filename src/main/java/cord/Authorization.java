@@ -3,6 +3,7 @@ package cord;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.stream.Stream;
 
 import javax.management.relation.Relation;
@@ -66,8 +67,11 @@ public class Authorization {
       };
 
       for (BaseRole role: globalRoles){
-        Node sg = this.mergeSecurityGroupForRole(role, baseNodeId, baseNode, label, model, permMap);
-        sgMap.put(role.roleName, sg);
+        Node sgNode = this.mergeSecurityGroupForRole(role, baseNodeId, baseNode, label, model, permMap);
+        sgMap.put(role.roleName, sgNode);
+
+        // global role users
+        this.addRoleMembersToSg(role, sgNode);
       }
 
       // determine if the creator should be added to the admin group for this node
@@ -75,6 +79,8 @@ public class Authorization {
       Boolean isProjectNode = Utility.isProjectChildNode(label);
 
       if (isProjectNode) {
+
+      // get project members
 
         BaseRole[] projectRoles = {
           AllRoles.Consultant,
@@ -88,8 +94,8 @@ public class Authorization {
         };
   
         for (BaseRole role: projectRoles){
-          Node sg = this.mergeSecurityGroupForRole(role, baseNodeId, baseNode, label, model, permMap);
-          sgMap.put(role.roleName, sg);
+          Node sgNode = this.mergeSecurityGroupForRole(role, baseNodeId, baseNode, label, model, permMap);
+          sgMap.put(role.roleName, sgNode);
         }
 
       } else {
@@ -97,11 +103,6 @@ public class Authorization {
         this.addMemberToSg(creatorUserId, sgMap.get(RoleNames.AdministratorRole));
       }
 
-      // add any user that needs to have access to this group
-      // global role users
-
-      // project member role users
-      
       return Stream.of(new ProcessNewBaseNodeResponse(true));
     }
 
@@ -255,4 +256,20 @@ public class Authorization {
         throw new RuntimeException("error in adding member to SG. userId, sgId: " + userId + " " + sgNode);
       }
     }
+
+    private void addRoleMembersToSg(BaseRole role, Node sgNode){
+      try ( Transaction tx = db.beginTx() )
+      {
+          Iterator<Node> iter = tx.findNodes(Label.label(role.roleName.name()));
+          while(iter.hasNext()){
+            Node userNode = iter.next();
+            sgNode.createRelationshipTo(userNode, 
+              RelationshipType.withName(NonPropertyRelationshipTypes.member.name()));
+          }
+          tx.commit();
+      } catch(Exception e){
+        throw new RuntimeException("error in adding role members to SG: " + sgNode + " " + role.roleName.name());
+      }
+    }
+
   }

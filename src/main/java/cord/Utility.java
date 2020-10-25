@@ -116,7 +116,6 @@ public class Utility {
       case Ceremony:              return true;
       case Directory:             return true;
       case Engagement:            return true;
-      case EthnologueLanguage:    return true;
       case File:                  return true;
       case FileVersion:           return true;
       case Film:                  return true;
