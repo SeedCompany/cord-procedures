@@ -11,6 +11,17 @@ import cord.roles.BaseRole;
 
 public class Utility {
 
+  public static Node getNode(GraphDatabaseService db, String id, String label) throws RuntimeException {
+    try ( Transaction tx = db.beginTx() )
+    {
+        Node node = tx.findNode(Label.label(label), "id", id);
+        tx.commit();
+        return node;
+    } catch(Exception e){
+      throw new RuntimeException("error in finding base node: " + id);
+    }
+  }
+
   public static BaseNodeLabels baseNodeClassStringToEnum(String className) throws RuntimeException {
     switch (className){
       case "BaseNode":                return BaseNodeLabels.BaseNode;

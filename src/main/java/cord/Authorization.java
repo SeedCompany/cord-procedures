@@ -29,6 +29,8 @@ public class Authorization {
     ) throws RuntimeException {
 
       this.log.info("cord.processNewBaseNode start");
+
+      Node baseNode = Utility.getNode(db, baseNodeId, baseNodeLabel);
       
       // get the base node's labels
       BaseNodeLabels label = Utility.baseNodeClassStringToEnum(baseNodeLabel);
