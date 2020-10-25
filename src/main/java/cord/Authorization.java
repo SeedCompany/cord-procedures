@@ -1,6 +1,7 @@
 package cord;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.stream.Stream;
 
 import org.neo4j.graphdb.*;
@@ -37,7 +38,9 @@ public class Authorization {
       BaseNodeLabels label = Utility.baseNodeClassStringToEnum(baseNodeLabel);
 
       // create permission nodes for each property
-      
+      ArrayList<String> model = Utility.getBaseNodePropertiesByLabel(label);
+
+
 
       // create SGs for all the global roles
       this.mergeSecurityGroupForRole(AllRoles.Administrator, baseNodeId, label);
