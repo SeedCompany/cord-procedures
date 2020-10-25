@@ -48,7 +48,7 @@ public class AllRoles {
       case "StaffMember":                         return AllRoles.StaffMember;
       case "Translator":                          return AllRoles.Translator;
 
-      default: return null;
+      default:                                    return null;
     }
   }
 
