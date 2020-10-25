@@ -1,12 +1,16 @@
 package cord;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.neo4j.graphdb.*;
 import cord.common.BaseNodeLabels;
 import cord.common.RoleNames;
+import cord.model.*;
 import cord.roles.BaseRole;
 
 public class Utility {
@@ -156,5 +160,120 @@ public class Utility {
     }
   }
 
+  public static List<String> getBaseNodePropertiesByLabel(String label){
+    ArrayList<String> list = new ArrayList<>();
+    switch (label){
+      case "Budget":                
+        Arrays.asList(Budget.values())
+          .forEach(item -> list.add(item.name()));
+          return list;
+      case "BudgetRecord":          
+        Arrays.asList(BudgetRecord.values())
+          .forEach(item -> list.add(item.name()));
+          return list;
+      case "Ceremony":              
+        Arrays.asList(Ceremony.values())
+          .forEach(item -> list.add(item.name()));
+          return list;
+      case "Directory":             
+        Arrays.asList(Directory.values())
+          .forEach(item -> list.add(item.name()));
+          return list;
+      case "Education":             
+        Arrays.asList(Education.values())
+          .forEach(item -> list.add(item.name()));
+          return list;
+      case "EthnologueLanguage":    
+        Arrays.asList(EthnologueLanguage.values())
+          .forEach(item -> list.add(item.name()));
+          return list;
+      case "FieldRegion":           
+        Arrays.asList(FieldRegion.values())
+          .forEach(item -> list.add(item.name()));
+          return list;
+      case "FieldZone":             
+        Arrays.asList(FieldZone.values())
+          .forEach(item -> list.add(item.name()));
+          return list;
+      case "File":                  
+        Arrays.asList(File.values())
+          .forEach(item -> list.add(item.name()));
+          return list;
+      case "FileVersion":           
+        Arrays.asList(FileVersion.values())
+          .forEach(item -> list.add(item.name()));
+          return list;
+      case "Film":                  
+        Arrays.asList(Film.values())
+          .forEach(item -> list.add(item.name()));
+          return list;
+      case "FundingAccount":        
+        Arrays.asList(FundingAccount.values())
+          .forEach(item -> list.add(item.name()));
+          return list;
+      case "InternshipEngagement":  
+        Arrays.asList(InternshipEngagement.values())
+          .forEach(item -> list.add(item.name()));
+          return list;
+      case "Language":              
+        Arrays.asList(Language.values())
+          .forEach(item -> list.add(item.name()));
+          return list;
+      case "LanguageEngagement":    
+        Arrays.asList(LanguageEngagement.values())
+          .forEach(item -> list.add(item.name()));
+          return list;
+      case "LiteracyMaterial":      
+        Arrays.asList(LiteracyMaterial.values())
+          .forEach(item -> list.add(item.name()));
+          return list;
+      case "Location":              
+        Arrays.asList(Location.values())
+          .forEach(item -> list.add(item.name()));
+          return list;
+      case "Organization":          
+        Arrays.asList(Organization.values())
+          .forEach(item -> list.add(item.name()));
+          return list;
+      case "Partner":               
+        Arrays.asList(Partner.values())
+          .forEach(item -> list.add(item.name()));
+          return list;
+      case "Partnership":           
+        Arrays.asList(Partnership.values())
+          .forEach(item -> list.add(item.name()));
+          return list;
+      case "Project":               
+        Arrays.asList(Project.values())
+          .forEach(item -> list.add(item.name()));
+          return list;
+      case "ProjectMember":         
+        Arrays.asList(ProjectMember.values())
+          .forEach(item -> list.add(item.name()));
+          return list;
+      case "Product":               
+        Arrays.asList(Product.values())
+          .forEach(item -> list.add(item.name()));
+          return list;
+      case "Song":                  
+        Arrays.asList(Song.values())
+          .forEach(item -> list.add(item.name()));
+          return list;
+      case "Story":                 
+        Arrays.asList(Story.values())
+          .forEach(item -> list.add(item.name()));
+          return list;
+      case "Unavailability":        
+        Arrays.asList(Unavailability.values())
+          .forEach(item -> list.add(item.name()));
+          return list;
+      case "User":                  
+        Arrays.asList(User.values())
+          .forEach(item -> list.add(item.name()));
+          return list;
+
+      default: return null;
+    }
+  }
 
 }

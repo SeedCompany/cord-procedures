@@ -7,6 +7,7 @@ import org.neo4j.graphdb.*;
 import org.neo4j.logging.Log;
 import org.neo4j.procedure.*;
 
+import cord.common.AllBaseNodes;
 import cord.common.AllRoles;
 import cord.common.BaseNodeLabels;
 import cord.common.RoleNames;
@@ -32,7 +33,7 @@ public class Authorization {
 
       Node baseNode = Utility.getNode(db, baseNodeId, baseNodeLabel);
       
-      // get the base node's labels
+      // get the base node's labels and model
       BaseNodeLabels label = Utility.baseNodeClassStringToEnum(baseNodeLabel);
 
       // create permission nodes for each property
