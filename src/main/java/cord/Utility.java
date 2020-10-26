@@ -27,27 +27,37 @@ public class Utility {
   }
 
   public static Long getProjectNode(GraphDatabaseService db, Long baseNodeNeoId, BaseNodeLabels label) {
+
+    System.out.println("label" + label);
+    Long projectNeoId = null;
     try ( Transaction tx = db.beginTx() )
     {
-      Long projectNeoId = null;
       Node baseNode = tx.getNodeById(baseNodeNeoId);
       Node nextNode = baseNode;
       BaseNodeLabels nextLabel = label;
 
       while (projectNeoId == null){
+
+        System.out.println("next label: " + nextLabel);
+
         switch (nextLabel){
           case File:
           case FileNode:
           case FileVersion:
           case Directory:
+            System.out.println("a1");
             if(nextNode.hasRelationship(
               RelationshipType.withName(AllProperties.rootDirectory.name())
             )){
+              System.out.println("a2");
               Relationship fromFileNodeRel = nextNode.getSingleRelationship(
                 RelationshipType.withName(AllProperties.rootDirectory.name()), Direction.INCOMING); 
+                System.out.println("a3");
               nextNode = fromFileNodeRel.getStartNode();          
               nextLabel = BaseNodeLabels.Project;
+              projectNeoId = nextNode.getId();
             } else {
+              System.out.println("a4");
               Relationship fromFileNodeRel = nextNode.getSingleRelationship(
                 RelationshipType.withName(AllProperties.parent.name()), Direction.OUTGOING); 
               nextNode = fromFileNodeRel.getEndNode();            
@@ -58,19 +68,20 @@ public class Utility {
             Relationship fromBudgetRel = nextNode.getSingleRelationship(
               RelationshipType.withName(AllProperties.budget.name()), Direction.INCOMING); 
             nextNode = fromBudgetRel.getStartNode();
-            label = BaseNodeLabels.Project;
+            nextLabel = BaseNodeLabels.Project;
+            projectNeoId = nextNode.getId();
             break;
           case BudgetRecord:
             Relationship fromBudgetRecordRel = nextNode.getSingleRelationship(
               RelationshipType.withName(AllProperties.records.name()), Direction.INCOMING); 
             nextNode = fromBudgetRecordRel.getStartNode();
-            label = BaseNodeLabels.Budget;
+            nextLabel = BaseNodeLabels.Budget;
             break;
           case Ceremony:
             Relationship fromCeremonyRel = nextNode.getSingleRelationship(
               RelationshipType.withName(AllProperties.ceremony.name()), Direction.INCOMING); 
             nextNode = fromCeremonyRel.getStartNode();
-            label = BaseNodeLabels.Engagement;
+            nextLabel = BaseNodeLabels.Engagement;
             break;
           case Engagement:
           case InternshipEngagement:
@@ -78,7 +89,8 @@ public class Utility {
             Relationship fromEngagementRel = nextNode.getSingleRelationship(
               RelationshipType.withName(AllProperties.engagement.name()), Direction.INCOMING); 
             nextNode = fromEngagementRel.getStartNode();
-            label = BaseNodeLabels.Project;
+            nextLabel = BaseNodeLabels.Project;
+            projectNeoId = nextNode.getId();
             break;
           case Film:
           case LiteracyMaterial:
@@ -87,44 +99,49 @@ public class Utility {
             Relationship fromProducibleRel = nextNode.getSingleRelationship(
               RelationshipType.withName(AllProperties.produces.name()), Direction.INCOMING); 
             nextNode = fromProducibleRel.getStartNode();
-            label = BaseNodeLabels.Product;
+            nextLabel = BaseNodeLabels.Product;
             break;
           case Partner:
             Relationship fromPartnerRel = nextNode.getSingleRelationship(
               RelationshipType.withName(AllProperties.partner.name()), Direction.INCOMING); 
             nextNode = fromPartnerRel.getStartNode();
-            label = BaseNodeLabels.Partnership;
+            nextLabel = BaseNodeLabels.Partnership;
             break;
           case Partnership:
             Relationship fromPartnershipRel = nextNode.getSingleRelationship(
               RelationshipType.withName(AllProperties.partnership.name()), Direction.INCOMING); 
             nextNode = fromPartnershipRel.getStartNode();
-            label = BaseNodeLabels.Project;
+            nextLabel = BaseNodeLabels.Project;
+            projectNeoId = nextNode.getId();
             break;
           case Product:
             Relationship fromProductRel = nextNode.getSingleRelationship(
               RelationshipType.withName(AllProperties.product.name()), Direction.INCOMING); 
             nextNode = fromProductRel.getStartNode();
-            label = BaseNodeLabels.Product;
+            nextLabel = BaseNodeLabels.Product;
             break;
           case ProjectMember:
             Relationship fromProjectMemberRel = nextNode.getSingleRelationship(
               RelationshipType.withName(AllProperties.member.name()), Direction.INCOMING); 
             nextNode = fromProjectMemberRel.getStartNode();
-            label = BaseNodeLabels.Project;
+            nextLabel = BaseNodeLabels.Project;
+            projectNeoId = nextNode.getId();
             break;
           case Project:
-              projectNeoId = nextNode.getId();
+            projectNeoId = nextNode.getId();
           default: return null;
         }
       }
 
       tx.commit();
 
-      return projectNeoId;
     } catch(Exception e){
+      e.printStackTrace();
+      System.out.println(e.getMessage());
       throw new RuntimeException("error in finding project node");
     }
+
+    return projectNeoId;
   }
 
   public static ArrayList<Long> getProjectMembers(GraphDatabaseService db, Long projectNodeNeoId) throws RuntimeException {
@@ -132,18 +149,22 @@ public class Utility {
     try ( Transaction tx = db.beginTx() )
     {
       Node projectNode = tx.getNodeById(projectNodeNeoId);
+      System.out.println("m1");
       Iterable<Relationship> iter = projectNode.getRelationships(Direction.OUTGOING, 
         RelationshipType.withName(AllProperties.member.name()));
-
+        System.out.println("m2");
       iter.forEach(rel -> members.add(rel.getEndNode().getId()));
-      
+      System.out.println("m3");
+      System.out.println("members size: " + members.size());
       tx.commit();
-      return members;
+      System.out.println("m4");
     } catch(Exception e){
+      e.printStackTrace();
       throw new RuntimeException("error in finding project member: " + projectNodeNeoId);
     }
+    System.out.println("m5");
+    return members;
   }
-
 
   public static BaseNodeLabels baseNodeClassStringToEnum(String className) throws RuntimeException {
     switch (className){
