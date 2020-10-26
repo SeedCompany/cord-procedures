@@ -5,41 +5,42 @@ import cord.model.*;
 
 public class FinancialAnalystOnProject extends BaseRole {
   public FinancialAnalystOnProject(){
-    super(RoleNames.FinancialAnalystOnProjectRole);
+    super(RoleNames.FinancialAnalystOnProjectRole, FinancialAnalystOnProject.permission);
   }
-  public static Permission permission(BaseNodeLabels label, Object property){
+
+  public static IPermission permission = (BaseNodeLabels label, String property) -> {
     switch(label){
-      case Budget:                return FinancialAnalystOnProject.Budget(                 (Budget)property);
-      case BudgetRecord:          return FinancialAnalystOnProject.BudgetRecord(           (BudgetRecord)property);
-      case Ceremony:              return FinancialAnalystOnProject.Ceremony(               (Ceremony)property);
-      case Directory:             return FinancialAnalystOnProject.Directory(              (Directory)property);
-      case Education:             return FinancialAnalystOnProject.Education(              (Education)property);
-      case EthnologueLanguage:    return FinancialAnalystOnProject.EthnologueLanguage(     (EthnologueLanguage)property);
-      case FieldRegion:           return FinancialAnalystOnProject.FieldRegion(            (FieldRegion)property);
-      case FieldZone:             return FinancialAnalystOnProject.FieldZone(              (FieldZone)property);
-      case File:                  return FinancialAnalystOnProject.File(                   (File)property);
-      case FileVersion:           return FinancialAnalystOnProject.FileVersion(            (FileVersion)property);
-      case Film:                  return FinancialAnalystOnProject.Film(                   (Film)property);
-      case FundingAccount:        return FinancialAnalystOnProject.FundingAccount(         (FundingAccount)property);
-      case InternshipEngagement:  return FinancialAnalystOnProject.InternshipEngagement(   (InternshipEngagement)property);
-      case Language:              return FinancialAnalystOnProject.Language(               (Language)property);
-      case LanguageEngagement:    return FinancialAnalystOnProject.LanguageEngagement(     (LanguageEngagement)property);
-      case LiteracyMaterial:      return FinancialAnalystOnProject.LiteracyMaterial(       (LiteracyMaterial)property);
-      case Location:              return FinancialAnalystOnProject.Location(               (Location)property);
-      case Organization:          return FinancialAnalystOnProject.Organization(           (Organization)property);
-      case Partner:               return FinancialAnalystOnProject.Partner(                (Partner)property);
-      case Partnership:           return FinancialAnalystOnProject.Partnership(            (Partnership)property);
-      case Project:               return FinancialAnalystOnProject.Project(                (Project)property);
-      case ProjectMember:         return FinancialAnalystOnProject.ProjectMember(          (ProjectMember)property);
-      case Product:               return FinancialAnalystOnProject.Product(                (Product)property);
-      case Song:                  return FinancialAnalystOnProject.Song(                   (Song)property);
-      case Story:                 return FinancialAnalystOnProject.Story(                  (Story)property);
-      case Unavailability:        return FinancialAnalystOnProject.Unavailability(         (Unavailability)property);
-      case User:                  return FinancialAnalystOnProject.User(                   (User)property);
+      case Budget:                return FinancialAnalystOnProject.Budget(                 Budget.valueOf(property));
+      case BudgetRecord:          return FinancialAnalystOnProject.BudgetRecord(           BudgetRecord.valueOf(property));
+      case Ceremony:              return FinancialAnalystOnProject.Ceremony(               Ceremony.valueOf(property));
+      case Directory:             return FinancialAnalystOnProject.Directory(              Directory.valueOf(property));
+      case Education:             return FinancialAnalystOnProject.Education(              Education.valueOf(property));
+      case EthnologueLanguage:    return FinancialAnalystOnProject.EthnologueLanguage(     EthnologueLanguage.valueOf(property));
+      case FieldRegion:           return FinancialAnalystOnProject.FieldRegion(            FieldRegion.valueOf(property));
+      case FieldZone:             return FinancialAnalystOnProject.FieldZone(              FieldZone.valueOf(property));
+      case File:                  return FinancialAnalystOnProject.File(                   File.valueOf(property));
+      case FileVersion:           return FinancialAnalystOnProject.FileVersion(            FileVersion.valueOf(property));
+      case Film:                  return FinancialAnalystOnProject.Film(                   Film.valueOf(property));
+      case FundingAccount:        return FinancialAnalystOnProject.FundingAccount(         FundingAccount.valueOf(property));
+      case InternshipEngagement:  return FinancialAnalystOnProject.InternshipEngagement(   InternshipEngagement.valueOf(property));
+      case Language:              return FinancialAnalystOnProject.Language(               Language.valueOf(property));
+      case LanguageEngagement:    return FinancialAnalystOnProject.LanguageEngagement(     LanguageEngagement.valueOf(property));
+      case LiteracyMaterial:      return FinancialAnalystOnProject.LiteracyMaterial(       LiteracyMaterial.valueOf(property));
+      case Location:              return FinancialAnalystOnProject.Location(               Location.valueOf(property));
+      case Organization:          return FinancialAnalystOnProject.Organization(           Organization.valueOf(property));
+      case Partner:               return FinancialAnalystOnProject.Partner(                Partner.valueOf(property));
+      case Partnership:           return FinancialAnalystOnProject.Partnership(            Partnership.valueOf(property));
+      case Project:               return FinancialAnalystOnProject.Project(                Project.valueOf(property));
+      case ProjectMember:         return FinancialAnalystOnProject.ProjectMember(          ProjectMember.valueOf(property));
+      case Product:               return FinancialAnalystOnProject.Product(                Product.valueOf(property));
+      case Song:                  return FinancialAnalystOnProject.Song(                   Song.valueOf(property));
+      case Story:                 return FinancialAnalystOnProject.Story(                  Story.valueOf(property));
+      case Unavailability:        return FinancialAnalystOnProject.Unavailability(         Unavailability.valueOf(property));
+      case User:                  return FinancialAnalystOnProject.User(                   User.valueOf(property));
 
       default: return Permission.None;
     }
-  }
+  };
 
   private static Permission Budget(Budget property){
     switch(property){

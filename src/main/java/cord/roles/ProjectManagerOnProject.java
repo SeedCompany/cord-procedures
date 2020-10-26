@@ -5,41 +5,42 @@ import cord.model.*;
 
 public class ProjectManagerOnProject extends BaseRole {
   public ProjectManagerOnProject(){
-    super(RoleNames.ProjectManagerOnProjectRole);
+    super(RoleNames.ProjectManagerOnProjectRole, ProjectManagerOnProject.permission);
   }
-  public static Permission permission(BaseNodeLabels label, Object property){
+
+  public static IPermission permission = (BaseNodeLabels label, String property) -> {
     switch(label){
-      case Budget:                return ProjectManagerOnProject.Budget(                 (Budget)property);
-      case BudgetRecord:          return ProjectManagerOnProject.BudgetRecord(           (BudgetRecord)property);
-      case Ceremony:              return ProjectManagerOnProject.Ceremony(               (Ceremony)property);
-      case Directory:             return ProjectManagerOnProject.Directory(              (Directory)property);
-      case Education:             return ProjectManagerOnProject.Education(              (Education)property);
-      case EthnologueLanguage:    return ProjectManagerOnProject.EthnologueLanguage(     (EthnologueLanguage)property);
-      case FieldRegion:           return ProjectManagerOnProject.FieldRegion(            (FieldRegion)property);
-      case FieldZone:             return ProjectManagerOnProject.FieldZone(              (FieldZone)property);
-      case File:                  return ProjectManagerOnProject.File(                   (File)property);
-      case FileVersion:           return ProjectManagerOnProject.FileVersion(            (FileVersion)property);
-      case Film:                  return ProjectManagerOnProject.Film(                   (Film)property);
-      case FundingAccount:        return ProjectManagerOnProject.FundingAccount(         (FundingAccount)property);
-      case InternshipEngagement:  return ProjectManagerOnProject.InternshipEngagement(   (InternshipEngagement)property);
-      case Language:              return ProjectManagerOnProject.Language(               (Language)property);
-      case LanguageEngagement:    return ProjectManagerOnProject.LanguageEngagement(     (LanguageEngagement)property);
-      case LiteracyMaterial:      return ProjectManagerOnProject.LiteracyMaterial(       (LiteracyMaterial)property);
-      case Location:              return ProjectManagerOnProject.Location(               (Location)property);
-      case Organization:          return ProjectManagerOnProject.Organization(           (Organization)property);
-      case Partner:               return ProjectManagerOnProject.Partner(                (Partner)property);
-      case Partnership:           return ProjectManagerOnProject.Partnership(            (Partnership)property);
-      case Project:               return ProjectManagerOnProject.Project(                (Project)property);
-      case ProjectMember:         return ProjectManagerOnProject.ProjectMember(          (ProjectMember)property);
-      case Product:               return ProjectManagerOnProject.Product(                (Product)property);
-      case Song:                  return ProjectManagerOnProject.Song(                   (Song)property);
-      case Story:                 return ProjectManagerOnProject.Story(                  (Story)property);
-      case Unavailability:        return ProjectManagerOnProject.Unavailability(         (Unavailability)property);
-      case User:                  return ProjectManagerOnProject.User(                   (User)property);
+      case Budget:                return ProjectManagerOnProject.Budget(                 Budget.valueOf(property));
+      case BudgetRecord:          return ProjectManagerOnProject.BudgetRecord(           BudgetRecord.valueOf(property));
+      case Ceremony:              return ProjectManagerOnProject.Ceremony(               Ceremony.valueOf(property));
+      case Directory:             return ProjectManagerOnProject.Directory(              Directory.valueOf(property));
+      case Education:             return ProjectManagerOnProject.Education(              Education.valueOf(property));
+      case EthnologueLanguage:    return ProjectManagerOnProject.EthnologueLanguage(     EthnologueLanguage.valueOf(property));
+      case FieldRegion:           return ProjectManagerOnProject.FieldRegion(            FieldRegion.valueOf(property));
+      case FieldZone:             return ProjectManagerOnProject.FieldZone(              FieldZone.valueOf(property));
+      case File:                  return ProjectManagerOnProject.File(                   File.valueOf(property));
+      case FileVersion:           return ProjectManagerOnProject.FileVersion(            FileVersion.valueOf(property));
+      case Film:                  return ProjectManagerOnProject.Film(                   Film.valueOf(property));
+      case FundingAccount:        return ProjectManagerOnProject.FundingAccount(         FundingAccount.valueOf(property));
+      case InternshipEngagement:  return ProjectManagerOnProject.InternshipEngagement(   InternshipEngagement.valueOf(property));
+      case Language:              return ProjectManagerOnProject.Language(               Language.valueOf(property));
+      case LanguageEngagement:    return ProjectManagerOnProject.LanguageEngagement(     LanguageEngagement.valueOf(property));
+      case LiteracyMaterial:      return ProjectManagerOnProject.LiteracyMaterial(       LiteracyMaterial.valueOf(property));
+      case Location:              return ProjectManagerOnProject.Location(               Location.valueOf(property));
+      case Organization:          return ProjectManagerOnProject.Organization(           Organization.valueOf(property));
+      case Partner:               return ProjectManagerOnProject.Partner(                Partner.valueOf(property));
+      case Partnership:           return ProjectManagerOnProject.Partnership(            Partnership.valueOf(property));
+      case Project:               return ProjectManagerOnProject.Project(                Project.valueOf(property));
+      case ProjectMember:         return ProjectManagerOnProject.ProjectMember(          ProjectMember.valueOf(property));
+      case Product:               return ProjectManagerOnProject.Product(                Product.valueOf(property));
+      case Song:                  return ProjectManagerOnProject.Song(                   Song.valueOf(property));
+      case Story:                 return ProjectManagerOnProject.Story(                  Story.valueOf(property));
+      case Unavailability:        return ProjectManagerOnProject.Unavailability(         Unavailability.valueOf(property));
+      case User:                  return ProjectManagerOnProject.User(                   User.valueOf(property));
 
       default: return Permission.None;
     }
-  }
+  };
 
   private static Permission Budget(Budget property){
     switch(property){

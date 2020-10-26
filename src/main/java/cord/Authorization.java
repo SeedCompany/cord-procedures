@@ -39,8 +39,6 @@ public class Authorization {
 
         this.log.info("cord.processNewBaseNode start");
 
-        this.log.info("creatorUserId: " + creatorUserId);
-
         Long baseNodeNeoId = Utility.getNode(db, baseNodeId, baseNodeLabel);
         
         // get the base node's labels and model
@@ -67,8 +65,6 @@ public class Authorization {
            new StaffMember()
         };
 
-        this.log.info("a1");
-
         for (BaseRole role: globalRoles){
           Long sgNodeNeoId = this.mergeSecurityGroupForRole(role, baseNodeId, baseNodeNeoId, label, model, permMap);
           sgMap.put(role.roleName, sgNodeNeoId);
@@ -77,16 +73,11 @@ public class Authorization {
           this.addRoleMembersToSg(role, sgNodeNeoId);
         }
 
-        this.log.info("a2");
-
         // determine if the creator should be added to the admin group for this node
         // and if to create project role SGs
         Boolean isProjectNode = Utility.isProjectChildNode(label);
 
         if (isProjectNode) {
-
-          this.log.info("a3");
-
         // get project members
         Long projectNodeNeoId = Utility.getProjectNode(db, baseNodeNeoId, label);
         ArrayList<Long> members = Utility.getProjectMembers(db, projectNodeNeoId);
@@ -102,20 +93,15 @@ public class Authorization {
             new Translator()
           };
     
-          this.log.info("a4");
           for (BaseRole role: projectRoles){
-            this.log.info("a4.5");
             Long sgNodeNeoId = this.mergeSecurityGroupForRole(role, baseNodeId, baseNodeNeoId, label, model, permMap);
             sgMap.put(role.roleName, sgNodeNeoId);
           }
 
-          this.log.info("a5");
-
           this.processProjectMember(members, sgMap);
 
-          this.log.info("a6");
         } else {
-          this.log.info("a7");
+
           // add creator to admin group
           this.addMemberToSg(creatorUserId, sgMap.get(RoleNames.AdministratorRole));
         }
@@ -219,16 +205,17 @@ public class Authorization {
         sgNodeNeoId = sgNode.getId();
         sgNode.setProperty(AllProperties.id.name(), this.getUniqueIdFromNeo4jId(sgNodeNeoId)); 
         sgNode.setProperty(AllProperties.createdAt.name(), LocalDateTime.now());
-        sgNode.setProperty(AllProperties.role.name(), role.roleName.name() );
+        sgNode.setProperty(AllProperties.role.name(), role.roleName.name());
         sgNode.createRelationshipTo(baseNode, 
           RelationshipType.withName(NonPropertyRelationshipTypes.baseNode.name()));
         
         // add all permissions to the SG according to the role and base node class
         // cycle through properties of base node
         model.forEach(property -> {
+
           // determine if the role grants the prop
           // static access not possible without gloriously large switch, ignore yellow squiggles
-          Permission grant = role.permission(label, property); 
+          Permission grant = role.permission.permission(label, property); 
 
           // get permision nodes and connect them if permitted
           Long readPermNeoId = permMap.get(property+"Read");

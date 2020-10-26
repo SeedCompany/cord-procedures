@@ -5,41 +5,42 @@ import cord.model.*;
 
 public class Intern extends BaseRole {
   public Intern(){
-    super(RoleNames.InternRole);
+    super(RoleNames.InternRole, Intern.permission);
   }
-  public static Permission permission(BaseNodeLabels label, Object property){
+
+  public static IPermission permission = (BaseNodeLabels label, String property) -> {
     switch(label){
-      case Budget:                return Intern.Budget(                 (Budget)property);
-      case BudgetRecord:          return Intern.BudgetRecord(           (BudgetRecord)property);
-      case Ceremony:              return Intern.Ceremony(               (Ceremony)property);
-      case Directory:             return Intern.Directory(              (Directory)property);
-      case Education:             return Intern.Education(              (Education)property);
-      case EthnologueLanguage:    return Intern.EthnologueLanguage(     (EthnologueLanguage)property);
-      case FieldRegion:           return Intern.FieldRegion(            (FieldRegion)property);
-      case FieldZone:             return Intern.FieldZone(              (FieldZone)property);
-      case File:                  return Intern.File(                   (File)property);
-      case FileVersion:           return Intern.FileVersion(            (FileVersion)property);
-      case Film:                  return Intern.Film(                   (Film)property);
-      case FundingAccount:        return Intern.FundingAccount(         (FundingAccount)property);
-      case InternshipEngagement:  return Intern.InternshipEngagement(   (InternshipEngagement)property);
-      case Language:              return Intern.Language(               (Language)property);
-      case LanguageEngagement:    return Intern.LanguageEngagement(     (LanguageEngagement)property);
-      case LiteracyMaterial:      return Intern.LiteracyMaterial(       (LiteracyMaterial)property);
-      case Location:              return Intern.Location(               (Location)property);
-      case Organization:          return Intern.Organization(           (Organization)property);
-      case Partner:               return Intern.Partner(                (Partner)property);
-      case Partnership:           return Intern.Partnership(            (Partnership)property);
-      case Project:               return Intern.Project(                (Project)property);
-      case ProjectMember:         return Intern.ProjectMember(          (ProjectMember)property);
-      case Product:               return Intern.Product(                (Product)property);
-      case Song:                  return Intern.Song(                   (Song)property);
-      case Story:                 return Intern.Story(                  (Story)property);
-      case Unavailability:        return Intern.Unavailability(         (Unavailability)property);
-      case User:                  return Intern.User(                   (User)property);
+      case Budget:                return Intern.Budget(                 Budget.valueOf(property));
+      case BudgetRecord:          return Intern.BudgetRecord(           BudgetRecord.valueOf(property));
+      case Ceremony:              return Intern.Ceremony(               Ceremony.valueOf(property));
+      case Directory:             return Intern.Directory(              Directory.valueOf(property));
+      case Education:             return Intern.Education(              Education.valueOf(property));
+      case EthnologueLanguage:    return Intern.EthnologueLanguage(     EthnologueLanguage.valueOf(property));
+      case FieldRegion:           return Intern.FieldRegion(            FieldRegion.valueOf(property));
+      case FieldZone:             return Intern.FieldZone(              FieldZone.valueOf(property));
+      case File:                  return Intern.File(                   File.valueOf(property));
+      case FileVersion:           return Intern.FileVersion(            FileVersion.valueOf(property));
+      case Film:                  return Intern.Film(                   Film.valueOf(property));
+      case FundingAccount:        return Intern.FundingAccount(         FundingAccount.valueOf(property));
+      case InternshipEngagement:  return Intern.InternshipEngagement(   InternshipEngagement.valueOf(property));
+      case Language:              return Intern.Language(               Language.valueOf(property));
+      case LanguageEngagement:    return Intern.LanguageEngagement(     LanguageEngagement.valueOf(property));
+      case LiteracyMaterial:      return Intern.LiteracyMaterial(       LiteracyMaterial.valueOf(property));
+      case Location:              return Intern.Location(               Location.valueOf(property));
+      case Organization:          return Intern.Organization(           Organization.valueOf(property));
+      case Partner:               return Intern.Partner(                Partner.valueOf(property));
+      case Partnership:           return Intern.Partnership(            Partnership.valueOf(property));
+      case Project:               return Intern.Project(                Project.valueOf(property));
+      case ProjectMember:         return Intern.ProjectMember(          ProjectMember.valueOf(property));
+      case Product:               return Intern.Product(                Product.valueOf(property));
+      case Song:                  return Intern.Song(                   Song.valueOf(property));
+      case Story:                 return Intern.Story(                  Story.valueOf(property));
+      case Unavailability:        return Intern.Unavailability(         Unavailability.valueOf(property));
+      case User:                  return Intern.User(                   User.valueOf(property));
 
       default: return Permission.None;
     }
-  }
+  };
 
   private static Permission Budget(Budget property){
     switch(property){

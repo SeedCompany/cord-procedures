@@ -6,41 +6,42 @@ import cord.model.Permission;
 
 public class ConsultantManager extends BaseRole{
   public ConsultantManager(){
-    super(RoleNames.ConsultantManagerRole);
+    super(RoleNames.ConsultantManagerRole, ConsultantManager.permission);
   }
-  public static Permission permission(BaseNodeLabels label, Object property){
+
+  public static IPermission permission = (BaseNodeLabels label, String property) -> {
     switch(label){
-      case Budget:                return ConsultantManager.Budget(                 (Budget)property);
-      case BudgetRecord:          return ConsultantManager.BudgetRecord(           (BudgetRecord)property);
-      case Ceremony:              return ConsultantManager.Ceremony(               (Ceremony)property);
-      case Directory:             return ConsultantManager.Directory(              (Directory)property);
-      case Education:             return ConsultantManager.Education(              (Education)property);
-      case EthnologueLanguage:    return ConsultantManager.EthnologueLanguage(     (EthnologueLanguage)property);
-      case FieldRegion:           return ConsultantManager.FieldRegion(            (FieldRegion)property);
-      case FieldZone:             return ConsultantManager.FieldZone(              (FieldZone)property);
-      case File:                  return ConsultantManager.File(                   (File)property);
-      case FileVersion:           return ConsultantManager.FileVersion(            (FileVersion)property);
-      case Film:                  return ConsultantManager.Film(                   (Film)property);
-      case FundingAccount:        return ConsultantManager.FundingAccount(         (FundingAccount)property);
-      case InternshipEngagement:  return ConsultantManager.InternshipEngagement(   (InternshipEngagement)property);
-      case Language:              return ConsultantManager.Language(               (Language)property);
-      case LanguageEngagement:    return ConsultantManager.LanguageEngagement(     (LanguageEngagement)property);
-      case LiteracyMaterial:      return ConsultantManager.LiteracyMaterial(       (LiteracyMaterial)property);
-      case Location:              return ConsultantManager.Location(               (Location)property);
-      case Organization:          return ConsultantManager.Organization(           (Organization)property);
-      case Partner:               return ConsultantManager.Partner(                (Partner)property);
-      case Partnership:           return ConsultantManager.Partnership(            (Partnership)property);
-      case Project:               return ConsultantManager.Project(                (Project)property);
-      case ProjectMember:         return ConsultantManager.ProjectMember(          (ProjectMember)property);
-      case Product:               return ConsultantManager.Product(                (Product)property);
-      case Song:                  return ConsultantManager.Song(                   (Song)property);
-      case Story:                 return ConsultantManager.Story(                  (Story)property);
-      case Unavailability:        return ConsultantManager.Unavailability(         (Unavailability)property);
-      case User:                  return ConsultantManager.User(                   (User)property);
+      case Budget:                return ConsultantManager.Budget(                 Budget.valueOf(property));
+      case BudgetRecord:          return ConsultantManager.BudgetRecord(           BudgetRecord.valueOf(property));
+      case Ceremony:              return ConsultantManager.Ceremony(               Ceremony.valueOf(property));
+      case Directory:             return ConsultantManager.Directory(              Directory.valueOf(property));
+      case Education:             return ConsultantManager.Education(              Education.valueOf(property));
+      case EthnologueLanguage:    return ConsultantManager.EthnologueLanguage(     EthnologueLanguage.valueOf(property));
+      case FieldRegion:           return ConsultantManager.FieldRegion(            FieldRegion.valueOf(property));
+      case FieldZone:             return ConsultantManager.FieldZone(              FieldZone.valueOf(property));
+      case File:                  return ConsultantManager.File(                   File.valueOf(property));
+      case FileVersion:           return ConsultantManager.FileVersion(            FileVersion.valueOf(property));
+      case Film:                  return ConsultantManager.Film(                   Film.valueOf(property));
+      case FundingAccount:        return ConsultantManager.FundingAccount(         FundingAccount.valueOf(property));
+      case InternshipEngagement:  return ConsultantManager.InternshipEngagement(   InternshipEngagement.valueOf(property));
+      case Language:              return ConsultantManager.Language(               Language.valueOf(property));
+      case LanguageEngagement:    return ConsultantManager.LanguageEngagement(     LanguageEngagement.valueOf(property));
+      case LiteracyMaterial:      return ConsultantManager.LiteracyMaterial(       LiteracyMaterial.valueOf(property));
+      case Location:              return ConsultantManager.Location(               Location.valueOf(property));
+      case Organization:          return ConsultantManager.Organization(           Organization.valueOf(property));
+      case Partner:               return ConsultantManager.Partner(                Partner.valueOf(property));
+      case Partnership:           return ConsultantManager.Partnership(            Partnership.valueOf(property));
+      case Project:               return ConsultantManager.Project(                Project.valueOf(property));
+      case ProjectMember:         return ConsultantManager.ProjectMember(          ProjectMember.valueOf(property));
+      case Product:               return ConsultantManager.Product(                Product.valueOf(property));
+      case Song:                  return ConsultantManager.Song(                   Song.valueOf(property));
+      case Story:                 return ConsultantManager.Story(                  Story.valueOf(property));
+      case Unavailability:        return ConsultantManager.Unavailability(         Unavailability.valueOf(property));
+      case User:                  return ConsultantManager.User(                   User.valueOf(property));
 
       default: return Permission.None;
     }
-  }
+  };
 
   private static Permission Budget(Budget property){
     switch(property){

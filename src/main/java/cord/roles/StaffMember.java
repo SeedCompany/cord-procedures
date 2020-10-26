@@ -5,41 +5,41 @@ import cord.model.*;
 
 public class StaffMember extends BaseRole {
   public StaffMember(){
-    super(RoleNames.StaffMemberRole);
+    super(RoleNames.StaffMemberRole, StaffMember.permission);
   }
-  public static Permission permission(BaseNodeLabels label, Object property){
-    switch(label){
-      case Budget:                return StaffMember.Budget(                 (Budget)property);
-      case BudgetRecord:          return StaffMember.BudgetRecord(           (BudgetRecord)property);
-      case Ceremony:              return StaffMember.Ceremony(               (Ceremony)property);
-      case Directory:             return StaffMember.Directory(              (Directory)property);
-      case Education:             return StaffMember.Education(              (Education)property);
-      case EthnologueLanguage:    return StaffMember.EthnologueLanguage(     (EthnologueLanguage)property);
-      case FieldRegion:           return StaffMember.FieldRegion(            (FieldRegion)property);
-      case FieldZone:             return StaffMember.FieldZone(              (FieldZone)property);
-      case File:                  return StaffMember.File(                   (File)property);
-      case FileVersion:           return StaffMember.FileVersion(            (FileVersion)property);
-      case Film:                  return StaffMember.Film(                   (Film)property);
-      case FundingAccount:        return StaffMember.FundingAccount(         (FundingAccount)property);
-      case InternshipEngagement:  return StaffMember.InternshipEngagement(   (InternshipEngagement)property);
-      case Language:              return StaffMember.Language(               (Language)property);
-      case LanguageEngagement:    return StaffMember.LanguageEngagement(     (LanguageEngagement)property);
-      case LiteracyMaterial:      return StaffMember.LiteracyMaterial(       (LiteracyMaterial)property);
-      case Location:              return StaffMember.Location(               (Location)property);
-      case Organization:          return StaffMember.Organization(           (Organization)property);
-      case Partner:               return StaffMember.Partner(                (Partner)property);
-      case Partnership:           return StaffMember.Partnership(            (Partnership)property);
-      case Project:               return StaffMember.Project(                (Project)property);
-      case ProjectMember:         return StaffMember.ProjectMember(          (ProjectMember)property);
-      case Product:               return StaffMember.Product(                (Product)property);
-      case Song:                  return StaffMember.Song(                   (Song)property);
-      case Story:                 return StaffMember.Story(                  (Story)property);
-      case Unavailability:        return StaffMember.Unavailability(         (Unavailability)property);
-      case User:                  return StaffMember.User(                   (User)property);
 
+  public static IPermission permission = (BaseNodeLabels label, String property) -> {
+    switch(label){
+      case Budget:                return StaffMember.Budget(                 Budget.valueOf(property));
+      case BudgetRecord:          return StaffMember.BudgetRecord(           BudgetRecord.valueOf(property));
+      case Ceremony:              return StaffMember.Ceremony(               Ceremony.valueOf(property));
+      case Directory:             return StaffMember.Directory(              Directory.valueOf(property));
+      case Education:             return StaffMember.Education(              Education.valueOf(property));
+      case EthnologueLanguage:    return StaffMember.EthnologueLanguage(     EthnologueLanguage.valueOf(property));
+      case FieldRegion:           return StaffMember.FieldRegion(            FieldRegion.valueOf(property));
+      case FieldZone:             return StaffMember.FieldZone(              FieldZone.valueOf(property));
+      case File:                  return StaffMember.File(                   File.valueOf(property));
+      case FileVersion:           return StaffMember.FileVersion(            FileVersion.valueOf(property));
+      case Film:                  return StaffMember.Film(                   Film.valueOf(property));
+      case FundingAccount:        return StaffMember.FundingAccount(         FundingAccount.valueOf(property));
+      case InternshipEngagement:  return StaffMember.InternshipEngagement(   InternshipEngagement.valueOf(property));
+      case Language:              return StaffMember.Language(               Language.valueOf(property));
+      case LanguageEngagement:    return StaffMember.LanguageEngagement(     LanguageEngagement.valueOf(property));
+      case LiteracyMaterial:      return StaffMember.LiteracyMaterial(       LiteracyMaterial.valueOf(property));
+      case Location:              return StaffMember.Location(               Location.valueOf(property));
+      case Organization:          return StaffMember.Organization(           Organization.valueOf(property));
+      case Partner:               return StaffMember.Partner(                Partner.valueOf(property));
+      case Partnership:           return StaffMember.Partnership(            Partnership.valueOf(property));
+      case Project:               return StaffMember.Project(                Project.valueOf(property));
+      case ProjectMember:         return StaffMember.ProjectMember(          ProjectMember.valueOf(property));
+      case Product:               return StaffMember.Product(                Product.valueOf(property));
+      case Song:                  return StaffMember.Song(                   Song.valueOf(property));
+      case Story:                 return StaffMember.Story(                  Story.valueOf(property));
+      case Unavailability:        return StaffMember.Unavailability(         Unavailability.valueOf(property));
+      case User:                  return StaffMember.User(                   User.valueOf(property));
       default: return Permission.None;
     }
-  }
+  };
 
   private static Permission Budget(Budget property){
     switch(property){

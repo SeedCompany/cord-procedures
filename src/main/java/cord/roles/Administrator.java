@@ -5,42 +5,42 @@ import cord.model.*;
 
 public class Administrator extends BaseRole {
   public Administrator(){
-    super(RoleNames.AdministratorRole);
+    super(RoleNames.AdministratorRole, Administrator.permission);
   }
 
-  public static Permission permission(BaseNodeLabels label, Object property){
+  public static IPermission permission = (BaseNodeLabels label, String property) -> {
     switch(label){
-      case Budget:                return Administrator.Budget(                 (Budget)property);
-      case BudgetRecord:          return Administrator.BudgetRecord(           (BudgetRecord)property);
-      case Ceremony:              return Administrator.Ceremony(               (Ceremony)property);
-      case Directory:             return Administrator.Directory(              (Directory)property);
-      case Education:             return Administrator.Education(              (Education)property);
-      case EthnologueLanguage:    return Administrator.EthnologueLanguage(     (EthnologueLanguage)property);
-      case FieldRegion:           return Administrator.FieldRegion(            (FieldRegion)property);
-      case FieldZone:             return Administrator.FieldZone(              (FieldZone)property);
-      case File:                  return Administrator.File(                   (File)property);
-      case FileVersion:           return Administrator.FileVersion(            (FileVersion)property);
-      case Film:                  return Administrator.Film(                   (Film)property);
-      case FundingAccount:        return Administrator.FundingAccount(         (FundingAccount)property);
-      case InternshipEngagement:  return Administrator.InternshipEngagement(   (InternshipEngagement)property);
-      case Language:              return Administrator.Language(               (Language)property);
-      case LanguageEngagement:    return Administrator.LanguageEngagement(     (LanguageEngagement)property);
-      case LiteracyMaterial:      return Administrator.LiteracyMaterial(       (LiteracyMaterial)property);
-      case Location:              return Administrator.Location(               (Location)property);
-      case Organization:          return Administrator.Organization(           (Organization)property);
-      case Partner:               return Administrator.Partner(                (Partner)property);
-      case Partnership:           return Administrator.Partnership(            (Partnership)property);
-      case Project:               return Administrator.Project(                (Project)property);
-      case ProjectMember:         return Administrator.ProjectMember(          (ProjectMember)property);
-      case Product:               return Administrator.Product(                (Product)property);
-      case Song:                  return Administrator.Song(                   (Song)property);
-      case Story:                 return Administrator.Story(                  (Story)property);
-      case Unavailability:        return Administrator.Unavailability(         (Unavailability)property);
-      case User:                  return Administrator.User(                   (User)property);
+      case Budget:                return Administrator.Budget(                 Budget.valueOf(property));
+      case BudgetRecord:          return Administrator.BudgetRecord(           BudgetRecord.valueOf(property));
+      case Ceremony:              return Administrator.Ceremony(               Ceremony.valueOf(property));
+      case Directory:             return Administrator.Directory(              Directory.valueOf(property));
+      case Education:             return Administrator.Education(              Education.valueOf(property));
+      case EthnologueLanguage:    return Administrator.EthnologueLanguage(     EthnologueLanguage.valueOf(property));
+      case FieldRegion:           return Administrator.FieldRegion(            FieldRegion.valueOf(property));
+      case FieldZone:             return Administrator.FieldZone(              FieldZone.valueOf(property));
+      case File:                  return Administrator.File(                   File.valueOf(property));
+      case FileVersion:           return Administrator.FileVersion(            FileVersion.valueOf(property));
+      case Film:                  return Administrator.Film(                   Film.valueOf(property));
+      case FundingAccount:        return Administrator.FundingAccount(         FundingAccount.valueOf(property));
+      case InternshipEngagement:  return Administrator.InternshipEngagement(   InternshipEngagement.valueOf(property));
+      case Language:              return Administrator.Language(               Language.valueOf(property));
+      case LanguageEngagement:    return Administrator.LanguageEngagement(     LanguageEngagement.valueOf(property));
+      case LiteracyMaterial:      return Administrator.LiteracyMaterial(       LiteracyMaterial.valueOf(property));
+      case Location:              return Administrator.Location(               Location.valueOf(property));
+      case Organization:          return Administrator.Organization(           Organization.valueOf(property));
+      case Partner:               return Administrator.Partner(                Partner.valueOf(property));
+      case Partnership:           return Administrator.Partnership(            Partnership.valueOf(property));
+      case Project:               return Administrator.Project(                Project.valueOf(property));
+      case ProjectMember:         return Administrator.ProjectMember(          ProjectMember.valueOf(property));
+      case Product:               return Administrator.Product(                Product.valueOf(property));
+      case Song:                  return Administrator.Song(                   Song.valueOf(property));
+      case Story:                 return Administrator.Story(                  Story.valueOf(property));
+      case Unavailability:        return Administrator.Unavailability(         Unavailability.valueOf(property));
+      case User:                  return Administrator.User(                   User.valueOf(property));
 
       default: return Permission.None;
     }
-  }
+  };
 
   private static Permission Budget(Budget property){
     switch(property){

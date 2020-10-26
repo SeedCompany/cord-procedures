@@ -5,41 +5,42 @@ import cord.model.*;
 
 public class FieldOperationsDirector extends BaseRole {
   public FieldOperationsDirector(){
-    super(RoleNames.FieldOperationsDirectorRole);
+    super(RoleNames.FieldOperationsDirectorRole, FieldOperationsDirector.permission);
   }
-  public static Permission permission(BaseNodeLabels label, Object property){
+
+  public static IPermission permission = (BaseNodeLabels label, String property) -> {
     switch(label){
-      case Budget:                return FieldOperationsDirector.Budget(                 (Budget)property);
-      case BudgetRecord:          return FieldOperationsDirector.BudgetRecord(           (BudgetRecord)property);
-      case Ceremony:              return FieldOperationsDirector.Ceremony(               (Ceremony)property);
-      case Directory:             return FieldOperationsDirector.Directory(              (Directory)property);
-      case Education:             return FieldOperationsDirector.Education(              (Education)property);
-      case EthnologueLanguage:    return FieldOperationsDirector.EthnologueLanguage(     (EthnologueLanguage)property);
-      case FieldRegion:           return FieldOperationsDirector.FieldRegion(            (FieldRegion)property);
-      case FieldZone:             return FieldOperationsDirector.FieldZone(              (FieldZone)property);
-      case File:                  return FieldOperationsDirector.File(                   (File)property);
-      case FileVersion:           return FieldOperationsDirector.FileVersion(            (FileVersion)property);
-      case Film:                  return FieldOperationsDirector.Film(                   (Film)property);
-      case FundingAccount:        return FieldOperationsDirector.FundingAccount(         (FundingAccount)property);
-      case InternshipEngagement:  return FieldOperationsDirector.InternshipEngagement(   (InternshipEngagement)property);
-      case Language:              return FieldOperationsDirector.Language(               (Language)property);
-      case LanguageEngagement:    return FieldOperationsDirector.LanguageEngagement(     (LanguageEngagement)property);
-      case LiteracyMaterial:      return FieldOperationsDirector.LiteracyMaterial(       (LiteracyMaterial)property);
-      case Location:              return FieldOperationsDirector.Location(               (Location)property);
-      case Organization:          return FieldOperationsDirector.Organization(           (Organization)property);
-      case Partner:               return FieldOperationsDirector.Partner(                (Partner)property);
-      case Partnership:           return FieldOperationsDirector.Partnership(            (Partnership)property);
-      case Project:               return FieldOperationsDirector.Project(                (Project)property);
-      case ProjectMember:         return FieldOperationsDirector.ProjectMember(          (ProjectMember)property);
-      case Product:               return FieldOperationsDirector.Product(                (Product)property);
-      case Song:                  return FieldOperationsDirector.Song(                   (Song)property);
-      case Story:                 return FieldOperationsDirector.Story(                  (Story)property);
-      case Unavailability:        return FieldOperationsDirector.Unavailability(         (Unavailability)property);
-      case User:                  return FieldOperationsDirector.User(                   (User)property);
+      case Budget:                return FieldOperationsDirector.Budget(                 Budget.valueOf(property));
+      case BudgetRecord:          return FieldOperationsDirector.BudgetRecord(           BudgetRecord.valueOf(property));
+      case Ceremony:              return FieldOperationsDirector.Ceremony(               Ceremony.valueOf(property));
+      case Directory:             return FieldOperationsDirector.Directory(              Directory.valueOf(property));
+      case Education:             return FieldOperationsDirector.Education(              Education.valueOf(property));
+      case EthnologueLanguage:    return FieldOperationsDirector.EthnologueLanguage(     EthnologueLanguage.valueOf(property));
+      case FieldRegion:           return FieldOperationsDirector.FieldRegion(            FieldRegion.valueOf(property));
+      case FieldZone:             return FieldOperationsDirector.FieldZone(              FieldZone.valueOf(property));
+      case File:                  return FieldOperationsDirector.File(                   File.valueOf(property));
+      case FileVersion:           return FieldOperationsDirector.FileVersion(            FileVersion.valueOf(property));
+      case Film:                  return FieldOperationsDirector.Film(                   Film.valueOf(property));
+      case FundingAccount:        return FieldOperationsDirector.FundingAccount(         FundingAccount.valueOf(property));
+      case InternshipEngagement:  return FieldOperationsDirector.InternshipEngagement(   InternshipEngagement.valueOf(property));
+      case Language:              return FieldOperationsDirector.Language(               Language.valueOf(property));
+      case LanguageEngagement:    return FieldOperationsDirector.LanguageEngagement(     LanguageEngagement.valueOf(property));
+      case LiteracyMaterial:      return FieldOperationsDirector.LiteracyMaterial(       LiteracyMaterial.valueOf(property));
+      case Location:              return FieldOperationsDirector.Location(               Location.valueOf(property));
+      case Organization:          return FieldOperationsDirector.Organization(           Organization.valueOf(property));
+      case Partner:               return FieldOperationsDirector.Partner(                Partner.valueOf(property));
+      case Partnership:           return FieldOperationsDirector.Partnership(            Partnership.valueOf(property));
+      case Project:               return FieldOperationsDirector.Project(                Project.valueOf(property));
+      case ProjectMember:         return FieldOperationsDirector.ProjectMember(          ProjectMember.valueOf(property));
+      case Product:               return FieldOperationsDirector.Product(                Product.valueOf(property));
+      case Song:                  return FieldOperationsDirector.Song(                   Song.valueOf(property));
+      case Story:                 return FieldOperationsDirector.Story(                  Story.valueOf(property));
+      case Unavailability:        return FieldOperationsDirector.Unavailability(         Unavailability.valueOf(property));
+      case User:                  return FieldOperationsDirector.User(                   User.valueOf(property));
 
       default: return Permission.None;
     }
-  }
+  };
 
   private static Permission Budget(Budget property){
     switch(property){

@@ -5,41 +5,42 @@ import cord.model.*;
 
 public class Marketing extends BaseRole {
   public Marketing(){
-    super(RoleNames.MarketingRole);
+    super(RoleNames.MarketingRole, Marketing.permission);
   }
-  public static Permission permission(BaseNodeLabels label, Object property){
+
+  public static IPermission permission = (BaseNodeLabels label, String property) -> {
     switch(label){
-      case Budget:                return Marketing.Budget(                 (Budget)property);
-      case BudgetRecord:          return Marketing.BudgetRecord(           (BudgetRecord)property);
-      case Ceremony:              return Marketing.Ceremony(               (Ceremony)property);
-      case Directory:             return Marketing.Directory(              (Directory)property);
-      case Education:             return Marketing.Education(              (Education)property);
-      case EthnologueLanguage:    return Marketing.EthnologueLanguage(     (EthnologueLanguage)property);
-      case FieldRegion:           return Marketing.FieldRegion(            (FieldRegion)property);
-      case FieldZone:             return Marketing.FieldZone(              (FieldZone)property);
-      case File:                  return Marketing.File(                   (File)property);
-      case FileVersion:           return Marketing.FileVersion(            (FileVersion)property);
-      case Film:                  return Marketing.Film(                   (Film)property);
-      case FundingAccount:        return Marketing.FundingAccount(         (FundingAccount)property);
-      case InternshipEngagement:  return Marketing.InternshipEngagement(   (InternshipEngagement)property);
-      case Language:              return Marketing.Language(               (Language)property);
-      case LanguageEngagement:    return Marketing.LanguageEngagement(     (LanguageEngagement)property);
-      case LiteracyMaterial:      return Marketing.LiteracyMaterial(       (LiteracyMaterial)property);
-      case Location:              return Marketing.Location(               (Location)property);
-      case Organization:          return Marketing.Organization(           (Organization)property);
-      case Partner:               return Marketing.Partner(                (Partner)property);
-      case Partnership:           return Marketing.Partnership(            (Partnership)property);
-      case Project:               return Marketing.Project(                (Project)property);
-      case ProjectMember:         return Marketing.ProjectMember(          (ProjectMember)property);
-      case Product:               return Marketing.Product(                (Product)property);
-      case Song:                  return Marketing.Song(                   (Song)property);
-      case Story:                 return Marketing.Story(                  (Story)property);
-      case Unavailability:        return Marketing.Unavailability(         (Unavailability)property);
-      case User:                  return Marketing.User(                   (User)property);
+      case Budget:                return Marketing.Budget(                 Budget.valueOf(property));
+      case BudgetRecord:          return Marketing.BudgetRecord(           BudgetRecord.valueOf(property));
+      case Ceremony:              return Marketing.Ceremony(               Ceremony.valueOf(property));
+      case Directory:             return Marketing.Directory(              Directory.valueOf(property));
+      case Education:             return Marketing.Education(              Education.valueOf(property));
+      case EthnologueLanguage:    return Marketing.EthnologueLanguage(     EthnologueLanguage.valueOf(property));
+      case FieldRegion:           return Marketing.FieldRegion(            FieldRegion.valueOf(property));
+      case FieldZone:             return Marketing.FieldZone(              FieldZone.valueOf(property));
+      case File:                  return Marketing.File(                   File.valueOf(property));
+      case FileVersion:           return Marketing.FileVersion(            FileVersion.valueOf(property));
+      case Film:                  return Marketing.Film(                   Film.valueOf(property));
+      case FundingAccount:        return Marketing.FundingAccount(         FundingAccount.valueOf(property));
+      case InternshipEngagement:  return Marketing.InternshipEngagement(   InternshipEngagement.valueOf(property));
+      case Language:              return Marketing.Language(               Language.valueOf(property));
+      case LanguageEngagement:    return Marketing.LanguageEngagement(     LanguageEngagement.valueOf(property));
+      case LiteracyMaterial:      return Marketing.LiteracyMaterial(       LiteracyMaterial.valueOf(property));
+      case Location:              return Marketing.Location(               Location.valueOf(property));
+      case Organization:          return Marketing.Organization(           Organization.valueOf(property));
+      case Partner:               return Marketing.Partner(                Partner.valueOf(property));
+      case Partnership:           return Marketing.Partnership(            Partnership.valueOf(property));
+      case Project:               return Marketing.Project(                Project.valueOf(property));
+      case ProjectMember:         return Marketing.ProjectMember(          ProjectMember.valueOf(property));
+      case Product:               return Marketing.Product(                Product.valueOf(property));
+      case Song:                  return Marketing.Song(                   Song.valueOf(property));
+      case Story:                 return Marketing.Story(                  Story.valueOf(property));
+      case Unavailability:        return Marketing.Unavailability(         Unavailability.valueOf(property));
+      case User:                  return Marketing.User(                   User.valueOf(property));
 
       default: return Permission.None;
     }
-  }
+  };
 
   private static Permission Budget(Budget property){
     switch(property){

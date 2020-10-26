@@ -6,42 +6,42 @@ import cord.model.*;
 public class Translator extends BaseRole {
 
   public Translator(){
-    super(RoleNames.TranslatorRole);
+    super(RoleNames.TranslatorRole, Translator.permission);
   }
 
-  public static Permission permission(BaseNodeLabels label, Object property){
+  public static IPermission permission = (BaseNodeLabels label, String property) -> {
     switch(label){
-      case Budget:                return Translator.Budget(                 (Budget)property);
-      case BudgetRecord:          return Translator.BudgetRecord(           (BudgetRecord)property);
-      case Ceremony:              return Translator.Ceremony(               (Ceremony)property);
-      case Directory:             return Translator.Directory(              (Directory)property);
-      case Education:             return Translator.Education(              (Education)property);
-      case EthnologueLanguage:    return Translator.EthnologueLanguage(     (EthnologueLanguage)property);
-      case FieldRegion:           return Translator.FieldRegion(            (FieldRegion)property);
-      case FieldZone:             return Translator.FieldZone(              (FieldZone)property);
-      case File:                  return Translator.File(                   (File)property);
-      case FileVersion:           return Translator.FileVersion(            (FileVersion)property);
-      case Film:                  return Translator.Film(                   (Film)property);
-      case FundingAccount:        return Translator.FundingAccount(         (FundingAccount)property);
-      case InternshipEngagement:  return Translator.InternshipEngagement(   (InternshipEngagement)property);
-      case Language:              return Translator.Language(               (Language)property);
-      case LanguageEngagement:    return Translator.LanguageEngagement(     (LanguageEngagement)property);
-      case LiteracyMaterial:      return Translator.LiteracyMaterial(       (LiteracyMaterial)property);
-      case Location:              return Translator.Location(               (Location)property);
-      case Organization:          return Translator.Organization(           (Organization)property);
-      case Partner:               return Translator.Partner(                (Partner)property);
-      case Partnership:           return Translator.Partnership(            (Partnership)property);
-      case Project:               return Translator.Project(                (Project)property);
-      case ProjectMember:         return Translator.ProjectMember(          (ProjectMember)property);
-      case Product:               return Translator.Product(                (Product)property);
-      case Song:                  return Translator.Song(                   (Song)property);
-      case Story:                 return Translator.Story(                  (Story)property);
-      case Unavailability:        return Translator.Unavailability(         (Unavailability)property);
-      case User:                  return Translator.User(                   (User)property);
+      case Budget:                return Translator.Budget(                 Budget.valueOf(property));
+      case BudgetRecord:          return Translator.BudgetRecord(           BudgetRecord.valueOf(property));
+      case Ceremony:              return Translator.Ceremony(               Ceremony.valueOf(property));
+      case Directory:             return Translator.Directory(              Directory.valueOf(property));
+      case Education:             return Translator.Education(              Education.valueOf(property));
+      case EthnologueLanguage:    return Translator.EthnologueLanguage(     EthnologueLanguage.valueOf(property));
+      case FieldRegion:           return Translator.FieldRegion(            FieldRegion.valueOf(property));
+      case FieldZone:             return Translator.FieldZone(              FieldZone.valueOf(property));
+      case File:                  return Translator.File(                   File.valueOf(property));
+      case FileVersion:           return Translator.FileVersion(            FileVersion.valueOf(property));
+      case Film:                  return Translator.Film(                   Film.valueOf(property));
+      case FundingAccount:        return Translator.FundingAccount(         FundingAccount.valueOf(property));
+      case InternshipEngagement:  return Translator.InternshipEngagement(   InternshipEngagement.valueOf(property));
+      case Language:              return Translator.Language(               Language.valueOf(property));
+      case LanguageEngagement:    return Translator.LanguageEngagement(     LanguageEngagement.valueOf(property));
+      case LiteracyMaterial:      return Translator.LiteracyMaterial(       LiteracyMaterial.valueOf(property));
+      case Location:              return Translator.Location(               Location.valueOf(property));
+      case Organization:          return Translator.Organization(           Organization.valueOf(property));
+      case Partner:               return Translator.Partner(                Partner.valueOf(property));
+      case Partnership:           return Translator.Partnership(            Partnership.valueOf(property));
+      case Project:               return Translator.Project(                Project.valueOf(property));
+      case ProjectMember:         return Translator.ProjectMember(          ProjectMember.valueOf(property));
+      case Product:               return Translator.Product(                Product.valueOf(property));
+      case Song:                  return Translator.Song(                   Song.valueOf(property));
+      case Story:                 return Translator.Story(                  Story.valueOf(property));
+      case Unavailability:        return Translator.Unavailability(         Unavailability.valueOf(property));
+      case User:                  return Translator.User(                   User.valueOf(property));
 
       default: return Permission.None;
     }
-  }
+  };
 
   private static Permission Budget(Budget property){
     switch(property){

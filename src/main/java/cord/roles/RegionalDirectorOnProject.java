@@ -5,41 +5,42 @@ import cord.model.*;
 
 public class RegionalDirectorOnProject extends BaseRole {
   public RegionalDirectorOnProject(){
-    super(RoleNames.RegionalDirectorOnProjectRole);
+    super(RoleNames.RegionalDirectorOnProjectRole, RegionalDirectorOnProject.permission);
   }
-  public static Permission permission(BaseNodeLabels label, Object property){
+
+  public static IPermission permission = (BaseNodeLabels label, String property) -> {
     switch(label){
-      case Budget:                return RegionalDirectorOnProject.Budget(                 (Budget)property);
-      case BudgetRecord:          return RegionalDirectorOnProject.BudgetRecord(           (BudgetRecord)property);
-      case Ceremony:              return RegionalDirectorOnProject.Ceremony(               (Ceremony)property);
-      case Directory:             return RegionalDirectorOnProject.Directory(              (Directory)property);
-      case Education:             return RegionalDirectorOnProject.Education(              (Education)property);
-      case EthnologueLanguage:    return RegionalDirectorOnProject.EthnologueLanguage(     (EthnologueLanguage)property);
-      case FieldRegion:           return RegionalDirectorOnProject.FieldRegion(            (FieldRegion)property);
-      case FieldZone:             return RegionalDirectorOnProject.FieldZone(              (FieldZone)property);
-      case File:                  return RegionalDirectorOnProject.File(                   (File)property);
-      case FileVersion:           return RegionalDirectorOnProject.FileVersion(            (FileVersion)property);
-      case Film:                  return RegionalDirectorOnProject.Film(                   (Film)property);
-      case FundingAccount:        return RegionalDirectorOnProject.FundingAccount(         (FundingAccount)property);
-      case InternshipEngagement:  return RegionalDirectorOnProject.InternshipEngagement(   (InternshipEngagement)property);
-      case Language:              return RegionalDirectorOnProject.Language(               (Language)property);
-      case LanguageEngagement:    return RegionalDirectorOnProject.LanguageEngagement(     (LanguageEngagement)property);
-      case LiteracyMaterial:      return RegionalDirectorOnProject.LiteracyMaterial(       (LiteracyMaterial)property);
-      case Location:              return RegionalDirectorOnProject.Location(               (Location)property);
-      case Organization:          return RegionalDirectorOnProject.Organization(           (Organization)property);
-      case Partner:               return RegionalDirectorOnProject.Partner(                (Partner)property);
-      case Partnership:           return RegionalDirectorOnProject.Partnership(            (Partnership)property);
-      case Project:               return RegionalDirectorOnProject.Project(                (Project)property);
-      case ProjectMember:         return RegionalDirectorOnProject.ProjectMember(          (ProjectMember)property);
-      case Product:               return RegionalDirectorOnProject.Product(                (Product)property);
-      case Song:                  return RegionalDirectorOnProject.Song(                   (Song)property);
-      case Story:                 return RegionalDirectorOnProject.Story(                  (Story)property);
-      case Unavailability:        return RegionalDirectorOnProject.Unavailability(         (Unavailability)property);
-      case User:                  return RegionalDirectorOnProject.User(                   (User)property);
+      case Budget:                return RegionalDirectorOnProject.Budget(                 Budget.valueOf(property));
+      case BudgetRecord:          return RegionalDirectorOnProject.BudgetRecord(           BudgetRecord.valueOf(property));
+      case Ceremony:              return RegionalDirectorOnProject.Ceremony(               Ceremony.valueOf(property));
+      case Directory:             return RegionalDirectorOnProject.Directory(              Directory.valueOf(property));
+      case Education:             return RegionalDirectorOnProject.Education(              Education.valueOf(property));
+      case EthnologueLanguage:    return RegionalDirectorOnProject.EthnologueLanguage(     EthnologueLanguage.valueOf(property));
+      case FieldRegion:           return RegionalDirectorOnProject.FieldRegion(            FieldRegion.valueOf(property));
+      case FieldZone:             return RegionalDirectorOnProject.FieldZone(              FieldZone.valueOf(property));
+      case File:                  return RegionalDirectorOnProject.File(                   File.valueOf(property));
+      case FileVersion:           return RegionalDirectorOnProject.FileVersion(            FileVersion.valueOf(property));
+      case Film:                  return RegionalDirectorOnProject.Film(                   Film.valueOf(property));
+      case FundingAccount:        return RegionalDirectorOnProject.FundingAccount(         FundingAccount.valueOf(property));
+      case InternshipEngagement:  return RegionalDirectorOnProject.InternshipEngagement(   InternshipEngagement.valueOf(property));
+      case Language:              return RegionalDirectorOnProject.Language(               Language.valueOf(property));
+      case LanguageEngagement:    return RegionalDirectorOnProject.LanguageEngagement(     LanguageEngagement.valueOf(property));
+      case LiteracyMaterial:      return RegionalDirectorOnProject.LiteracyMaterial(       LiteracyMaterial.valueOf(property));
+      case Location:              return RegionalDirectorOnProject.Location(               Location.valueOf(property));
+      case Organization:          return RegionalDirectorOnProject.Organization(           Organization.valueOf(property));
+      case Partner:               return RegionalDirectorOnProject.Partner(                Partner.valueOf(property));
+      case Partnership:           return RegionalDirectorOnProject.Partnership(            Partnership.valueOf(property));
+      case Project:               return RegionalDirectorOnProject.Project(                Project.valueOf(property));
+      case ProjectMember:         return RegionalDirectorOnProject.ProjectMember(          ProjectMember.valueOf(property));
+      case Product:               return RegionalDirectorOnProject.Product(                Product.valueOf(property));
+      case Song:                  return RegionalDirectorOnProject.Song(                   Song.valueOf(property));
+      case Story:                 return RegionalDirectorOnProject.Story(                  Story.valueOf(property));
+      case Unavailability:        return RegionalDirectorOnProject.Unavailability(         Unavailability.valueOf(property));
+      case User:                  return RegionalDirectorOnProject.User(                   User.valueOf(property));
 
       default: return Permission.None;
     }
-  }
+  };
 
   private static Permission Budget(Budget property){
     switch(property){

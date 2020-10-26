@@ -5,41 +5,42 @@ import cord.model.*;
 
 public class Controller extends BaseRole {
   public Controller(){
-    super(RoleNames.ControllerRole);
+    super(RoleNames.ControllerRole, Controller.permission);
   }
-  public static Permission permission(BaseNodeLabels label, Object property){
+
+  public static IPermission permission = (BaseNodeLabels label, String property) -> {
     switch(label){
-      case Budget:                return Controller.Budget(                 (Budget)property);
-      case BudgetRecord:          return Controller.BudgetRecord(           (BudgetRecord)property);
-      case Ceremony:              return Controller.Ceremony(               (Ceremony)property);
-      case Directory:             return Controller.Directory(              (Directory)property);
-      case Education:             return Controller.Education(              (Education)property);
-      case EthnologueLanguage:    return Controller.EthnologueLanguage(     (EthnologueLanguage)property);
-      case FieldRegion:           return Controller.FieldRegion(            (FieldRegion)property);
-      case FieldZone:             return Controller.FieldZone(              (FieldZone)property);
-      case File:                  return Controller.File(                   (File)property);
-      case FileVersion:           return Controller.FileVersion(            (FileVersion)property);
-      case Film:                  return Controller.Film(                   (Film)property);
-      case FundingAccount:        return Controller.FundingAccount(         (FundingAccount)property);
-      case InternshipEngagement:  return Controller.InternshipEngagement(   (InternshipEngagement)property);
-      case Language:              return Controller.Language(               (Language)property);
-      case LanguageEngagement:    return Controller.LanguageEngagement(     (LanguageEngagement)property);
-      case LiteracyMaterial:      return Controller.LiteracyMaterial(       (LiteracyMaterial)property);
-      case Location:              return Controller.Location(               (Location)property);
-      case Organization:          return Controller.Organization(           (Organization)property);
-      case Partner:               return Controller.Partner(                (Partner)property);
-      case Partnership:           return Controller.Partnership(            (Partnership)property);
-      case Project:               return Controller.Project(                (Project)property);
-      case ProjectMember:         return Controller.ProjectMember(          (ProjectMember)property);
-      case Product:               return Controller.Product(                (Product)property);
-      case Song:                  return Controller.Song(                   (Song)property);
-      case Story:                 return Controller.Story(                  (Story)property);
-      case Unavailability:        return Controller.Unavailability(         (Unavailability)property);
-      case User:                  return Controller.User(                   (User)property);
+      case Budget:                return Controller.Budget(                 Budget.valueOf(property));
+      case BudgetRecord:          return Controller.BudgetRecord(           BudgetRecord.valueOf(property));
+      case Ceremony:              return Controller.Ceremony(               Ceremony.valueOf(property));
+      case Directory:             return Controller.Directory(              Directory.valueOf(property));
+      case Education:             return Controller.Education(              Education.valueOf(property));
+      case EthnologueLanguage:    return Controller.EthnologueLanguage(     EthnologueLanguage.valueOf(property));
+      case FieldRegion:           return Controller.FieldRegion(            FieldRegion.valueOf(property));
+      case FieldZone:             return Controller.FieldZone(              FieldZone.valueOf(property));
+      case File:                  return Controller.File(                   File.valueOf(property));
+      case FileVersion:           return Controller.FileVersion(            FileVersion.valueOf(property));
+      case Film:                  return Controller.Film(                   Film.valueOf(property));
+      case FundingAccount:        return Controller.FundingAccount(         FundingAccount.valueOf(property));
+      case InternshipEngagement:  return Controller.InternshipEngagement(   InternshipEngagement.valueOf(property));
+      case Language:              return Controller.Language(               Language.valueOf(property));
+      case LanguageEngagement:    return Controller.LanguageEngagement(     LanguageEngagement.valueOf(property));
+      case LiteracyMaterial:      return Controller.LiteracyMaterial(       LiteracyMaterial.valueOf(property));
+      case Location:              return Controller.Location(               Location.valueOf(property));
+      case Organization:          return Controller.Organization(           Organization.valueOf(property));
+      case Partner:               return Controller.Partner(                Partner.valueOf(property));
+      case Partnership:           return Controller.Partnership(            Partnership.valueOf(property));
+      case Project:               return Controller.Project(                Project.valueOf(property));
+      case ProjectMember:         return Controller.ProjectMember(          ProjectMember.valueOf(property));
+      case Product:               return Controller.Product(                Product.valueOf(property));
+      case Song:                  return Controller.Song(                   Song.valueOf(property));
+      case Story:                 return Controller.Story(                  Story.valueOf(property));
+      case Unavailability:        return Controller.Unavailability(         Unavailability.valueOf(property));
+      case User:                  return Controller.User(                   User.valueOf(property));
 
       default: return Permission.None;
     }
-  }
+  };
 
   private static Permission Budget(Budget property){
     switch(property){

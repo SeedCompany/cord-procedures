@@ -5,41 +5,42 @@ import cord.model.*;
 
 public class Fundraising extends BaseRole {
   public Fundraising(){
-    super(RoleNames.FundraisingRole);
+    super(RoleNames.FundraisingRole, Fundraising.permission);
   }
-  public static Permission permission(BaseNodeLabels label, Object property){
+
+  public static IPermission permission = (BaseNodeLabels label, String property) -> {
     switch(label){
-      case Budget:                return Fundraising.Budget(                 (Budget)property);
-      case BudgetRecord:          return Fundraising.BudgetRecord(           (BudgetRecord)property);
-      case Ceremony:              return Fundraising.Ceremony(               (Ceremony)property);
-      case Directory:             return Fundraising.Directory(              (Directory)property);
-      case Education:             return Fundraising.Education(              (Education)property);
-      case EthnologueLanguage:    return Fundraising.EthnologueLanguage(     (EthnologueLanguage)property);
-      case FieldRegion:           return Fundraising.FieldRegion(            (FieldRegion)property);
-      case FieldZone:             return Fundraising.FieldZone(              (FieldZone)property);
-      case File:                  return Fundraising.File(                   (File)property);
-      case FileVersion:           return Fundraising.FileVersion(            (FileVersion)property);
-      case Film:                  return Fundraising.Film(                   (Film)property);
-      case FundingAccount:        return Fundraising.FundingAccount(         (FundingAccount)property);
-      case InternshipEngagement:  return Fundraising.InternshipEngagement(   (InternshipEngagement)property);
-      case Language:              return Fundraising.Language(               (Language)property);
-      case LanguageEngagement:    return Fundraising.LanguageEngagement(     (LanguageEngagement)property);
-      case LiteracyMaterial:      return Fundraising.LiteracyMaterial(       (LiteracyMaterial)property);
-      case Location:              return Fundraising.Location(               (Location)property);
-      case Organization:          return Fundraising.Organization(           (Organization)property);
-      case Partner:               return Fundraising.Partner(                (Partner)property);
-      case Partnership:           return Fundraising.Partnership(            (Partnership)property);
-      case Project:               return Fundraising.Project(                (Project)property);
-      case ProjectMember:         return Fundraising.ProjectMember(          (ProjectMember)property);
-      case Product:               return Fundraising.Product(                (Product)property);
-      case Song:                  return Fundraising.Song(                   (Song)property);
-      case Story:                 return Fundraising.Story(                  (Story)property);
-      case Unavailability:        return Fundraising.Unavailability(         (Unavailability)property);
-      case User:                  return Fundraising.User(                   (User)property);
+      case Budget:                return Fundraising.Budget(                 Budget.valueOf(property));
+      case BudgetRecord:          return Fundraising.BudgetRecord(           BudgetRecord.valueOf(property));
+      case Ceremony:              return Fundraising.Ceremony(               Ceremony.valueOf(property));
+      case Directory:             return Fundraising.Directory(              Directory.valueOf(property));
+      case Education:             return Fundraising.Education(              Education.valueOf(property));
+      case EthnologueLanguage:    return Fundraising.EthnologueLanguage(     EthnologueLanguage.valueOf(property));
+      case FieldRegion:           return Fundraising.FieldRegion(            FieldRegion.valueOf(property));
+      case FieldZone:             return Fundraising.FieldZone(              FieldZone.valueOf(property));
+      case File:                  return Fundraising.File(                   File.valueOf(property));
+      case FileVersion:           return Fundraising.FileVersion(            FileVersion.valueOf(property));
+      case Film:                  return Fundraising.Film(                   Film.valueOf(property));
+      case FundingAccount:        return Fundraising.FundingAccount(         FundingAccount.valueOf(property));
+      case InternshipEngagement:  return Fundraising.InternshipEngagement(   InternshipEngagement.valueOf(property));
+      case Language:              return Fundraising.Language(               Language.valueOf(property));
+      case LanguageEngagement:    return Fundraising.LanguageEngagement(     LanguageEngagement.valueOf(property));
+      case LiteracyMaterial:      return Fundraising.LiteracyMaterial(       LiteracyMaterial.valueOf(property));
+      case Location:              return Fundraising.Location(               Location.valueOf(property));
+      case Organization:          return Fundraising.Organization(           Organization.valueOf(property));
+      case Partner:               return Fundraising.Partner(                Partner.valueOf(property));
+      case Partnership:           return Fundraising.Partnership(            Partnership.valueOf(property));
+      case Project:               return Fundraising.Project(                Project.valueOf(property));
+      case ProjectMember:         return Fundraising.ProjectMember(          ProjectMember.valueOf(property));
+      case Product:               return Fundraising.Product(                Product.valueOf(property));
+      case Song:                  return Fundraising.Song(                   Song.valueOf(property));
+      case Story:                 return Fundraising.Story(                  Story.valueOf(property));
+      case Unavailability:        return Fundraising.Unavailability(         Unavailability.valueOf(property));
+      case User:                  return Fundraising.User(                   User.valueOf(property));
 
       default: return Permission.None;
     }
-  }
+  };
 
   private static Permission Budget(Budget property){
     switch(property){

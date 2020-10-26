@@ -5,41 +5,42 @@ import cord.model.*;
 
 public class RegionalDirectorGlobal extends BaseRole {
   public RegionalDirectorGlobal(){
-    super(RoleNames.RegionalDirectorGlobalRole);
+    super(RoleNames.RegionalDirectorGlobalRole, RegionalDirectorGlobal.permission);
   }
-  public static Permission permission(BaseNodeLabels label, Object property){
+
+  public static IPermission permission = (BaseNodeLabels label, String property) -> {
     switch(label){
-      case Budget:                return RegionalDirectorGlobal.Budget(                 (Budget)property);
-      case BudgetRecord:          return RegionalDirectorGlobal.BudgetRecord(           (BudgetRecord)property);
-      case Ceremony:              return RegionalDirectorGlobal.Ceremony(               (Ceremony)property);
-      case Directory:             return RegionalDirectorGlobal.Directory(              (Directory)property);
-      case Education:             return RegionalDirectorGlobal.Education(              (Education)property);
-      case EthnologueLanguage:    return RegionalDirectorGlobal.EthnologueLanguage(     (EthnologueLanguage)property);
-      case FieldRegion:           return RegionalDirectorGlobal.FieldRegion(            (FieldRegion)property);
-      case FieldZone:             return RegionalDirectorGlobal.FieldZone(              (FieldZone)property);
-      case File:                  return RegionalDirectorGlobal.File(                   (File)property);
-      case FileVersion:           return RegionalDirectorGlobal.FileVersion(            (FileVersion)property);
-      case Film:                  return RegionalDirectorGlobal.Film(                   (Film)property);
-      case FundingAccount:        return RegionalDirectorGlobal.FundingAccount(         (FundingAccount)property);
-      case InternshipEngagement:  return RegionalDirectorGlobal.InternshipEngagement(   (InternshipEngagement)property);
-      case Language:              return RegionalDirectorGlobal.Language(               (Language)property);
-      case LanguageEngagement:    return RegionalDirectorGlobal.LanguageEngagement(     (LanguageEngagement)property);
-      case LiteracyMaterial:      return RegionalDirectorGlobal.LiteracyMaterial(       (LiteracyMaterial)property);
-      case Location:              return RegionalDirectorGlobal.Location(               (Location)property);
-      case Organization:          return RegionalDirectorGlobal.Organization(           (Organization)property);
-      case Partner:               return RegionalDirectorGlobal.Partner(                (Partner)property);
-      case Partnership:           return RegionalDirectorGlobal.Partnership(            (Partnership)property);
-      case Project:               return RegionalDirectorGlobal.Project(                (Project)property);
-      case ProjectMember:         return RegionalDirectorGlobal.ProjectMember(          (ProjectMember)property);
-      case Product:               return RegionalDirectorGlobal.Product(                (Product)property);
-      case Song:                  return RegionalDirectorGlobal.Song(                   (Song)property);
-      case Story:                 return RegionalDirectorGlobal.Story(                  (Story)property);
-      case Unavailability:        return RegionalDirectorGlobal.Unavailability(         (Unavailability)property);
-      case User:                  return RegionalDirectorGlobal.User(                   (User)property);
+      case Budget:                return RegionalDirectorGlobal.Budget(                 Budget.valueOf(property));
+      case BudgetRecord:          return RegionalDirectorGlobal.BudgetRecord(           BudgetRecord.valueOf(property));
+      case Ceremony:              return RegionalDirectorGlobal.Ceremony(               Ceremony.valueOf(property));
+      case Directory:             return RegionalDirectorGlobal.Directory(              Directory.valueOf(property));
+      case Education:             return RegionalDirectorGlobal.Education(              Education.valueOf(property));
+      case EthnologueLanguage:    return RegionalDirectorGlobal.EthnologueLanguage(     EthnologueLanguage.valueOf(property));
+      case FieldRegion:           return RegionalDirectorGlobal.FieldRegion(            FieldRegion.valueOf(property));
+      case FieldZone:             return RegionalDirectorGlobal.FieldZone(              FieldZone.valueOf(property));
+      case File:                  return RegionalDirectorGlobal.File(                   File.valueOf(property));
+      case FileVersion:           return RegionalDirectorGlobal.FileVersion(            FileVersion.valueOf(property));
+      case Film:                  return RegionalDirectorGlobal.Film(                   Film.valueOf(property));
+      case FundingAccount:        return RegionalDirectorGlobal.FundingAccount(         FundingAccount.valueOf(property));
+      case InternshipEngagement:  return RegionalDirectorGlobal.InternshipEngagement(   InternshipEngagement.valueOf(property));
+      case Language:              return RegionalDirectorGlobal.Language(               Language.valueOf(property));
+      case LanguageEngagement:    return RegionalDirectorGlobal.LanguageEngagement(     LanguageEngagement.valueOf(property));
+      case LiteracyMaterial:      return RegionalDirectorGlobal.LiteracyMaterial(       LiteracyMaterial.valueOf(property));
+      case Location:              return RegionalDirectorGlobal.Location(               Location.valueOf(property));
+      case Organization:          return RegionalDirectorGlobal.Organization(           Organization.valueOf(property));
+      case Partner:               return RegionalDirectorGlobal.Partner(                Partner.valueOf(property));
+      case Partnership:           return RegionalDirectorGlobal.Partnership(            Partnership.valueOf(property));
+      case Project:               return RegionalDirectorGlobal.Project(                Project.valueOf(property));
+      case ProjectMember:         return RegionalDirectorGlobal.ProjectMember(          ProjectMember.valueOf(property));
+      case Product:               return RegionalDirectorGlobal.Product(                Product.valueOf(property));
+      case Song:                  return RegionalDirectorGlobal.Song(                   Song.valueOf(property));
+      case Story:                 return RegionalDirectorGlobal.Story(                  Story.valueOf(property));
+      case Unavailability:        return RegionalDirectorGlobal.Unavailability(         Unavailability.valueOf(property));
+      case User:                  return RegionalDirectorGlobal.User(                   User.valueOf(property));
 
       default: return Permission.None;
     }
-  }
+  };
 
   private static Permission Budget(Budget property){
     switch(property){

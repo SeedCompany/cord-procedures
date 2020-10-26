@@ -6,41 +6,42 @@ import cord.model.Permission;
 
 public class Consultant extends BaseRole {
   public Consultant(){
-    super(RoleNames.ConsultantRole);
+    super(RoleNames.ConsultantRole, Consultant.permission);
   }
-  public static Permission permission(BaseNodeLabels label, Object property){
+
+  public static IPermission permission = (BaseNodeLabels label, String property) -> {
     switch(label){
-      case Budget:                return Consultant.Budget(                 (Budget)property);
-      case BudgetRecord:          return Consultant.BudgetRecord(           (BudgetRecord)property);
-      case Ceremony:              return Consultant.Ceremony(               (Ceremony)property);
-      case Directory:             return Consultant.Directory(              (Directory)property);
-      case Education:             return Consultant.Education(              (Education)property);
-      case EthnologueLanguage:    return Consultant.EthnologueLanguage(     (EthnologueLanguage)property);
-      case FieldRegion:           return Consultant.FieldRegion(            (FieldRegion)property);
-      case FieldZone:             return Consultant.FieldZone(              (FieldZone)property);
-      case File:                  return Consultant.File(                   (File)property);
-      case FileVersion:           return Consultant.FileVersion(            (FileVersion)property);
-      case Film:                  return Consultant.Film(                   (Film)property);
-      case FundingAccount:        return Consultant.FundingAccount(         (FundingAccount)property);
-      case InternshipEngagement:  return Consultant.InternshipEngagement(   (InternshipEngagement)property);
-      case Language:              return Consultant.Language(               (Language)property);
-      case LanguageEngagement:    return Consultant.LanguageEngagement(     (LanguageEngagement)property);
-      case LiteracyMaterial:      return Consultant.LiteracyMaterial(       (LiteracyMaterial)property);
-      case Location:              return Consultant.Location(               (Location)property);
-      case Organization:          return Consultant.Organization(           (Organization)property);
-      case Partner:               return Consultant.Partner(                (Partner)property);
-      case Partnership:           return Consultant.Partnership(            (Partnership)property);
-      case Project:               return Consultant.Project(                (Project)property);
-      case ProjectMember:         return Consultant.ProjectMember(          (ProjectMember)property);
-      case Product:               return Consultant.Product(                (Product)property);
-      case Song:                  return Consultant.Song(                   (Song)property);
-      case Story:                 return Consultant.Story(                  (Story)property);
-      case Unavailability:        return Consultant.Unavailability(         (Unavailability)property);
-      case User:                  return Consultant.User(                   (User)property);
+      case Budget:                return Consultant.Budget(                 Budget.valueOf(property));
+      case BudgetRecord:          return Consultant.BudgetRecord(           BudgetRecord.valueOf(property));
+      case Ceremony:              return Consultant.Ceremony(               Ceremony.valueOf(property));
+      case Directory:             return Consultant.Directory(              Directory.valueOf(property));
+      case Education:             return Consultant.Education(              Education.valueOf(property));
+      case EthnologueLanguage:    return Consultant.EthnologueLanguage(     EthnologueLanguage.valueOf(property));
+      case FieldRegion:           return Consultant.FieldRegion(            FieldRegion.valueOf(property));
+      case FieldZone:             return Consultant.FieldZone(              FieldZone.valueOf(property));
+      case File:                  return Consultant.File(                   File.valueOf(property));
+      case FileVersion:           return Consultant.FileVersion(            FileVersion.valueOf(property));
+      case Film:                  return Consultant.Film(                   Film.valueOf(property));
+      case FundingAccount:        return Consultant.FundingAccount(         FundingAccount.valueOf(property));
+      case InternshipEngagement:  return Consultant.InternshipEngagement(   InternshipEngagement.valueOf(property));
+      case Language:              return Consultant.Language(               Language.valueOf(property));
+      case LanguageEngagement:    return Consultant.LanguageEngagement(     LanguageEngagement.valueOf(property));
+      case LiteracyMaterial:      return Consultant.LiteracyMaterial(       LiteracyMaterial.valueOf(property));
+      case Location:              return Consultant.Location(               Location.valueOf(property));
+      case Organization:          return Consultant.Organization(           Organization.valueOf(property));
+      case Partner:               return Consultant.Partner(                Partner.valueOf(property));
+      case Partnership:           return Consultant.Partnership(            Partnership.valueOf(property));
+      case Project:               return Consultant.Project(                Project.valueOf(property));
+      case ProjectMember:         return Consultant.ProjectMember(          ProjectMember.valueOf(property));
+      case Product:               return Consultant.Product(                Product.valueOf(property));
+      case Song:                  return Consultant.Song(                   Song.valueOf(property));
+      case Story:                 return Consultant.Story(                  Story.valueOf(property));
+      case Unavailability:        return Consultant.Unavailability(         Unavailability.valueOf(property));
+      case User:                  return Consultant.User(                   User.valueOf(property));
 
       default: return Permission.None;
     }
-  }
+  };
 
   private static Permission Budget(Budget property){
     switch(property){

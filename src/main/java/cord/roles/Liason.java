@@ -5,41 +5,42 @@ import cord.model.*;
 
 public class Liason extends BaseRole {
   public Liason(){
-    super(RoleNames.LiasonRole);
+    super(RoleNames.LiasonRole, Liason.permission);
   }
-  public static Permission permission(BaseNodeLabels label, Object property){
+
+  public static IPermission permission = (BaseNodeLabels label, String property) -> {
     switch(label){
-      case Budget:                return Liason.Budget(                 (Budget)property);
-      case BudgetRecord:          return Liason.BudgetRecord(           (BudgetRecord)property);
-      case Ceremony:              return Liason.Ceremony(               (Ceremony)property);
-      case Directory:             return Liason.Directory(              (Directory)property);
-      case Education:             return Liason.Education(              (Education)property);
-      case EthnologueLanguage:    return Liason.EthnologueLanguage(     (EthnologueLanguage)property);
-      case FieldRegion:           return Liason.FieldRegion(            (FieldRegion)property);
-      case FieldZone:             return Liason.FieldZone(              (FieldZone)property);
-      case File:                  return Liason.File(                   (File)property);
-      case FileVersion:           return Liason.FileVersion(            (FileVersion)property);
-      case Film:                  return Liason.Film(                   (Film)property);
-      case FundingAccount:        return Liason.FundingAccount(         (FundingAccount)property);
-      case InternshipEngagement:  return Liason.InternshipEngagement(   (InternshipEngagement)property);
-      case Language:              return Liason.Language(               (Language)property);
-      case LanguageEngagement:    return Liason.LanguageEngagement(     (LanguageEngagement)property);
-      case LiteracyMaterial:      return Liason.LiteracyMaterial(       (LiteracyMaterial)property);
-      case Location:              return Liason.Location(               (Location)property);
-      case Organization:          return Liason.Organization(           (Organization)property);
-      case Partner:               return Liason.Partner(                (Partner)property);
-      case Partnership:           return Liason.Partnership(            (Partnership)property);
-      case Project:               return Liason.Project(                (Project)property);
-      case ProjectMember:         return Liason.ProjectMember(          (ProjectMember)property);
-      case Product:               return Liason.Product(                (Product)property);
-      case Song:                  return Liason.Song(                   (Song)property);
-      case Story:                 return Liason.Story(                  (Story)property);
-      case Unavailability:        return Liason.Unavailability(         (Unavailability)property);
-      case User:                  return Liason.User(                   (User)property);
+      case Budget:                return Liason.Budget(                 Budget.valueOf(property));
+      case BudgetRecord:          return Liason.BudgetRecord(           BudgetRecord.valueOf(property));
+      case Ceremony:              return Liason.Ceremony(               Ceremony.valueOf(property));
+      case Directory:             return Liason.Directory(              Directory.valueOf(property));
+      case Education:             return Liason.Education(              Education.valueOf(property));
+      case EthnologueLanguage:    return Liason.EthnologueLanguage(     EthnologueLanguage.valueOf(property));
+      case FieldRegion:           return Liason.FieldRegion(            FieldRegion.valueOf(property));
+      case FieldZone:             return Liason.FieldZone(              FieldZone.valueOf(property));
+      case File:                  return Liason.File(                   File.valueOf(property));
+      case FileVersion:           return Liason.FileVersion(            FileVersion.valueOf(property));
+      case Film:                  return Liason.Film(                   Film.valueOf(property));
+      case FundingAccount:        return Liason.FundingAccount(         FundingAccount.valueOf(property));
+      case InternshipEngagement:  return Liason.InternshipEngagement(   InternshipEngagement.valueOf(property));
+      case Language:              return Liason.Language(               Language.valueOf(property));
+      case LanguageEngagement:    return Liason.LanguageEngagement(     LanguageEngagement.valueOf(property));
+      case LiteracyMaterial:      return Liason.LiteracyMaterial(       LiteracyMaterial.valueOf(property));
+      case Location:              return Liason.Location(               Location.valueOf(property));
+      case Organization:          return Liason.Organization(           Organization.valueOf(property));
+      case Partner:               return Liason.Partner(                Partner.valueOf(property));
+      case Partnership:           return Liason.Partnership(            Partnership.valueOf(property));
+      case Project:               return Liason.Project(                Project.valueOf(property));
+      case ProjectMember:         return Liason.ProjectMember(          ProjectMember.valueOf(property));
+      case Product:               return Liason.Product(                Product.valueOf(property));
+      case Song:                  return Liason.Song(                   Song.valueOf(property));
+      case Story:                 return Liason.Story(                  Story.valueOf(property));
+      case Unavailability:        return Liason.Unavailability(         Unavailability.valueOf(property));
+      case User:                  return Liason.User(                   User.valueOf(property));
 
       default: return Permission.None;
     }
-  }
+  };
 
   private static Permission Budget(Budget property){
     switch(property){

@@ -5,41 +5,42 @@ import cord.model.*;
 
 public class Leadership extends BaseRole {
   public Leadership(){
-    super(RoleNames.LeadershipRole);
+    super(RoleNames.LeadershipRole, Leadership.permission);
   }
-  public static Permission permission(BaseNodeLabels label, Object property){
+
+  public static IPermission permission = (BaseNodeLabels label, String property) -> {
     switch(label){
-      case Budget:                return Leadership.Budget(                 (Budget)property);
-      case BudgetRecord:          return Leadership.BudgetRecord(           (BudgetRecord)property);
-      case Ceremony:              return Leadership.Ceremony(               (Ceremony)property);
-      case Directory:             return Leadership.Directory(              (Directory)property);
-      case Education:             return Leadership.Education(              (Education)property);
-      case EthnologueLanguage:    return Leadership.EthnologueLanguage(     (EthnologueLanguage)property);
-      case FieldRegion:           return Leadership.FieldRegion(            (FieldRegion)property);
-      case FieldZone:             return Leadership.FieldZone(              (FieldZone)property);
-      case File:                  return Leadership.File(                   (File)property);
-      case FileVersion:           return Leadership.FileVersion(            (FileVersion)property);
-      case Film:                  return Leadership.Film(                   (Film)property);
-      case FundingAccount:        return Leadership.FundingAccount(         (FundingAccount)property);
-      case InternshipEngagement:  return Leadership.InternshipEngagement(   (InternshipEngagement)property);
-      case Language:              return Leadership.Language(               (Language)property);
-      case LanguageEngagement:    return Leadership.LanguageEngagement(     (LanguageEngagement)property);
-      case LiteracyMaterial:      return Leadership.LiteracyMaterial(       (LiteracyMaterial)property);
-      case Location:              return Leadership.Location(               (Location)property);
-      case Organization:          return Leadership.Organization(           (Organization)property);
-      case Partner:               return Leadership.Partner(                (Partner)property);
-      case Partnership:           return Leadership.Partnership(            (Partnership)property);
-      case Project:               return Leadership.Project(                (Project)property);
-      case ProjectMember:         return Leadership.ProjectMember(          (ProjectMember)property);
-      case Product:               return Leadership.Product(                (Product)property);
-      case Song:                  return Leadership.Song(                   (Song)property);
-      case Story:                 return Leadership.Story(                  (Story)property);
-      case Unavailability:        return Leadership.Unavailability(         (Unavailability)property);
-      case User:                  return Leadership.User(                   (User)property);
+      case Budget:                return Leadership.Budget(                 Budget.valueOf(property));
+      case BudgetRecord:          return Leadership.BudgetRecord(           BudgetRecord.valueOf(property));
+      case Ceremony:              return Leadership.Ceremony(               Ceremony.valueOf(property));
+      case Directory:             return Leadership.Directory(              Directory.valueOf(property));
+      case Education:             return Leadership.Education(              Education.valueOf(property));
+      case EthnologueLanguage:    return Leadership.EthnologueLanguage(     EthnologueLanguage.valueOf(property));
+      case FieldRegion:           return Leadership.FieldRegion(            FieldRegion.valueOf(property));
+      case FieldZone:             return Leadership.FieldZone(              FieldZone.valueOf(property));
+      case File:                  return Leadership.File(                   File.valueOf(property));
+      case FileVersion:           return Leadership.FileVersion(            FileVersion.valueOf(property));
+      case Film:                  return Leadership.Film(                   Film.valueOf(property));
+      case FundingAccount:        return Leadership.FundingAccount(         FundingAccount.valueOf(property));
+      case InternshipEngagement:  return Leadership.InternshipEngagement(   InternshipEngagement.valueOf(property));
+      case Language:              return Leadership.Language(               Language.valueOf(property));
+      case LanguageEngagement:    return Leadership.LanguageEngagement(     LanguageEngagement.valueOf(property));
+      case LiteracyMaterial:      return Leadership.LiteracyMaterial(       LiteracyMaterial.valueOf(property));
+      case Location:              return Leadership.Location(               Location.valueOf(property));
+      case Organization:          return Leadership.Organization(           Organization.valueOf(property));
+      case Partner:               return Leadership.Partner(                Partner.valueOf(property));
+      case Partnership:           return Leadership.Partnership(            Partnership.valueOf(property));
+      case Project:               return Leadership.Project(                Project.valueOf(property));
+      case ProjectMember:         return Leadership.ProjectMember(          ProjectMember.valueOf(property));
+      case Product:               return Leadership.Product(                Product.valueOf(property));
+      case Song:                  return Leadership.Song(                   Song.valueOf(property));
+      case Story:                 return Leadership.Story(                  Story.valueOf(property));
+      case Unavailability:        return Leadership.Unavailability(         Unavailability.valueOf(property));
+      case User:                  return Leadership.User(                   User.valueOf(property));
 
       default: return Permission.None;
     }
-  }
+  };
 
   private static Permission Budget(Budget property){
     switch(property){
