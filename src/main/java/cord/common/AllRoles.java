@@ -26,7 +26,7 @@ public class AllRoles {
   public static StaffMember StaffMember;
   public static Translator Translator;
 
-  public static Object getRoleByName(String name){
+  public static BaseRole getRoleByName(String name){
     switch (name){
       case "Administrator":                       return AllRoles.Administrator;
       case "Consultant":                          return AllRoles.Consultant;

@@ -100,12 +100,55 @@ public class Authorization {
           sgMap.put(role.roleName, sgNode);
         }
 
+        this.processProjectMember(members, sgMap);
+
       } else {
         // add creator to admin group
         this.addMemberToSg(creatorUserId, sgMap.get(RoleNames.AdministratorRole));
       }
 
       return Stream.of(new ProcessNewBaseNodeResponse(true));
+    }
+
+    public void processProjectMember(ArrayList<Node> members, HashMap<RoleNames, Node> sgMap) throws RuntimeException {
+      try ( Transaction tx = db.beginTx() )
+      {
+        // add all project members to this base node for their correct role
+        members.forEach(memberNode -> {
+          // get member's roles
+          Iterable<Relationship> toRolesIter = memberNode.getRelationships(Direction.OUTGOING, 
+          RelationshipType.withName(AllProperties.roles.name()));
+          
+          toRolesIter.forEach(rel -> {
+            if ((Boolean)rel.getProperty(AllProperties.active.name()) == true){
+              Node rolesNode = rel.getEndNode();
+              String[] roles = (String[]) rolesNode.getProperty(AllProperties.value.name());
+              for (String role: roles){
+                // map role string to a role object
+                BaseRole roleObj = AllRoles.getRoleByName(role);
+                
+                // get member's user node
+                Relationship toUser = memberNode.getSingleRelationship(
+                  RelationshipType.withName(AllProperties.user.name()),
+                  Direction.OUTGOING);
+                Node memberUserNode = toUser.getEndNode();
+
+                // get role SG node
+                Node roleNode = sgMap.get(roleObj.roleName);
+                  
+                // attach user to SG of the role
+                roleNode.createRelationshipTo(memberUserNode, 
+                  RelationshipType.withName(NonPropertyRelationshipTypes.member.name()));
+                  
+              }
+            }
+          });
+
+        });
+        tx.commit();
+      } catch(Exception e){
+        throw new RuntimeException("error in processing project member");
+      }
     }
 
     public static class ProcessNewBaseNodeResponse {

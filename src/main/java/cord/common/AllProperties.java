@@ -125,6 +125,7 @@ public enum AllProperties {
   unavailability,
   universalTemplateFile,
   user,
+  value
 }           
       
 
