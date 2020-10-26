@@ -4,8 +4,9 @@ import cord.common.RoleNames;
 import cord.model.*;
 
 public class RegionalCommunicationCoordinator extends BaseRole {
-  public static final RoleNames roleName = RoleNames.RegionalCommunicationCoordinatorRole;
-
+  public RegionalCommunicationCoordinator(){
+    super(RoleNames.RegionalCommunicationCoordinatorRole);
+  }
   public static Permission permission(BaseNodeLabels label, Object property){
     switch(label){
       case Budget:                return RegionalCommunicationCoordinator.Budget(                 (Budget)property);

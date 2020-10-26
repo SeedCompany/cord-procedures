@@ -2,146 +2,145 @@ package cord;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.EnumSet;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import org.neo4j.graphdb.*;
-import org.neo4j.storageengine.api.RelationshipDirection;
-
 import cord.common.AllProperties;
 import cord.common.BaseNodeLabels;
-import cord.common.NonBaseNodeLabels;
-import cord.common.NonPropertyRelationshipTypes;
 import cord.common.RoleNames;
 import cord.model.*;
 import cord.roles.BaseRole;
 
 public class Utility {
 
-  public static Node getNode(GraphDatabaseService db, String id, String label) throws RuntimeException {
+  public static Long getNode(GraphDatabaseService db, String id, String label) throws RuntimeException {
     try ( Transaction tx = db.beginTx() )
     {
         Node node = tx.findNode(Label.label(label), "id", id);
+        Long nodeNeoId = node.getId();
         tx.commit();
-        return node;
+        return nodeNeoId;
     } catch(Exception e){
       throw new RuntimeException("error in finding base node: " + id);
     }
   }
 
-  public static Node getProjectNode(GraphDatabaseService db, Node baseNode, BaseNodeLabels label) {
+  public static Long getProjectNode(GraphDatabaseService db, Long baseNodeNeoId, BaseNodeLabels label) {
     try ( Transaction tx = db.beginTx() )
     {
-        Node nextNode = baseNode;
-        BaseNodeLabels nextLabel = label;
+      Long projectNeoId = null;
+      Node baseNode = tx.getNodeById(baseNodeNeoId);
+      Node nextNode = baseNode;
+      BaseNodeLabels nextLabel = label;
 
-        while (nextLabel != BaseNodeLabels.Project){
-          switch (nextLabel){
-            case File:
-            case FileNode:
-            case FileVersion:
-            case Directory:
-              if(nextNode.hasRelationship(
-                RelationshipType.withName(AllProperties.rootDirectory.name())
-              )){
-                Relationship fromFileNodeRel = nextNode.getSingleRelationship(
-                  RelationshipType.withName(AllProperties.rootDirectory.name()), Direction.INCOMING); 
-                nextNode = fromFileNodeRel.getStartNode();          
-                nextLabel = BaseNodeLabels.Project;
-              } else {
-                Relationship fromFileNodeRel = nextNode.getSingleRelationship(
-                  RelationshipType.withName(AllProperties.parent.name()), Direction.OUTGOING); 
-                nextNode = fromFileNodeRel.getEndNode();            
-                nextLabel = BaseNodeLabels.FileNode;
-                }
-              break;
-            case Budget:
-              Relationship fromBudgetRel = nextNode.getSingleRelationship(
-                RelationshipType.withName(AllProperties.budget.name()), Direction.INCOMING); 
-              nextNode = fromBudgetRel.getStartNode();
-              label = BaseNodeLabels.Project;
-              break;
-            case BudgetRecord:
-              Relationship fromBudgetRecordRel = nextNode.getSingleRelationship(
-                RelationshipType.withName(AllProperties.records.name()), Direction.INCOMING); 
-              nextNode = fromBudgetRecordRel.getStartNode();
-              label = BaseNodeLabels.Budget;
-              break;
-            case Ceremony:
-              Relationship fromCeremonyRel = nextNode.getSingleRelationship(
-                RelationshipType.withName(AllProperties.ceremony.name()), Direction.INCOMING); 
-              nextNode = fromCeremonyRel.getStartNode();
-              label = BaseNodeLabels.Engagement;
-              break;
-            case Engagement:
-            case InternshipEngagement:
-            case LanguageEngagement:
-              Relationship fromEngagementRel = nextNode.getSingleRelationship(
-                RelationshipType.withName(AllProperties.engagement.name()), Direction.INCOMING); 
-              nextNode = fromEngagementRel.getStartNode();
-              label = BaseNodeLabels.Project;
-              break;
-            case Film:
-            case LiteracyMaterial:
-            case Song:
-            case Story:
-              Relationship fromProducibleRel = nextNode.getSingleRelationship(
-                RelationshipType.withName(AllProperties.produces.name()), Direction.INCOMING); 
-              nextNode = fromProducibleRel.getStartNode();
-              label = BaseNodeLabels.Product;
-              break;
-            case Partner:
-              Relationship fromPartnerRel = nextNode.getSingleRelationship(
-                RelationshipType.withName(AllProperties.partner.name()), Direction.INCOMING); 
-              nextNode = fromPartnerRel.getStartNode();
-              label = BaseNodeLabels.Partnership;
-              break;
-            case Partnership:
-              Relationship fromPartnershipRel = nextNode.getSingleRelationship(
-                RelationshipType.withName(AllProperties.partnership.name()), Direction.INCOMING); 
-              nextNode = fromPartnershipRel.getStartNode();
-              label = BaseNodeLabels.Project;
-              break;
-            case Product:
-              Relationship fromProductRel = nextNode.getSingleRelationship(
-                RelationshipType.withName(AllProperties.product.name()), Direction.INCOMING); 
-              nextNode = fromProductRel.getStartNode();
-              label = BaseNodeLabels.Product;
-              break;
-            case ProjectMember:
-              Relationship fromProjectMemberRel = nextNode.getSingleRelationship(
-                RelationshipType.withName(AllProperties.member.name()), Direction.INCOMING); 
-              nextNode = fromProjectMemberRel.getStartNode();
-              label = BaseNodeLabels.Project;
-              break;
-            case Project:
-                return nextNode;
-            default: return null;
-          }
+      while (projectNeoId == null){
+        switch (nextLabel){
+          case File:
+          case FileNode:
+          case FileVersion:
+          case Directory:
+            if(nextNode.hasRelationship(
+              RelationshipType.withName(AllProperties.rootDirectory.name())
+            )){
+              Relationship fromFileNodeRel = nextNode.getSingleRelationship(
+                RelationshipType.withName(AllProperties.rootDirectory.name()), Direction.INCOMING); 
+              nextNode = fromFileNodeRel.getStartNode();          
+              nextLabel = BaseNodeLabels.Project;
+            } else {
+              Relationship fromFileNodeRel = nextNode.getSingleRelationship(
+                RelationshipType.withName(AllProperties.parent.name()), Direction.OUTGOING); 
+              nextNode = fromFileNodeRel.getEndNode();            
+              nextLabel = BaseNodeLabels.FileNode;
+              }
+            break;
+          case Budget:
+            Relationship fromBudgetRel = nextNode.getSingleRelationship(
+              RelationshipType.withName(AllProperties.budget.name()), Direction.INCOMING); 
+            nextNode = fromBudgetRel.getStartNode();
+            label = BaseNodeLabels.Project;
+            break;
+          case BudgetRecord:
+            Relationship fromBudgetRecordRel = nextNode.getSingleRelationship(
+              RelationshipType.withName(AllProperties.records.name()), Direction.INCOMING); 
+            nextNode = fromBudgetRecordRel.getStartNode();
+            label = BaseNodeLabels.Budget;
+            break;
+          case Ceremony:
+            Relationship fromCeremonyRel = nextNode.getSingleRelationship(
+              RelationshipType.withName(AllProperties.ceremony.name()), Direction.INCOMING); 
+            nextNode = fromCeremonyRel.getStartNode();
+            label = BaseNodeLabels.Engagement;
+            break;
+          case Engagement:
+          case InternshipEngagement:
+          case LanguageEngagement:
+            Relationship fromEngagementRel = nextNode.getSingleRelationship(
+              RelationshipType.withName(AllProperties.engagement.name()), Direction.INCOMING); 
+            nextNode = fromEngagementRel.getStartNode();
+            label = BaseNodeLabels.Project;
+            break;
+          case Film:
+          case LiteracyMaterial:
+          case Song:
+          case Story:
+            Relationship fromProducibleRel = nextNode.getSingleRelationship(
+              RelationshipType.withName(AllProperties.produces.name()), Direction.INCOMING); 
+            nextNode = fromProducibleRel.getStartNode();
+            label = BaseNodeLabels.Product;
+            break;
+          case Partner:
+            Relationship fromPartnerRel = nextNode.getSingleRelationship(
+              RelationshipType.withName(AllProperties.partner.name()), Direction.INCOMING); 
+            nextNode = fromPartnerRel.getStartNode();
+            label = BaseNodeLabels.Partnership;
+            break;
+          case Partnership:
+            Relationship fromPartnershipRel = nextNode.getSingleRelationship(
+              RelationshipType.withName(AllProperties.partnership.name()), Direction.INCOMING); 
+            nextNode = fromPartnershipRel.getStartNode();
+            label = BaseNodeLabels.Project;
+            break;
+          case Product:
+            Relationship fromProductRel = nextNode.getSingleRelationship(
+              RelationshipType.withName(AllProperties.product.name()), Direction.INCOMING); 
+            nextNode = fromProductRel.getStartNode();
+            label = BaseNodeLabels.Product;
+            break;
+          case ProjectMember:
+            Relationship fromProjectMemberRel = nextNode.getSingleRelationship(
+              RelationshipType.withName(AllProperties.member.name()), Direction.INCOMING); 
+            nextNode = fromProjectMemberRel.getStartNode();
+            label = BaseNodeLabels.Project;
+            break;
+          case Project:
+              projectNeoId = nextNode.getId();
+          default: return null;
         }
+      }
 
-        return nextNode;
+      tx.commit();
+
+      return projectNeoId;
     } catch(Exception e){
       throw new RuntimeException("error in finding project node");
     }
   }
 
-  public static ArrayList<Node> getProjectMembers(GraphDatabaseService db, Node projectNode) throws RuntimeException {
-    ArrayList<Node> members = new ArrayList<Node>();
+  public static ArrayList<Long> getProjectMembers(GraphDatabaseService db, Long projectNodeNeoId) throws RuntimeException {
+    ArrayList<Long> members = new ArrayList<Long>();
     try ( Transaction tx = db.beginTx() )
     {
-        Iterable<Relationship> iter = projectNode.getRelationships(Direction.OUTGOING, 
-          RelationshipType.withName(AllProperties.member.name()));
+      Node projectNode = tx.getNodeById(projectNodeNeoId);
+      Iterable<Relationship> iter = projectNode.getRelationships(Direction.OUTGOING, 
+        RelationshipType.withName(AllProperties.member.name()));
 
-        iter.forEach(rel -> members.add(rel.getEndNode()));
-        
-        tx.commit();
-        return members;
+      iter.forEach(rel -> members.add(rel.getEndNode().getId()));
+      
+      tx.commit();
+      return members;
     } catch(Exception e){
-      throw new RuntimeException("error in finding project member: " + projectNode.getId());
+      throw new RuntimeException("error in finding project member: " + projectNodeNeoId);
     }
   }
 
@@ -249,25 +248,26 @@ public class Utility {
     }
   }
 
-  public static Node getSecurityGroupNode(GraphDatabaseService db, BaseRole role, String baseNodeId, BaseNodeLabels label) throws RuntimeException {
+  public static Long getSecurityGroupNode(GraphDatabaseService db, BaseRole role, String baseNodeId, BaseNodeLabels label) throws RuntimeException {
 
     Map<String, Object> params = new HashMap<>();
     // params.put("role", role);                      // todo
     params.put("baseNodeId", baseNodeId);
+    params.put("role", role.roleName.name());
 
-    Node sg = null;
+    Long sg = null;
 
     try ( 
       Transaction tx = db.beginTx();
       Result result = tx.execute(
         "MATCH (sg:SecurityGroup {role: $role})-[:baseNode]->(baseNode:"+label.name()+" {id:$baseNodeId}) " +
-        "RETURN sg",
+        "RETURN id(sg) as id",
         params
       )
     ) {
       while (result.hasNext()){
         Map<String, Object> row = result.next();
-        sg = (Node) row.get("sg");
+        sg = (Long) row.get("id");
       }
 
       return sg;

@@ -4,8 +4,9 @@ import cord.common.RoleNames;
 import cord.model.*;
 
 public class FinancialAnalystOnProject extends BaseRole {
-  public static final RoleNames roleName = RoleNames.FinancialAnalystOnProjectRole;
-
+  public FinancialAnalystOnProject(){
+    super(RoleNames.FinancialAnalystOnProjectRole);
+  }
   public static Permission permission(BaseNodeLabels label, Object property){
     switch(label){
       case Budget:                return FinancialAnalystOnProject.Budget(                 (Budget)property);

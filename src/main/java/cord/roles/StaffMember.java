@@ -4,8 +4,9 @@ import cord.common.RoleNames;
 import cord.model.*;
 
 public class StaffMember extends BaseRole {
-  public static final RoleNames roleName = RoleNames.StaffMemberRole;
-
+  public StaffMember(){
+    super(RoleNames.StaffMemberRole);
+  }
   public static Permission permission(BaseNodeLabels label, Object property){
     switch(label){
       case Budget:                return StaffMember.Budget(                 (Budget)property);

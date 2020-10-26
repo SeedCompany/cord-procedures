@@ -5,8 +5,9 @@ import cord.common.RoleNames;
 import cord.model.Permission;
 
 public class ConsultantManager extends BaseRole{
-  public static final RoleNames roleName = RoleNames.ConsultantManagerRole;
-
+  public ConsultantManager(){
+    super(RoleNames.ConsultantManagerRole);
+  }
   public static Permission permission(BaseNodeLabels label, Object property){
     switch(label){
       case Budget:                return ConsultantManager.Budget(                 (Budget)property);

@@ -4,8 +4,9 @@ import cord.common.RoleNames;
 import cord.model.*;
 
 public class FieldOperationsDirector extends BaseRole {
-  public static final RoleNames roleName = RoleNames.FieldOperationsDirectorRole;
-
+  public FieldOperationsDirector(){
+    super(RoleNames.FieldOperationsDirectorRole);
+  }
   public static Permission permission(BaseNodeLabels label, Object property){
     switch(label){
       case Budget:                return FieldOperationsDirector.Budget(                 (Budget)property);

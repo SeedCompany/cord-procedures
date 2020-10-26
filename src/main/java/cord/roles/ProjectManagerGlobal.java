@@ -4,8 +4,9 @@ import cord.common.RoleNames;
 import cord.model.*;
 
 public class ProjectManagerGlobal extends BaseRole {
-  public static final RoleNames roleName = RoleNames.ProjectManagerGlobalRole;
-
+  public ProjectManagerGlobal(){
+    super(RoleNames.ProjectManagerGlobalRole);
+  }
   public static Permission permission(BaseNodeLabels label, Object property){
     switch(label){
       case Budget:                return ProjectManagerGlobal.Budget(                 (Budget)property);
