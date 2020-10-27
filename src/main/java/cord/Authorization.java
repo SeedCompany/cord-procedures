@@ -1,6 +1,6 @@
 package cord;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -28,7 +28,7 @@ public class Authorization {
     public GraphDatabaseService db;
 
     @Procedure(value = "cord.processNewBaseNode", mode = Mode.WRITE)
-    @Description("Add security and grant access to new node.")
+    @Description("Add security and grant access to new node. NOT IDEMPOTENT!")
     public Stream<ProcessNewBaseNodeResponse> processNewBaseNode(
       @Name("baseNodeId") String baseNodeId,
       @Name("baseNodeLabel") String baseNodeLabel,
@@ -184,7 +184,7 @@ public class Authorization {
         );
         sgNodeNeoId = sgNode.getId();
         sgNode.setProperty(AllProperties.id.name(), this.getUniqueIdFromNeo4jId(sgNodeNeoId)); 
-        sgNode.setProperty(AllProperties.createdAt.name(), LocalDateTime.now());
+        sgNode.setProperty(AllProperties.createdAt.name(), ZonedDateTime.now() );
         sgNode.setProperty(AllProperties.role.name(), role.roleName.name());
         sgNode.createRelationshipTo(baseNode, 
           RelationshipType.withName(NonPropertyRelationshipTypes.baseNode.name()));
@@ -194,7 +194,6 @@ public class Authorization {
         model.forEach(property -> {
 
           // determine if the role grants the prop
-          // static access not possible without gloriously large switch, ignore yellow squiggles
           Permission grant = role.permission.permission(label, property); 
 
           // get permision nodes and connect them if permitted
