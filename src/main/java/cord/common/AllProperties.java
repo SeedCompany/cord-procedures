@@ -100,7 +100,7 @@ public enum AllProperties {
   read,
   realFirstName,
   realLastName,
-  records,
+  record,
   registryOfDialectsCode,
   role,
   roles,

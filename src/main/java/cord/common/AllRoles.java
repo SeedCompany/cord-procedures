@@ -6,73 +6,128 @@ import java.util.List;
 import cord.roles.*;
 
 public class AllRoles {
-  public static Administrator Administrator;
-  public static Consultant Consultant;
-  public static ConsultantManager ConsultantManager;
-  public static Controller Controller;
-  public static FieldOperationsDirector FieldOperationsDirector;
-  public static FinancialAnalystGlobal FinancialAnalystGlobal;
-  public static FinancialAnalystOnProject FinancialAnalystOnProject;
-  public static Fundraising Fundraising;
-  public static Intern Intern;
-  public static Leadership Leadership;
-  public static Liason Liason;
-  public static Marketing Marketing;
-  public static ProjectManagerGlobal ProjectManagerGlobal;
-  public static ProjectManagerOnProject ProjectManagerOnProject;
-  public static RegionalCommunicationCoordinator RegionalCommunicationCoordinator;
-  public static RegionalDirectorGlobal RegionalDirectorGlobal;
-  public static RegionalDirectorOnProject RegionalDirectorOnProject;
-  public static StaffMember StaffMember;
-  public static Translator Translator;
+  public Administrator Administrator;
+  public Consultant Consultant;
+  public ConsultantManager ConsultantManager;
+  public Controller Controller;
+  public FieldOperationsDirector FieldOperationsDirector;
+  public FinancialAnalystGlobal FinancialAnalystGlobal;
+  public FinancialAnalystOnProject FinancialAnalystOnProject;
+  public Fundraising Fundraising;
+  public Intern Intern;
+  public Leadership Leadership;
+  public Liason Liason;
+  public Marketing Marketing;
+  public ProjectManagerGlobal ProjectManagerGlobal;
+  public ProjectManagerOnProject ProjectManagerOnProject;
+  public RegionalCommunicationCoordinator RegionalCommunicationCoordinator;
+  public RegionalDirectorGlobal RegionalDirectorGlobal;
+  public RegionalDirectorOnProject RegionalDirectorOnProject;
+  public StaffMember StaffMember;
+  public Translator Translator;
 
-  public static BaseRole getRoleByName(String name){
+  public AllRoles(){
+    this.Administrator = new Administrator();
+    this.Consultant = new Consultant();
+    this.ConsultantManager = new ConsultantManager();
+    this.Controller = new Controller();
+    this.FieldOperationsDirector = new FieldOperationsDirector();
+    this.FinancialAnalystGlobal = new FinancialAnalystGlobal();
+    this.FinancialAnalystOnProject = new FinancialAnalystOnProject();
+    this.Fundraising = new Fundraising();
+    this.Intern = new Intern();
+    this.Leadership = new Leadership();
+    this.Liason = new Liason();
+    this.Marketing = new Marketing();
+    this.ProjectManagerGlobal = new ProjectManagerGlobal();
+    this.ProjectManagerOnProject = new ProjectManagerOnProject();
+    this.RegionalCommunicationCoordinator = new RegionalCommunicationCoordinator();
+    this.RegionalDirectorGlobal = new RegionalDirectorGlobal();
+    this.RegionalDirectorOnProject = new RegionalDirectorOnProject();
+    this.StaffMember = new StaffMember();
+    this.Translator = new Translator();
+  }
+
+  public BaseRole getRoleByName(String name){
     switch (name){
-      case "Administrator":                       return AllRoles.Administrator;
-      case "Consultant":                          return AllRoles.Consultant;
-      case "ConsultantManager":                   return AllRoles.ConsultantManager;
-      case "Controller":                          return AllRoles.Controller;
-      case "FieldOperationsDirector":             return AllRoles.FieldOperationsDirector;
-      case "FinancialAnalystGlobal":              return AllRoles.FinancialAnalystGlobal;
-      case "FinancialAnalystOnProject":           return AllRoles.FinancialAnalystOnProject;
-      case "Fundraising":                         return AllRoles.Fundraising;
-      case "Intern":                              return AllRoles.Intern;
-      case "Leadership":                          return AllRoles.Leadership;
-      case "Liason":                              return AllRoles.Liason;
-      case "Marketing":                           return AllRoles.Marketing;
-      case "ProjectManagerGlobal":                return AllRoles.ProjectManagerGlobal;
-      case "ProjectManagerOnProject":             return AllRoles.ProjectManagerOnProject;
-      case "RegionalCommunicationCoordinator":    return AllRoles.RegionalCommunicationCoordinator;
-      case "RegionalDirectorGlobal":              return AllRoles.RegionalDirectorGlobal;
-      case "RegionalDirectorOnProject":           return AllRoles.RegionalDirectorOnProject;
-      case "StaffMember":                         return AllRoles.StaffMember;
-      case "Translator":                          return AllRoles.Translator;
+      case "Administrator":                       return this.Administrator;
+      case "Consultant":                          return this.Consultant;
+      case "ConsultantManager":                   return this.ConsultantManager;
+      case "Controller":                          return this.Controller;
+      case "FieldOperationsDirector":             return this.FieldOperationsDirector;
+      case "FinancialAnalyst":                    // must fall through to project
+      case "FinancialAnalystOnProject":           return this.FinancialAnalystOnProject;
+      case "FinancialAnalystGlobal":              return this.FinancialAnalystGlobal;
+      case "Fundraising":                         return this.Fundraising;
+      case "Intern":                              return this.Intern;
+      case "Leadership":                          return this.Leadership;
+      case "Liason":                              return this.Liason;
+      case "Marketing":                           return this.Marketing;
+      case "ProjectManager":                      // must fall through to project
+      case "ProjectManagerOnProject":             return this.ProjectManagerOnProject;
+      case "ProjectManagerGlobal":                return this.ProjectManagerGlobal;
+      case "RegionalCommunicationCoordinator":    return this.RegionalCommunicationCoordinator;
+      case "RegionalDirector":                    // must fall through to project
+      case "RegionalDirectorOnProject":           return this.RegionalDirectorOnProject;
+      case "RegionalDirectorGlobal":              return this.RegionalDirectorGlobal;
+      case "StaffMember":                         return this.StaffMember;
+      case "Translator":                          return this.Translator;
 
       default:                                    return null;
     }
   }
 
-  public static List<String> rolesList(){
+  public List<BaseRole> allRolesList(){
     return Arrays.asList(
-      "Administrator",
-      "Consultant",
-      "ConsultantManager",
-      "Controller",
-      "FieldOperationsDirector",
-      "FinancialAnalystGlobal",
-      "FinancialAnalystOnProject",
-      "Fundraising",
-      "Intern",
-      "Leadership",
-      "Liason",
-      "Marketing",
-      "ProjectManagerGlobal",
-      "ProjectManagerOnProject",
-      "RegionalCommunicationCoordinator",
-      "RegionalDirectorGlobal",
-      "RegionalDirectorOnProject",
-      "StaffMember",
-      "Translator"
+      this.Administrator,
+      this.Consultant,
+      this.ConsultantManager,
+      this.Controller,
+      this.FieldOperationsDirector,
+      this.FinancialAnalystGlobal,
+      this.FinancialAnalystOnProject,
+      this.Fundraising,
+      this.Intern,
+      this.Leadership,
+      this.Liason,
+      this.Marketing,
+      this.ProjectManagerGlobal,
+      this.ProjectManagerOnProject,
+      this.RegionalCommunicationCoordinator,
+      this.RegionalDirectorGlobal,
+      this.RegionalDirectorOnProject,
+      this.StaffMember,
+      this.Translator
+    );
+  }
+
+  public List<BaseRole> globalRolesList(){
+    return Arrays.asList(
+      this.Administrator,
+      this.ConsultantManager,
+      this.Controller,
+      this.FieldOperationsDirector,
+      this.FinancialAnalystGlobal,
+      this.Fundraising,
+      this.Leadership,
+      this.Marketing,
+      this.ProjectManagerGlobal,
+      this.RegionalDirectorGlobal,
+      this.RegionalDirectorOnProject,
+      this.StaffMember
+    );
+  }
+
+  public List<BaseRole> projectRolesList(){
+    return Arrays.asList(
+      this.Consultant,
+      this.FinancialAnalystOnProject,
+      this.Intern,
+      this.Liason,
+      this.ProjectManagerOnProject,
+      this.RegionalCommunicationCoordinator,
+      this.RegionalDirectorOnProject,
+      this.Translator
     );
   }
 }

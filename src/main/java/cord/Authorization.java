@@ -28,7 +28,7 @@ public class Authorization {
     public GraphDatabaseService db;
 
     @Procedure(value = "cord.processNewBaseNode", mode = Mode.WRITE)
-    @Description("Do the thing.")
+    @Description("Add security and grant access to new node.")
     public Stream<ProcessNewBaseNodeResponse> processNewBaseNode(
       @Name("baseNodeId") String baseNodeId,
       @Name("baseNodeLabel") String baseNodeLabel,
@@ -37,7 +37,7 @@ public class Authorization {
 
       try {
 
-        this.log.info("cord.processNewBaseNode start");
+        AllRoles allRoles = new AllRoles();
 
         Long baseNodeNeoId = Utility.getNode(db, baseNodeId, baseNodeLabel);
         
@@ -51,21 +51,7 @@ public class Authorization {
         // create SGs for all the global roles      
         HashMap<RoleNames, Long> sgMap = new HashMap<RoleNames, Long>();
 
-        BaseRole[] globalRoles = {
-           new Administrator(),
-           new ConsultantManager(),
-           new Controller(),
-           new Leadership(),
-           new FieldOperationsDirector(),
-           new FinancialAnalystGlobal(),
-           new Fundraising(),
-           new Marketing(),
-           new ProjectManagerGlobal(),
-           new RegionalDirectorGlobal(),
-           new StaffMember()
-        };
-
-        for (BaseRole role: globalRoles){
+        for (BaseRole role: allRoles.globalRolesList()){
           Long sgNodeNeoId = this.mergeSecurityGroupForRole(role, baseNodeId, baseNodeNeoId, label, model, permMap);
           sgMap.put(role.roleName, sgNodeNeoId);
 
@@ -78,27 +64,22 @@ public class Authorization {
         Boolean isProjectNode = Utility.isProjectChildNode(label);
 
         if (isProjectNode) {
-        // get project members
-        Long projectNodeNeoId = Utility.getProjectNode(db, baseNodeNeoId, label);
-        ArrayList<Long> members = Utility.getProjectMembers(db, projectNodeNeoId);
 
-          BaseRole[] projectRoles = {
-            new Consultant(),
-            new FinancialAnalystOnProject(),
-            new Intern(),
-            new Liason(),
-            new ProjectManagerOnProject(),
-            new RegionalCommunicationCoordinator(),
-            new RegionalDirectorOnProject(),
-            new Translator()
-          };
-    
-          for (BaseRole role: projectRoles){
-            Long sgNodeNeoId = this.mergeSecurityGroupForRole(role, baseNodeId, baseNodeNeoId, label, model, permMap);
-            sgMap.put(role.roleName, sgNodeNeoId);
+          // get project members
+          Long projectNodeNeoId = Utility.getProjectNode(db, log, baseNodeNeoId, label);
+          if (projectNodeNeoId == null){
+            this.log.error("project id not found. skipping adding project members to new node. baseNodeNeoId: " + baseNodeNeoId + " label: " + label);
+          } else {    
+            ArrayList<Long> members = Utility.getProjectMembers(db, projectNodeNeoId);
+
+            for (BaseRole role: allRoles.projectRolesList()){
+              Long sgNodeNeoId = this.mergeSecurityGroupForRole(role, baseNodeId, baseNodeNeoId, label, model, permMap);
+              sgMap.put(role.roleName, sgNodeNeoId);
+            }
+
+            this.processProjectMember(members, sgMap, allRoles);
+
           }
-
-          this.processProjectMember(members, sgMap);
 
         } else {
 
@@ -106,19 +87,16 @@ public class Authorization {
           this.addMemberToSg(creatorUserId, sgMap.get(RoleNames.AdministratorRole));
         }
 
-        this.log.info("cord.processNewBaseNode stop");
-
         return Stream.of(new ProcessNewBaseNodeResponse(true));
-
 
       } catch (Exception e){
         e.printStackTrace();
         this.log.error(e.getMessage());
-      }
-      return Stream.of(new ProcessNewBaseNodeResponse(false));
+        throw new RuntimeException("error in processing new base node " + baseNodeId);
+      } 
     }
 
-    public void processProjectMember(ArrayList<Long> members, HashMap<RoleNames, Long> sgMap) throws RuntimeException {
+    public void processProjectMember(ArrayList<Long> members, HashMap<RoleNames, Long> sgMap, AllRoles allRoles) throws RuntimeException {
       try ( Transaction tx = db.beginTx() )
       {
         // add all project members to this base node for their correct role
@@ -127,37 +105,39 @@ public class Authorization {
           // get member's roles
           Iterable<Relationship> toRolesIter = memberNode.getRelationships(Direction.OUTGOING, 
           RelationshipType.withName(AllProperties.roles.name()));
-          
           toRolesIter.forEach(rel -> {
             if ((Boolean)rel.getProperty(AllProperties.active.name()) == true){
               Node rolesNode = rel.getEndNode();
               String[] roles = (String[]) rolesNode.getProperty(AllProperties.value.name());
-              for (String role: roles){
-                // map role string to a role object
-                BaseRole roleObj = AllRoles.getRoleByName(role);
-                
-                // get member's user node
-                Relationship toUser = memberNode.getSingleRelationship(
-                  RelationshipType.withName(AllProperties.user.name()),
-                  Direction.OUTGOING);
-                Node memberUserNode = toUser.getEndNode();
+              if (roles != null){
 
-                // get role SG node
-                Long roleNodeNeoId = sgMap.get(roleObj.roleName);
-                Node roleNode = tx.getNodeById(roleNodeNeoId);
+                for (String role: roles){
+                  // map role string to a role object
+                  BaseRole roleObj = allRoles.getRoleByName(role);
                   
-                // attach user to SG of the role
-                roleNode.createRelationshipTo(memberUserNode, 
-                  RelationshipType.withName(NonPropertyRelationshipTypes.member.name()));
-                  
-              }
+                  // get member's user node
+                  Relationship toUser = memberNode.getSingleRelationship(
+                    RelationshipType.withName(AllProperties.user.name()),
+                    Direction.OUTGOING);
+                    Node memberUserNode = toUser.getEndNode();
+                    // get role SG node
+                    Long roleNodeNeoId = sgMap.get(roleObj.roleName);
+                    Node roleNode = tx.getNodeById(roleNodeNeoId);
+                    
+                    // attach user to SG of the role
+                    roleNode.createRelationshipTo(memberUserNode, 
+                    RelationshipType.withName(NonPropertyRelationshipTypes.member.name()));
+                  }
+                } else {
+                  this.log.error("roles is null");
+                }
             }
           });
 
         });
         tx.commit();
       } catch(Exception e){
-        this.log.error(e.getMessage());
+        e.printStackTrace();
         throw new RuntimeException("error in processing project member");
       }
     }
@@ -332,8 +312,26 @@ public class Authorization {
           Iterator<Node> iter = tx.findNodes(Label.label(role.roleName.name()));
           while(iter.hasNext()){
             Node userNode = iter.next();
-            sgNode.createRelationshipTo(userNode, 
+            Long userNodeNeoId = userNode.getId();
+            Boolean isMember = false;
+
+            Iterable<Relationship> memberRels = userNode.getRelationships(Direction.INCOMING, 
               RelationshipType.withName(NonPropertyRelationshipTypes.member.name()));
+
+            Iterator<Relationship> memberRelsIter = memberRels.iterator();
+            
+            while (memberRelsIter.hasNext()){
+              Relationship rel = memberRelsIter.next();
+
+              if (rel.getEndNode().getId() == userNodeNeoId){
+                isMember = true;
+              }
+            }
+
+            if (!isMember){
+              sgNode.createRelationshipTo(userNode, 
+              RelationshipType.withName(NonPropertyRelationshipTypes.member.name()));
+            }
           }
           tx.commit();
       } catch(Exception e){

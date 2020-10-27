@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.neo4j.graphdb.*;
+import org.neo4j.logging.Log;
+
 import cord.common.AllProperties;
 import cord.common.BaseNodeLabels;
 import cord.common.RoleNames;
@@ -22,13 +24,16 @@ public class Utility {
         tx.commit();
         return nodeNeoId;
     } catch(Exception e){
-      throw new RuntimeException("error in finding base node: " + id);
+      throw new RuntimeException("error in finding base node: " + label + " id:" + id);
     }
   }
 
-  public static Long getProjectNode(GraphDatabaseService db, Long baseNodeNeoId, BaseNodeLabels label) {
+  public static Long getProjectNode(
+    GraphDatabaseService db, 
+    Log log, 
+    Long baseNodeNeoId, 
+    BaseNodeLabels label) {
 
-    System.out.println("label" + label);
     Long projectNeoId = null;
     try ( Transaction tx = db.beginTx() )
     {
@@ -37,49 +42,101 @@ public class Utility {
       BaseNodeLabels nextLabel = label;
 
       while (projectNeoId == null){
-
-        System.out.println("next label: " + nextLabel);
-
         switch (nextLabel){
+          case Project:
+            projectNeoId = nextNode.getId();
+            break;
           case File:
           case FileNode:
           case FileVersion:
           case Directory:
-            System.out.println("a1");
             if(nextNode.hasRelationship(
-              RelationshipType.withName(AllProperties.rootDirectory.name())
-            )){
-              System.out.println("a2");
+              RelationshipType.withName(AllProperties.rootDirectory.name()))
+            ){
               Relationship fromFileNodeRel = nextNode.getSingleRelationship(
                 RelationshipType.withName(AllProperties.rootDirectory.name()), Direction.INCOMING); 
-                System.out.println("a3");
               nextNode = fromFileNodeRel.getStartNode();          
               nextLabel = BaseNodeLabels.Project;
               projectNeoId = nextNode.getId();
+            } else if (
+              nextNode.hasRelationship(
+                RelationshipType.withName(AllProperties.pnp.name()))
+            ){
+              Relationship fromFileNodeRel = nextNode.getSingleRelationship(
+                RelationshipType.withName(AllProperties.pnp.name()), Direction.INCOMING); 
+              nextNode = fromFileNodeRel.getStartNode();          
+              nextLabel = BaseNodeLabels.Engagement;
+            } else if (
+              nextNode.hasRelationship(
+                RelationshipType.withName(AllProperties.growthPlan.name()))
+            ){
+              Relationship fromFileNodeRel = nextNode.getSingleRelationship(
+                RelationshipType.withName(AllProperties.growthPlan.name()), Direction.INCOMING); 
+              nextNode = fromFileNodeRel.getStartNode();          
+              nextLabel = BaseNodeLabels.Engagement;
+            } else if (
+              nextNode.hasRelationship(
+                RelationshipType.withName(AllProperties.universalTemplateFile.name()))
+            ){
+              Relationship fromFileNodeRel = nextNode.getSingleRelationship(
+                RelationshipType.withName(AllProperties.universalTemplateFile.name()), Direction.INCOMING); 
+              nextNode = fromFileNodeRel.getStartNode();          
+              nextLabel = BaseNodeLabels.Budget;
+            } else if (
+              nextNode.hasRelationship(
+                RelationshipType.withName(AllProperties.mou.name()))
+            ){
+              Relationship fromFileNodeRel = nextNode.getSingleRelationship(
+                RelationshipType.withName(AllProperties.mou.name()), Direction.INCOMING); 
+              nextNode = fromFileNodeRel.getStartNode();          
+              nextLabel = BaseNodeLabels.Partnership;
+            } else if (
+              nextNode.hasRelationship(
+                RelationshipType.withName(AllProperties.agreement.name()))
+            ){
+              Relationship fromFileNodeRel = nextNode.getSingleRelationship(
+                RelationshipType.withName(AllProperties.agreement.name()), Direction.INCOMING); 
+              nextNode = fromFileNodeRel.getStartNode();          
+              nextLabel = BaseNodeLabels.Partnership;
             } else {
-              System.out.println("a4");
               Relationship fromFileNodeRel = nextNode.getSingleRelationship(
                 RelationshipType.withName(AllProperties.parent.name()), Direction.OUTGOING); 
+                if (fromFileNodeRel == null){
+                  log.error("file node rel is null for label " + nextLabel + " nextNodeNeoId: " + nextNode.getId());
+                  return null;
+                }
               nextNode = fromFileNodeRel.getEndNode();            
               nextLabel = BaseNodeLabels.FileNode;
-              }
+            }
             break;
           case Budget:
             Relationship fromBudgetRel = nextNode.getSingleRelationship(
               RelationshipType.withName(AllProperties.budget.name()), Direction.INCOMING); 
+              if (fromBudgetRel == null){
+                log.error("budget rel is null for label " + nextLabel + " nextNodeNeoId: " + nextNode.getId());
+                return null;
+              }
             nextNode = fromBudgetRel.getStartNode();
             nextLabel = BaseNodeLabels.Project;
             projectNeoId = nextNode.getId();
             break;
           case BudgetRecord:
             Relationship fromBudgetRecordRel = nextNode.getSingleRelationship(
-              RelationshipType.withName(AllProperties.records.name()), Direction.INCOMING); 
+              RelationshipType.withName(AllProperties.record.name()), Direction.INCOMING); 
+              if (fromBudgetRecordRel == null){
+                log.error("budget record rel is null for label " + nextLabel + " nextNodeNeoId: " + nextNode.getId());
+                return null;
+              }
             nextNode = fromBudgetRecordRel.getStartNode();
             nextLabel = BaseNodeLabels.Budget;
             break;
           case Ceremony:
             Relationship fromCeremonyRel = nextNode.getSingleRelationship(
               RelationshipType.withName(AllProperties.ceremony.name()), Direction.INCOMING); 
+              if (fromCeremonyRel == null){
+                log.error("ceremony rel is null for label " + nextLabel + " nextNodeNeoId: " + nextNode.getId());
+                return null;
+              }
             nextNode = fromCeremonyRel.getStartNode();
             nextLabel = BaseNodeLabels.Engagement;
             break;
@@ -88,6 +145,10 @@ public class Utility {
           case LanguageEngagement:
             Relationship fromEngagementRel = nextNode.getSingleRelationship(
               RelationshipType.withName(AllProperties.engagement.name()), Direction.INCOMING); 
+              if (fromEngagementRel == null){
+                log.error("engagement rel is null for label " + nextLabel + " nextNodeNeoId: " + nextNode.getId());
+                return null;
+              }
             nextNode = fromEngagementRel.getStartNode();
             nextLabel = BaseNodeLabels.Project;
             projectNeoId = nextNode.getId();
@@ -98,18 +159,30 @@ public class Utility {
           case Story:
             Relationship fromProducibleRel = nextNode.getSingleRelationship(
               RelationshipType.withName(AllProperties.produces.name()), Direction.INCOMING); 
+              if (fromProducibleRel == null){
+                log.error("producible rel is null for label " + nextLabel + " nextNodeNeoId: " + nextNode.getId());
+                return null;
+              }
             nextNode = fromProducibleRel.getStartNode();
             nextLabel = BaseNodeLabels.Product;
             break;
           case Partner:
             Relationship fromPartnerRel = nextNode.getSingleRelationship(
               RelationshipType.withName(AllProperties.partner.name()), Direction.INCOMING); 
+              if (fromPartnerRel == null){
+                log.error("partner rel is null for label " + nextLabel + " nextNodeNeoId: " + nextNode.getId());
+                return null;
+              }
             nextNode = fromPartnerRel.getStartNode();
             nextLabel = BaseNodeLabels.Partnership;
             break;
           case Partnership:
             Relationship fromPartnershipRel = nextNode.getSingleRelationship(
               RelationshipType.withName(AllProperties.partnership.name()), Direction.INCOMING); 
+              if (fromPartnershipRel == null){
+                log.error("partnership rel is null for label " + nextLabel + " nextNodeNeoId: " + nextNode.getId());
+                return null;
+              }
             nextNode = fromPartnershipRel.getStartNode();
             nextLabel = BaseNodeLabels.Project;
             projectNeoId = nextNode.getId();
@@ -117,19 +190,27 @@ public class Utility {
           case Product:
             Relationship fromProductRel = nextNode.getSingleRelationship(
               RelationshipType.withName(AllProperties.product.name()), Direction.INCOMING); 
+              if (fromProductRel == null){
+                log.error("product rel is null for label " + nextLabel + " nextNodeNeoId: " + nextNode.getId());
+                return null;
+              }
             nextNode = fromProductRel.getStartNode();
             nextLabel = BaseNodeLabels.Product;
             break;
           case ProjectMember:
             Relationship fromProjectMemberRel = nextNode.getSingleRelationship(
               RelationshipType.withName(AllProperties.member.name()), Direction.INCOMING); 
+              if (fromProjectMemberRel == null){
+                log.error("ceremony rel is null for label " + nextLabel + " nextNodeNeoId: " + nextNode.getId());
+                return null;
+              }
             nextNode = fromProjectMemberRel.getStartNode();
             nextLabel = BaseNodeLabels.Project;
             projectNeoId = nextNode.getId();
             break;
-          case Project:
-            projectNeoId = nextNode.getId();
-          default: return null;
+          default: 
+            log.error("base node label not found in project nodes switch:" + nextLabel);
+            return null;
         }
       }
 
@@ -137,7 +218,7 @@ public class Utility {
 
     } catch(Exception e){
       e.printStackTrace();
-      System.out.println(e.getMessage());
+      log.info(e.getMessage());
       throw new RuntimeException("error in finding project node");
     }
 
@@ -149,20 +230,14 @@ public class Utility {
     try ( Transaction tx = db.beginTx() )
     {
       Node projectNode = tx.getNodeById(projectNodeNeoId);
-      System.out.println("m1");
       Iterable<Relationship> iter = projectNode.getRelationships(Direction.OUTGOING, 
         RelationshipType.withName(AllProperties.member.name()));
-        System.out.println("m2");
       iter.forEach(rel -> members.add(rel.getEndNode().getId()));
-      System.out.println("m3");
-      System.out.println("members size: " + members.size());
       tx.commit();
-      System.out.println("m4");
     } catch(Exception e){
       e.printStackTrace();
       throw new RuntimeException("error in finding project member: " + projectNodeNeoId);
     }
-    System.out.println("m5");
     return members;
   }
 
@@ -188,6 +263,7 @@ public class Utility {
       case "LiteracyMaterial":        return BaseNodeLabels.LiteracyMaterial;
       case "Location":                return BaseNodeLabels.Location;
       case "Organization":            return BaseNodeLabels.Organization;
+      case "Partner":                 return BaseNodeLabels.Partner;
       case "Partnership":             return BaseNodeLabels.Partnership;
       case "Product":                 return BaseNodeLabels.Product;
       case "Project":                 return BaseNodeLabels.Project;
@@ -259,7 +335,6 @@ public class Utility {
       case InternshipEngagement:  return true;
       case LanguageEngagement:    return true;
       case LiteracyMaterial:      return true;
-      case Partner:               return true;
       case Partnership:           return true;
       case Product:               return true;
       case ProjectMember:         return true;
