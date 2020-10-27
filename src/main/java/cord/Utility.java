@@ -153,19 +153,6 @@ public class Utility {
             nextLabel = BaseNodeLabels.Project;
             projectNeoId = nextNode.getId();
             break;
-          case Film:
-          case LiteracyMaterial:
-          case Song:
-          case Story:
-            Relationship fromProducibleRel = nextNode.getSingleRelationship(
-              RelationshipType.withName(AllProperties.produces.name()), Direction.INCOMING); 
-              if (fromProducibleRel == null){
-                log.error("producible rel is null for label " + nextLabel + " nextNodeNeoId: " + nextNode.getId());
-                return null;
-              }
-            nextNode = fromProducibleRel.getStartNode();
-            nextLabel = BaseNodeLabels.Product;
-            break;
           case Partner:
             Relationship fromPartnerRel = nextNode.getSingleRelationship(
               RelationshipType.withName(AllProperties.partner.name()), Direction.INCOMING); 
@@ -195,7 +182,7 @@ public class Utility {
                 return null;
               }
             nextNode = fromProductRel.getStartNode();
-            nextLabel = BaseNodeLabels.Product;
+            nextLabel = BaseNodeLabels.Engagement;
             break;
           case ProjectMember:
             Relationship fromProjectMemberRel = nextNode.getSingleRelationship(
@@ -331,15 +318,11 @@ public class Utility {
       case File:                  return true;
       case FileNode:              return true;
       case FileVersion:           return true;
-      case Film:                  return true;
       case InternshipEngagement:  return true;
       case LanguageEngagement:    return true;
-      case LiteracyMaterial:      return true;
       case Partnership:           return true;
       case Product:               return true;
       case ProjectMember:         return true;
-      case Song:                  return true;
-      case Story:                 return true;
       default:                    return false;
     }
   }
