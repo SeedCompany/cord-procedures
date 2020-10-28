@@ -60,42 +60,42 @@ public class Utility {
               projectNeoId = nextNode.getId();
             } else if (
               nextNode.hasRelationship(
-                RelationshipType.withName(AllProperties.pnp.name()))
+                RelationshipType.withName(AllProperties.pnpNode.name()))
             ){
               Relationship fromFileNodeRel = nextNode.getSingleRelationship(
-                RelationshipType.withName(AllProperties.pnp.name()), Direction.INCOMING); 
+                RelationshipType.withName(AllProperties.pnpNode.name()), Direction.INCOMING); 
               nextNode = fromFileNodeRel.getStartNode();          
               nextLabel = BaseNodeLabels.Engagement;
             } else if (
               nextNode.hasRelationship(
-                RelationshipType.withName(AllProperties.growthPlan.name()))
+                RelationshipType.withName(AllProperties.growthPlanNode.name()))
             ){
               Relationship fromFileNodeRel = nextNode.getSingleRelationship(
-                RelationshipType.withName(AllProperties.growthPlan.name()), Direction.INCOMING); 
+                RelationshipType.withName(AllProperties.growthPlanNode.name()), Direction.INCOMING); 
               nextNode = fromFileNodeRel.getStartNode();          
               nextLabel = BaseNodeLabels.Engagement;
             } else if (
               nextNode.hasRelationship(
-                RelationshipType.withName(AllProperties.universalTemplateFile.name()))
+                RelationshipType.withName(AllProperties.universalTemplateFileNode.name()))
             ){
               Relationship fromFileNodeRel = nextNode.getSingleRelationship(
-                RelationshipType.withName(AllProperties.universalTemplateFile.name()), Direction.INCOMING); 
+                RelationshipType.withName(AllProperties.universalTemplateFileNode.name()), Direction.INCOMING); 
               nextNode = fromFileNodeRel.getStartNode();          
               nextLabel = BaseNodeLabels.Budget;
             } else if (
               nextNode.hasRelationship(
-                RelationshipType.withName(AllProperties.mou.name()))
+                RelationshipType.withName(AllProperties.mouNode.name()))
             ){
               Relationship fromFileNodeRel = nextNode.getSingleRelationship(
-                RelationshipType.withName(AllProperties.mou.name()), Direction.INCOMING); 
+                RelationshipType.withName(AllProperties.mouNode.name()), Direction.INCOMING); 
               nextNode = fromFileNodeRel.getStartNode();          
               nextLabel = BaseNodeLabels.Partnership;
             } else if (
               nextNode.hasRelationship(
-                RelationshipType.withName(AllProperties.agreement.name()))
+                RelationshipType.withName(AllProperties.agreementNode.name()))
             ){
               Relationship fromFileNodeRel = nextNode.getSingleRelationship(
-                RelationshipType.withName(AllProperties.agreement.name()), Direction.INCOMING); 
+                RelationshipType.withName(AllProperties.agreementNode.name()), Direction.INCOMING); 
               nextNode = fromFileNodeRel.getStartNode();          
               nextLabel = BaseNodeLabels.Partnership;
             } else {
