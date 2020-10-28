@@ -108,28 +108,31 @@ public class Authorization {
           toRolesIter.forEach(rel -> {
             if ((Boolean)rel.getProperty(AllProperties.active.name()) == true){
               Node rolesNode = rel.getEndNode();
-              String[] roles = (String[]) rolesNode.getProperty(AllProperties.value.name());
-              if (roles != null){
+              if (rolesNode.hasProperty(AllProperties.value.name())){
 
-                for (String role: roles){
-                  // map role string to a role object
-                  BaseRole roleObj = allRoles.getRoleByName(role);
+                String[] roles = (String[]) rolesNode.getProperty(AllProperties.value.name());
+                if (roles != null){
                   
-                  // get member's user node
-                  Relationship toUser = memberNode.getSingleRelationship(
-                    RelationshipType.withName(AllProperties.user.name()),
-                    Direction.OUTGOING);
-                    Node memberUserNode = toUser.getEndNode();
-                    // get role SG node
-                    Long roleNodeNeoId = sgMap.get(roleObj.roleName);
-                    Node roleNode = tx.getNodeById(roleNodeNeoId);
+                  for (String role: roles){
+                    // map role string to a role object
+                    BaseRole roleObj = allRoles.getRoleByName(role);
                     
-                    // attach user to SG of the role
-                    roleNode.createRelationshipTo(memberUserNode, 
-                    RelationshipType.withName(NonPropertyRelationshipTypes.member.name()));
+                    // get member's user node
+                    Relationship toUser = memberNode.getSingleRelationship(
+                      RelationshipType.withName(AllProperties.user.name()),
+                      Direction.OUTGOING);
+                      Node memberUserNode = toUser.getEndNode();
+                      // get role SG node
+                      Long roleNodeNeoId = sgMap.get(roleObj.roleName);
+                      Node roleNode = tx.getNodeById(roleNodeNeoId);
+                      
+                      // attach user to SG of the role
+                      roleNode.createRelationshipTo(memberUserNode, 
+                      RelationshipType.withName(NonPropertyRelationshipTypes.member.name()));
+                    }
+                  } else {
+                    this.log.error("roles is null");
                   }
-                } else {
-                  this.log.error("roles is null");
                 }
             }
           });
