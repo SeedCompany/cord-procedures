@@ -105,6 +105,7 @@ public enum AllProperties {
   realFirstName,
   realLastName,
   record,
+  records,
   registryOfDialectsCode,
   role,
   roles,

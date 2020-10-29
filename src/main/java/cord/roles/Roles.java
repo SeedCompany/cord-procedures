@@ -8,55 +8,253 @@ import cord.common.BaseNodeLabels;
 import cord.model.Perm;
 
 public class Roles {
+  private HashMap<String, Perm> p;
+  public Roles(){
+    this.p = new HashMap<String, Perm>();
 
-  class RoleToPerm{
-    private HashMap<RoleNames, Perm> map;
-    public RoleToPerm(RoleNames role, Perm[] perms){
-      this.map = new HashMap<RoleNames, Perm>();
-      for (Perm perm : perms){
-        map.put(role, perm);
+    addPerm(BaseNodeLabels.Budget, AllProperties.about, RoleNames.AdministratorRole, Perm.NO);
+
+    Object[][] matrix = {                                                 /*  Admin,   PM G,    PM P,    RD G,    RD P,    FOD,     FA G,    FA P,    CTRL,    CM,      FUN,     MAR,     STAF,    LEAD,    INT,     LIA,     MEN,     RCC,     TRA,     CON        */
+      {BaseNodeLabels.Budget, AllProperties.universalTemplateFile,            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.records,                          Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.status,                           Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {BaseNodeLabels.Budget, AllProperties.about,                            Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW, Perm.RW },
+      {},
+    };
+
+    Integer baseNodePropertyCombos = 15;
+    Integer roles = 19;
+
+    for (Integer i = 0; i < baseNodePropertyCombos; i++){
+      BaseNodeLabels baseNode = null;
+      AllProperties property = null;
+      for (Integer j = 0; j < roles; j++){
+        switch (j){
+          case (0):  baseNode = (BaseNodeLabels) matrix[i][j]; break;
+          case (1):  property = (AllProperties) matrix[i][j]; break;
+          case (2):  this.addPerm(baseNode, property, RoleNames.AdministratorRole, (Perm) matrix[i][j]); break;
+          case (3):  this.addPerm(baseNode, property, RoleNames.ProjectManagerGlobalRole, (Perm) matrix[i][j]); break;
+          case (4):  this.addPerm(baseNode, property, RoleNames.ProjectManagerOnProjectRole, (Perm) matrix[i][j]); break;
+          case (5):  this.addPerm(baseNode, property, RoleNames.RegionalDirectorGlobalRole, (Perm) matrix[i][j]); break;
+          case (6):  this.addPerm(baseNode, property, RoleNames.RegionalDirectorOnProjectRole, (Perm) matrix[i][j]); break;
+          case (7):  this.addPerm(baseNode, property, RoleNames.FieldOperationsDirectorRole, (Perm) matrix[i][j]); break;
+          case (8):  this.addPerm(baseNode, property, RoleNames.FinancialAnalystGlobalRole, (Perm) matrix[i][j]); break;
+          case (9):  this.addPerm(baseNode, property, RoleNames.FinancialAnalystOnProjectRole, (Perm) matrix[i][j]); break;
+          case (10): this.addPerm(baseNode, property, RoleNames.ControllerRole, (Perm) matrix[i][j]); break;
+          case (11): this.addPerm(baseNode, property, RoleNames.ConsultantManagerRole, (Perm) matrix[i][j]); break;
+          case (12): this.addPerm(baseNode, property, RoleNames.FundraisingRole, (Perm) matrix[i][j]); break;
+          case (13): this.addPerm(baseNode, property, RoleNames.MarketingRole, (Perm) matrix[i][j]); break;
+          case (14): this.addPerm(baseNode, property, RoleNames.StaffMemberRole, (Perm) matrix[i][j]); break;
+          case (15): this.addPerm(baseNode, property, RoleNames.LeadershipRole, (Perm) matrix[i][j]); break;
+          case (16): this.addPerm(baseNode, property, RoleNames.InternRole, (Perm) matrix[i][j]); break;
+          case (17): this.addPerm(baseNode, property, RoleNames.LiasonRole, (Perm) matrix[i][j]); break;
+          case (18): this.addPerm(baseNode, property, RoleNames.MentorRole, (Perm) matrix[i][j]); break;
+          case (19): this.addPerm(baseNode, property, RoleNames.RegionalCommunicationCoordinatorRole, (Perm) matrix[i][j]); break;
+          case (20): this.addPerm(baseNode, property, RoleNames.TranslatorRole, (Perm) matrix[i][j]); break;
+          case (21): this.addPerm(baseNode, property, RoleNames.ConsultantRole, (Perm) matrix[i][j]); break;
+        }
       }
     }
-    public Perm get(RoleNames role){
-      return this.map.get(role);
-    }
   }
 
-  class PropertyToRole{
-    private HashMap<AllProperties, RoleToPerm> map;
-    public PropertyToRole(AllProperties property, RoleToPerm[] roles){
-      this.map = new HashMap<AllProperties, RoleToPerm>();
-      for (RoleToPerm role : roles){
-        map.put(property, role);
-      }
-    }
-    public RoleToPerm get(AllProperties property){
-      return this.map.get(property);
-    }
-  }
-
-  public class BaseNodeToProperty{
-    private HashMap<BaseNodeLabels, PropertyToRole> map;
-    public BaseNodeToProperty(BaseNodeLabels baseNode, PropertyToRole[] propertyRows){
-      this.map = new HashMap<BaseNodeLabels, PropertyToRole>();
-      for (PropertyToRole row: propertyRows){
-        this.map.put(baseNode, row);
-      }
-    }
-    public PropertyToRole get(BaseNodeLabels baseNode){
-      return this.map.get(baseNode);
-    }
-  }
-
-  private BaseNodeToProperty map;
-
-  public Roles() {
-    this.map = new BaseNodeToProperty(
-      BaseNodeLabels.Budget,            new PropertyToRole[]{ new PropertyToRole( AllProperties.about,          new RoleToPerm[]{ new RoleToPerm( RoleNames.AdministratorRole,            new Perm[]{Perm.NO} ) } ) } );
-  }
-  
-  public Perm permission(BaseNodeLabels baseNode, AllProperties property, RoleNames role){
-    return this.map.get(baseNode).get(property).get(role);
+  private void addPerm(
+    BaseNodeLabels baseNode, 
+    AllProperties property, 
+    RoleNames role, 
+    Perm perm
+  ){
+    this.p.put(baseNode.name()+":"+property.name()+":"+role.name(), perm);
   }
   
 }

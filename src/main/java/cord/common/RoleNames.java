@@ -13,6 +13,7 @@ public enum RoleNames {
   LeadershipRole,
   LiasonRole,
   MarketingRole,
+  MentorRole,
   ProjectManagerGlobalRole,
   ProjectManagerOnProjectRole,
   RegionalCommunicationCoordinatorRole,
