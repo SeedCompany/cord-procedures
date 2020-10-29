@@ -37,350 +37,350 @@ public class RegionalDirectorOnProject extends BaseRole {
       case Story:                 return RegionalDirectorOnProject.Story(                  Story.valueOf(property));
       case Unavailability:        return RegionalDirectorOnProject.Unavailability(         Unavailability.valueOf(property));
       case User:                  return RegionalDirectorOnProject.User(                   User.valueOf(property));
-      default: return Permission.None;
+      default: return Perm.NO;
     }
   };
 
-  private static Permission Budget(Budget property){
+  private static Perm Budget(Budget property){
     switch(property){
-      case universalTemplateFile:      return Permission.ReadWrite;
-      case records:                    return Permission.ReadWrite;
-      case status:                     return Permission.ReadWrite;
+      case universalTemplateFile:      return Perm.RW;
+      case records:                    return Perm.RW;
+      case status:                     return Perm.RW;
       }
-return Permission.None;
+return Perm.NO;
   }
 
-  private static Permission BudgetRecord(BudgetRecord property){
+  private static Perm BudgetRecord(BudgetRecord property){
     switch(property){
-      case amount:                     return Permission.ReadWrite;
-      case fiscalYear:                 return Permission.ReadWrite;
-      case organization:               return Permission.ReadWrite;
+      case amount:                     return Perm.RW;
+      case fiscalYear:                 return Perm.RW;
+      case organization:               return Perm.RW;
       }
-return Permission.None;
+return Perm.NO;
   }  
   
-  private static Permission Ceremony(Ceremony property){
+  private static Perm Ceremony(Ceremony property){
     switch(property){
-      case actualDate:                 return Permission.ReadWrite;
-      case estimatedDate:              return Permission.ReadWrite;
-      case planned:                    return Permission.ReadWrite;
-      case type:                       return Permission.ReadWrite;
+      case actualDate:                 return Perm.RW;
+      case estimatedDate:              return Perm.RW;
+      case planned:                    return Perm.RW;
+      case type:                       return Perm.RW;
       }
-return Permission.None;
+return Perm.NO;
   }
 
-  private static Permission Directory(Directory property){
+  private static Perm Directory(Directory property){
     switch(property){
-      case name:                       return Permission.ReadWrite;
-      case createdBy:                  return Permission.ReadWrite;
-      case parent:                     return Permission.ReadWrite;
+      case name:                       return Perm.RW;
+      case createdBy:                  return Perm.RW;
+      case parent:                     return Perm.RW;
       }
-return Permission.None;
+return Perm.NO;
   }
 
-  private static Permission Education(Education property){
+  private static Perm Education(Education property){
     switch(property){
-      case degree:                     return Permission.Read;
-      case institution:                return Permission.Read;
-      case major:                      return Permission.Read;
+      case degree:                     return Perm.RO;
+      case institution:                return Perm.RO;
+      case major:                      return Perm.RO;
       }
-return Permission.None;
+return Perm.NO;
   }
 
-  private static Permission EthnologueLanguage(EthnologueLanguage property){
+  private static Perm EthnologueLanguage(EthnologueLanguage property){
     switch(property){
-      case code:                       return Permission.Read;
-      case name:                       return Permission.Read;
-      case population:                 return Permission.Read;
-      case provisionalCode:            return Permission.Read;
+      case code:                       return Perm.RO;
+      case name:                       return Perm.RO;
+      case population:                 return Perm.RO;
+      case provisionalCode:            return Perm.RO;
       }
-return Permission.None;
+return Perm.NO;
   }
 
-  private static Permission FieldRegion(FieldRegion property){
+  private static Perm FieldRegion(FieldRegion property){
     switch(property){
-      case director:                   return Permission.Read;
-      case name:                       return Permission.Read;
-      case fieldZone:                  return Permission.Read;
+      case director:                   return Perm.RO;
+      case name:                       return Perm.RO;
+      case fieldZone:                  return Perm.RO;
       }
-return Permission.None;
+return Perm.NO;
   }  
   
-  private static Permission FieldZone(FieldZone property){
+  private static Perm FieldZone(FieldZone property){
     switch(property){
-      case director:                   return Permission.Read;
-      case name:                       return Permission.Read;
+      case director:                   return Perm.RO;
+      case name:                       return Perm.RO;
       }
-return Permission.None;
+return Perm.NO;
   }
 
-  private static Permission File(File property){
+  private static Perm File(File property){
     switch(property){
-      case name:                       return Permission.ReadWrite;
-      case createdBy:                  return Permission.ReadWrite;
-      case parent:                     return Permission.ReadWrite;
-      case mimeType:                   return Permission.ReadWrite;
+      case name:                       return Perm.RW;
+      case createdBy:                  return Perm.RW;
+      case parent:                     return Perm.RW;
+      case mimeType:                   return Perm.RW;
       }
-return Permission.None;
+return Perm.NO;
   }
 
-  private static Permission FileVersion(FileVersion property){
+  private static Perm FileVersion(FileVersion property){
     switch(property){
-      case name:                       return Permission.ReadWrite;
-      case createdBy:                  return Permission.ReadWrite;
-      case parent:                     return Permission.ReadWrite;
-      case mimeType:                   return Permission.ReadWrite;
-      case size:                       return Permission.ReadWrite;
+      case name:                       return Perm.RW;
+      case createdBy:                  return Perm.RW;
+      case parent:                     return Perm.RW;
+      case mimeType:                   return Perm.RW;
+      case size:                       return Perm.RW;
       }
-return Permission.None;
+return Perm.NO;
   }
 
-  private static Permission Film(Film property){
+  private static Perm Film(Film property){
     switch(property){
-      case name:                       return Permission.ReadWrite;
-      case scriptureReferences:        return Permission.ReadWrite;
+      case name:                       return Perm.RW;
+      case scriptureReferences:        return Perm.RW;
       }
-return Permission.None;
+return Perm.NO;
   }
 
-  private static Permission FundingAccount(FundingAccount property){
+  private static Perm FundingAccount(FundingAccount property){
     switch(property){
-      case name:                       return Permission.Read;
-      case accountNumber:              return Permission.Read;
+      case name:                       return Perm.RO;
+      case accountNumber:              return Perm.RO;
       }
-return Permission.None;
+return Perm.NO;
   }  
   
-  private static Permission InternshipEngagement(InternshipEngagement property){
+  private static Perm InternshipEngagement(InternshipEngagement property){
     switch(property){
-      case ceremony:                   return Permission.ReadWrite;
-      case communicationsCompleteDate: return Permission.Read;
-      case completeDate:               return Permission.ReadWrite;
-      case countryOfOrigin:            return Permission.ReadWrite;
-      case disbursementCompleteDate:   return Permission.Read;
-      case endDate:                    return Permission.ReadWrite;
-      case endDateOverride:            return Permission.Read;
-      case growthPlan:                 return Permission.ReadWrite;
-      case initialEndDate:             return Permission.Read;
-      case intern:                     return Permission.ReadWrite;
-      case lastReactivatedAt:          return Permission.Read;
-      case lastSuspendedAt:            return Permission.Read;
-      case mentor:                     return Permission.ReadWrite;
-      case methodologies:              return Permission.ReadWrite;
-      case position:                   return Permission.ReadWrite;
-      case startDate:                  return Permission.Read;
-      case startDateOverride:          return Permission.Read;
-      case statusModifiedAt:           return Permission.Read;
-      case modifiedAt:                 return Permission.Read;
-      case status:                     return Permission.ReadWrite;
+      case ceremony:                   return Perm.RW;
+      case communicationsCompleteDate: return Perm.RO;
+      case completeDate:               return Perm.RW;
+      case countryOfOrigin:            return Perm.RW;
+      case disbursementCompleteDate:   return Perm.RO;
+      case endDate:                    return Perm.RW;
+      case endDateOverride:            return Perm.RO;
+      case growthPlan:                 return Perm.RW;
+      case initialEndDate:             return Perm.RO;
+      case intern:                     return Perm.RW;
+      case lastReactivatedAt:          return Perm.RO;
+      case lastSuspendedAt:            return Perm.RO;
+      case mentor:                     return Perm.RW;
+      case methodologies:              return Perm.RW;
+      case position:                   return Perm.RW;
+      case startDate:                  return Perm.RO;
+      case startDateOverride:          return Perm.RO;
+      case statusModifiedAt:           return Perm.RO;
+      case modifiedAt:                 return Perm.RO;
+      case status:                     return Perm.RW;
       }
-return Permission.None;
+return Perm.NO;
   }
 
-  private static Permission Language(Language property){
+  private static Perm Language(Language property){
     switch(property){
-      case displayName:                return Permission.Read;
-      case displayNamePronunciation:   return Permission.Read;
-      case isDialect:                  return Permission.Read;
-      case isSignLanguage:             return Permission.Read;
-      case leastOfThese:               return Permission.Read;
-      case name:                       return Permission.Read;
-      case leastOfTheseReason:         return Permission.Read;
-      case populationOverride:         return Permission.Read;
-      case registryOfDialectsCode:     return Permission.Read;
-      case signLanguageCode:           return Permission.Read;
-      case sponsorEstimatedEndDate:    return Permission.Read;
-      case ethnologue:                 return Permission.Read;
-      case sensitivity:                return Permission.Read;
-      case hasExternalFirstScripture:  return Permission.Read;
-      case locations:                  return Permission.Read;
-      case tags:                       return Permission.Read;
+      case displayName:                return Perm.RO;
+      case displayNamePronunciation:   return Perm.RO;
+      case isDialect:                  return Perm.RO;
+      case isSignLanguage:             return Perm.RO;
+      case leastOfThese:               return Perm.RO;
+      case name:                       return Perm.RO;
+      case leastOfTheseReason:         return Perm.RO;
+      case populationOverride:         return Perm.RO;
+      case registryOfDialectsCode:     return Perm.RO;
+      case signLanguageCode:           return Perm.RO;
+      case sponsorEstimatedEndDate:    return Perm.RO;
+      case ethnologue:                 return Perm.RO;
+      case sensitivity:                return Perm.RO;
+      case hasExternalFirstScripture:  return Perm.RO;
+      case locations:                  return Perm.RO;
+      case tags:                       return Perm.RO;
       }
-return Permission.None;
+return Perm.NO;
   }
 
-  private static Permission LanguageEngagement(LanguageEngagement property){
+  private static Perm LanguageEngagement(LanguageEngagement property){
     switch(property){
-      case ceremony:                   return Permission.ReadWrite;
-      case communicationsCompleteDate: return Permission.Read;
-      case completeDate:               return Permission.Read;
-      case disbursementCompleteDate:   return Permission.Read;
-      case endDate:                    return Permission.Read;
-      case endDateOverride:            return Permission.Read;
-      case firstScripture:             return Permission.ReadWrite;
-      case initialEndDate:             return Permission.Read;
-      case language:                   return Permission.ReadWrite;
-      case lastReactivatedAt:          return Permission.Read;
-      case lastSuspendedAt:            return Permission.Read;
-      case lukePartnership:            return Permission.ReadWrite;
-      case paraTextRegistryId:         return Permission.ReadWrite;
-      case pnp:                        return Permission.ReadWrite;
-      case sentPrintingDate:           return Permission.ReadWrite;
-      case startDate:                  return Permission.Read;
-      case startDateOverride:          return Permission.Read;
-      case statusModifiedAt:           return Permission.Read;
-      case modifiedAt:                 return Permission.Read;
-      case product:                    return Permission.ReadWrite;
-      case status:                     return Permission.Read;
+      case ceremony:                   return Perm.RW;
+      case communicationsCompleteDate: return Perm.RO;
+      case completeDate:               return Perm.RO;
+      case disbursementCompleteDate:   return Perm.RO;
+      case endDate:                    return Perm.RO;
+      case endDateOverride:            return Perm.RO;
+      case firstScripture:             return Perm.RW;
+      case initialEndDate:             return Perm.RO;
+      case language:                   return Perm.RW;
+      case lastReactivatedAt:          return Perm.RO;
+      case lastSuspendedAt:            return Perm.RO;
+      case lukePartnership:            return Perm.RW;
+      case paraTextRegistryId:         return Perm.RW;
+      case pnp:                        return Perm.RW;
+      case sentPrintingDate:           return Perm.RW;
+      case startDate:                  return Perm.RO;
+      case startDateOverride:          return Perm.RO;
+      case statusModifiedAt:           return Perm.RO;
+      case modifiedAt:                 return Perm.RO;
+      case product:                    return Perm.RW;
+      case status:                     return Perm.RO;
       }
-return Permission.None;
+return Perm.NO;
   }
 
-  private static Permission LiteracyMaterial(LiteracyMaterial property){
+  private static Perm LiteracyMaterial(LiteracyMaterial property){
     switch(property){
-      case name:                       return Permission.ReadWrite;
-      case scriptureReferences:        return Permission.ReadWrite;
+      case name:                       return Perm.RW;
+      case scriptureReferences:        return Perm.RW;
       }
-return Permission.None;
+return Perm.NO;
   }
 
-  private static Permission Location(Location property){
+  private static Perm Location(Location property){
     switch(property){
-      case name:                       return Permission.Read;
-      case type:                       return Permission.Read;
-      case sensitivity:                return Permission.Read;
-      case isoAlpha3:                  return Permission.Read;
-      case fundingAccount:             return Permission.Read;
+      case name:                       return Perm.RO;
+      case type:                       return Perm.RO;
+      case sensitivity:                return Perm.RO;
+      case isoAlpha3:                  return Perm.RO;
+      case fundingAccount:             return Perm.RO;
       }
-return Permission.None;
+return Perm.NO;
   }
   
-  private static Permission Organization(Organization property){
+  private static Perm Organization(Organization property){
     switch(property){
-      case name:                       return Permission.Read;
-      case address:                    return Permission.Read;
-      case locations:                  return Permission.Read;
+      case name:                       return Perm.RO;
+      case address:                    return Perm.RO;
+      case locations:                  return Perm.RO;
       }
-return Permission.None;
+return Perm.NO;
   }
 
-  private static Permission Partner(Partner property){
+  private static Perm Partner(Partner property){
     switch(property){
-      case organization:               return Permission.Read;
-      case pointOfContact:             return Permission.Read;
-      case types:                      return Permission.Read;
-      case financialReportingTypes:    return Permission.Read;
-      case pmcEntityCode:              return Permission.Read;
-      case globalInnovationsClient:    return Permission.Read;
-      case active:                     return Permission.Read;
-      case address:                    return Permission.Read;
-      case modifiedAt:                 return Permission.Read;
+      case organization:               return Perm.RO;
+      case pointOfContact:             return Perm.RO;
+      case types:                      return Perm.RO;
+      case financialReportingTypes:    return Perm.RO;
+      case pmcEntityCode:              return Perm.RO;
+      case globalInnovationsClient:    return Perm.RO;
+      case active:                     return Perm.RO;
+      case address:                    return Perm.RO;
+      case modifiedAt:                 return Perm.RO;
       }
-return Permission.None;
+return Perm.NO;
   }
 
-  private static Permission Partnership(Partnership property){
+  private static Perm Partnership(Partnership property){
     switch(property){
-      case agreement:                  return Permission.ReadWrite;
-      case agreementStatus:            return Permission.ReadWrite;
-      case financialReportingType:     return Permission.Read;
-      case mou:                        return Permission.Read;
-      case mouEnd:                     return Permission.Read;
-      case mouEndOverride:             return Permission.Read;
-      case mouStart:                   return Permission.Read;
-      case mouStartOverride:           return Permission.Read;
-      case mouStatus:                  return Permission.Read;
-      case types:                      return Permission.ReadWrite;
-      case organization:               return Permission.ReadWrite;
-      case partner:                    return Permission.ReadWrite;
+      case agreement:                  return Perm.RW;
+      case agreementStatus:            return Perm.RW;
+      case financialReportingType:     return Perm.RO;
+      case mou:                        return Perm.RO;
+      case mouEnd:                     return Perm.RO;
+      case mouEndOverride:             return Perm.RO;
+      case mouStart:                   return Perm.RO;
+      case mouStartOverride:           return Perm.RO;
+      case mouStatus:                  return Perm.RO;
+      case types:                      return Perm.RW;
+      case organization:               return Perm.RW;
+      case partner:                    return Perm.RW;
       }
-return Permission.None;
+return Perm.NO;
   }
 
-  private static Permission Product(Product property){
+  private static Perm Product(Product property){
     switch(property){
-      case mediums:                    return Permission.ReadWrite;
-      case methodology:                return Permission.ReadWrite;
-      case purposes:                   return Permission.ReadWrite;
-      case scriptureReferences:        return Permission.ReadWrite;
-      case produces:                   return Permission.ReadWrite;
-      case scriptureReferencesOverride:return Permission.ReadWrite;
-      case isOverriding:               return Permission.ReadWrite;
+      case mediums:                    return Perm.RW;
+      case methodology:                return Perm.RW;
+      case purposes:                   return Perm.RW;
+      case scriptureReferences:        return Perm.RW;
+      case produces:                   return Perm.RW;
+      case scriptureReferencesOverride:return Perm.RW;
+      case isOverriding:               return Perm.RW;
       }
-return Permission.None;
+return Perm.NO;
   }
 
-  private static Permission Project(Project property){
+  private static Perm Project(Project property){
     switch(property){
-      case estimatedSubmission:        return Permission.ReadWrite;
-      case step:                       return Permission.ReadWrite;
-      case name:                       return Permission.ReadWrite;
-      case status:                     return Permission.Read;
-      case departmentId:               return Permission.Read;
-      case mouStart:                   return Permission.ReadWrite;
-      case mouEnd:                     return Permission.ReadWrite;
-      case rootDirectory:              return Permission.ReadWrite;
-      case member:                     return Permission.ReadWrite;
-      case otherLocations:             return Permission.ReadWrite;
-      case primaryLocation:            return Permission.ReadWrite;
-      case marketingLocation:          return Permission.ReadWrite;
-      case partnership:                return Permission.ReadWrite;
-      case budget:                     return Permission.ReadWrite;
-      case modifiedAt:                 return Permission.Read;
-      case fieldRegion:                return Permission.ReadWrite;
-      case engagement:                 return Permission.ReadWrite;
-      case sensitivity:                return Permission.ReadWrite;
-      case stepChangedAt:              return Permission.ReadWrite; 
-      case owningOrganization:         return Permission.ReadWrite; 
-      case initialMouEnd:              return Permission.ReadWrite; 
-      case tags:                       return Permission.ReadWrite;
+      case estimatedSubmission:        return Perm.RW;
+      case step:                       return Perm.RW;
+      case name:                       return Perm.RW;
+      case status:                     return Perm.RO;
+      case departmentId:               return Perm.RO;
+      case mouStart:                   return Perm.RW;
+      case mouEnd:                     return Perm.RW;
+      case rootDirectory:              return Perm.RW;
+      case member:                     return Perm.RW;
+      case otherLocations:             return Perm.RW;
+      case primaryLocation:            return Perm.RW;
+      case marketingLocation:          return Perm.RW;
+      case partnership:                return Perm.RW;
+      case budget:                     return Perm.RW;
+      case modifiedAt:                 return Perm.RO;
+      case fieldRegion:                return Perm.RW;
+      case engagement:                 return Perm.RW;
+      case sensitivity:                return Perm.RW;
+      case stepChangedAt:              return Perm.RW; 
+      case owningOrganization:         return Perm.RW; 
+      case initialMouEnd:              return Perm.RW; 
+      case tags:                       return Perm.RW;
       }
-return Permission.None;
+return Perm.NO;
   }
 
-  private static Permission ProjectMember(ProjectMember property){
+  private static Perm ProjectMember(ProjectMember property){
     switch(property){
-      case roles:                      return Permission.ReadWrite;
-      case user:                       return Permission.ReadWrite;
-      case modifiedAt:                 return Permission.Read;
+      case roles:                      return Perm.RW;
+      case user:                       return Perm.RW;
+      case modifiedAt:                 return Perm.RO;
       }
-return Permission.None;
+return Perm.NO;
   }
 
-  private static Permission Song(Song property){
+  private static Perm Song(Song property){
     switch(property){
-      case name:                       return Permission.ReadWrite;
-      case scriptureReferences:        return Permission.ReadWrite;
+      case name:                       return Perm.RW;
+      case scriptureReferences:        return Perm.RW;
       }
-return Permission.None;
+return Perm.NO;
   }
 
-  private static Permission Story(Story property){
+  private static Perm Story(Story property){
     switch(property){
-      case name:                       return Permission.ReadWrite;
-      case scriptureReferences:        return Permission.ReadWrite;
+      case name:                       return Perm.RW;
+      case scriptureReferences:        return Perm.RW;
       }
-return Permission.None;
+return Perm.NO;
   }
 
-  private static Permission Unavailability(Unavailability property){
+  private static Perm Unavailability(Unavailability property){
     switch(property){
-      case description:                return Permission.Read;
-      case end:                        return Permission.Read;
-      case start:                      return Permission.Read;
+      case description:                return Perm.RO;
+      case end:                        return Perm.RO;
+      case start:                      return Perm.RO;
       }
-return Permission.None;
+return Perm.NO;
   }
 
-  private static Permission User(User property){
+  private static Perm User(User property){
     switch(property){
-      case about:                      return Permission.Read;
-      case displayFirstName:           return Permission.Read;
-      case displayLastName:            return Permission.Read;
-      case email:                      return Permission.Read;
-      case phone:                      return Permission.Read;
-      case realFirstName:              return Permission.Read;
-      case realLastName:               return Permission.Read;
-      case roles:                      return Permission.Read;
-      case status:                     return Permission.Read;
-      case timezone:                   return Permission.Read;
-      case title:                      return Permission.Read;
-      case education:                  return Permission.Read;
-      case organization:               return Permission.Read;
-      case unavailability:             return Permission.Read;
-      case locations:                  return Permission.Read;
+      case about:                      return Perm.RO;
+      case displayFirstName:           return Perm.RO;
+      case displayLastName:            return Perm.RO;
+      case email:                      return Perm.RO;
+      case phone:                      return Perm.RO;
+      case realFirstName:              return Perm.RO;
+      case realLastName:               return Perm.RO;
+      case roles:                      return Perm.RO;
+      case status:                     return Perm.RO;
+      case timezone:                   return Perm.RO;
+      case title:                      return Perm.RO;
+      case education:                  return Perm.RO;
+      case organization:               return Perm.RO;
+      case unavailability:             return Perm.RO;
+      case locations:                  return Perm.RO;
       }
-return Permission.None;
+return Perm.NO;
   }
 
 }

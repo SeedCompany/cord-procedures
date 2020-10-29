@@ -2,7 +2,7 @@ package cord.common;
 
 public enum NonBaseNodeLabels {
   SecurityGroup,
-  Permission,
+  Perm,
   canRead,
   canEdit,
   Active,

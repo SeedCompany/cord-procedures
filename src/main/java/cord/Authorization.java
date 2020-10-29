@@ -16,7 +16,7 @@ import cord.common.BaseNodeLabels;
 import cord.common.NonBaseNodeLabels;
 import cord.common.NonPropertyRelationshipTypes;
 import cord.common.RoleNames;
-import cord.model.Permission;
+import cord.model.Perm;
 import cord.roles.*;
 
 public class Authorization {
@@ -197,7 +197,7 @@ public class Authorization {
         model.forEach(property -> {
 
           // determine if the role grants the prop
-          Permission grant = role.permission.permission(label, property); 
+          Perm grant = role.permission.permission(label, property); 
 
           // get permision nodes and connect them if permitted
           Long readPermNeoId = permMap.get(property+"Read");
@@ -209,17 +209,11 @@ public class Authorization {
           if (readPerm != null && editPerm != null){
             
             switch (grant){
-              case Read: 
+              case RO: 
                 sgNode.createRelationshipTo(readPerm, 
                   RelationshipType.withName(NonPropertyRelationshipTypes.permission.name()));
               return;
-              case Write: 
-                sgNode.createRelationshipTo(readPerm, 
-                  RelationshipType.withName(NonPropertyRelationshipTypes.permission.name()));
-                sgNode.createRelationshipTo(editPerm, 
-                  RelationshipType.withName(NonPropertyRelationshipTypes.permission.name()));
-              return;
-              case ReadWrite: 
+              case RW: 
                 sgNode.createRelationshipTo(readPerm, 
                   RelationshipType.withName(NonPropertyRelationshipTypes.permission.name()));
                 sgNode.createRelationshipTo(editPerm, 
@@ -256,7 +250,7 @@ public class Authorization {
           String propertyLabelForPerm = label.name() + property;
   
           Node permRead = tx.createNode(
-            Label.label(NonBaseNodeLabels.Permission.name()), 
+            Label.label(NonBaseNodeLabels.Perm.name()), 
             Label.label(propertyLabelForPerm),
             Label.label(NonBaseNodeLabels.canRead.name())
             );
@@ -268,7 +262,7 @@ public class Authorization {
           map.put(property+"Read", permRead.getId());
   
           Node permEdit = tx.createNode(
-            Label.label(NonBaseNodeLabels.Permission.name()), 
+            Label.label(NonBaseNodeLabels.Perm.name()), 
             Label.label(propertyLabelForPerm),
             Label.label(NonBaseNodeLabels.canRead.name()),
             Label.label(NonBaseNodeLabels.canEdit.name())

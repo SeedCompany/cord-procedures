@@ -1,8 +1,8 @@
 package cord.roles;
 
 import cord.common.BaseNodeLabels;
-import cord.model.Permission;
+import cord.model.Perm;
 
 public interface IPermission {
-  Permission permission(BaseNodeLabels label, String property);
+  Perm permission(BaseNodeLabels label, String property);
 }
