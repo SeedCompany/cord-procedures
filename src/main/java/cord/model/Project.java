@@ -18,5 +18,9 @@ budget,
 modifiedAt,         
 fieldRegion,        
 engagement,         
-sensitivity        
+sensitivity,
+tags,
+initialMouEnd,
+stepChangedAt,
+owningOrganization        
 }

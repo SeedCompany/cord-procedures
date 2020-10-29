@@ -17,5 +17,7 @@ ethnologue,
                  
 sensitivity,              
 hasExternalFirstScripture,
-locations           
+locations,
+
+tags
 }

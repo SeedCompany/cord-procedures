@@ -130,7 +130,12 @@ public enum AllProperties {
   universalTemplateFile,
   universalTemplateFileNode,
   user,
-  value
+  value,
+
+  tags,
+  initialMouEnd,
+  stepChangedAt,
+  owningOrganization 
 }           
       
 
