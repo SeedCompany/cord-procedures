@@ -22,5 +22,5 @@ sensitivity,
 tags,
 initialMouEnd,
 stepChangedAt,
-owningOrganization        
+owningOrganization      
 }

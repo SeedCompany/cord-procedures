@@ -4,4 +4,5 @@ public enum Ceremony {
   actualDate,    
 estimatedDate, 
 planned,       
+type,
 }

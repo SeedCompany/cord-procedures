@@ -67,6 +67,7 @@ public class Administrator extends BaseRole {
       case actualDate:                 return Permission.ReadWrite;
       case estimatedDate:              return Permission.ReadWrite;
       case planned:                    return Permission.ReadWrite;
+      case type:                       return Permission.Read;
       } 
 
       return Permission.None;
@@ -327,8 +328,8 @@ return Permission.None;
       case estimatedSubmission:        return Permission.ReadWrite;
       case step:                       return Permission.ReadWrite;
       case name:                       return Permission.ReadWrite;
-      case status:                     return Permission.ReadWrite;
-      case departmentId:               return Permission.ReadWrite;
+      case status:                     return Permission.Read;
+      case departmentId:               return Permission.Read;
       case mouStart:                   return Permission.ReadWrite;
       case mouEnd:                     return Permission.ReadWrite;
       case rootDirectory:              return Permission.ReadWrite;
@@ -338,7 +339,7 @@ return Permission.None;
       case marketingLocation:          return Permission.ReadWrite;
       case partnership:                return Permission.ReadWrite;
       case budget:                     return Permission.ReadWrite;
-      case modifiedAt:                 return Permission.ReadWrite;
+      case modifiedAt:                 return Permission.Read;
       case fieldRegion:                return Permission.ReadWrite;
       case engagement:                 return Permission.ReadWrite;
       case sensitivity:                return Permission.ReadWrite;
@@ -356,7 +357,7 @@ return Permission.None;
     switch(property){
       case roles:                      return Permission.ReadWrite;
       case user:                       return Permission.ReadWrite;
-      case modifiedAt:                 return Permission.ReadWrite;
+      case modifiedAt:                 return Permission.Read;
       } 
 
 return Permission.None;
