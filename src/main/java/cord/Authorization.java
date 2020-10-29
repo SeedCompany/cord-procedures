@@ -250,7 +250,7 @@ public class Authorization {
           String propertyLabelForPerm = label.name() + property;
   
           Node permRead = tx.createNode(
-            Label.label(NonBaseNodeLabels.Perm.name()), 
+            Label.label(NonBaseNodeLabels.Permission.name()), 
             Label.label(propertyLabelForPerm),
             Label.label(NonBaseNodeLabels.canRead.name())
             );
@@ -262,7 +262,7 @@ public class Authorization {
           map.put(property+"Read", permRead.getId());
   
           Node permEdit = tx.createNode(
-            Label.label(NonBaseNodeLabels.Perm.name()), 
+            Label.label(NonBaseNodeLabels.Permission.name()), 
             Label.label(propertyLabelForPerm),
             Label.label(NonBaseNodeLabels.canRead.name()),
             Label.label(NonBaseNodeLabels.canEdit.name())
