@@ -145,8 +145,8 @@ return Perm.NO;
 
   private static Perm FundingAccount(FundingAccount property){
     switch(property){
-      case name:                       return Perm.RO;
-      case accountNumber:              return Perm.RO;
+      case name:                       return Perm.RW;
+      case accountNumber:              return Perm.RW;
       }
 return Perm.NO;
   }  
@@ -154,24 +154,24 @@ return Perm.NO;
   private static Perm InternshipEngagement(InternshipEngagement property){
     switch(property){
       case ceremony:                   return Perm.RW;
-      case communicationsCompleteDate: return Perm.RO;
+      case communicationsCompleteDate: return Perm.RW;
       case completeDate:               return Perm.RW;
       case countryOfOrigin:            return Perm.RW;
-      case disbursementCompleteDate:   return Perm.RO;
+      case disbursementCompleteDate:   return Perm.RW;
       case endDate:                    return Perm.RW;
-      case endDateOverride:            return Perm.RO;
+      case endDateOverride:            return Perm.RW;
       case growthPlan:                 return Perm.RW;
-      case initialEndDate:             return Perm.RO;
+      case initialEndDate:             return Perm.RW;
       case intern:                     return Perm.RW;
-      case lastReactivatedAt:          return Perm.RO;
-      case lastSuspendedAt:            return Perm.RO;
+      case lastReactivatedAt:          return Perm.RW;
+      case lastSuspendedAt:            return Perm.RW;
       case mentor:                     return Perm.RW;
       case methodologies:              return Perm.RW;
       case position:                   return Perm.RW;
-      case startDate:                  return Perm.RO;
-      case startDateOverride:          return Perm.RO;
-      case statusModifiedAt:           return Perm.RO;
-      case modifiedAt:                 return Perm.RO;
+      case startDate:                  return Perm.RW;
+      case startDateOverride:          return Perm.RW;
+      case statusModifiedAt:           return Perm.RW;
+      case modifiedAt:                 return Perm.RW;
       case status:                     return Perm.RW;
       }
 return Perm.NO;
@@ -194,7 +194,7 @@ return Perm.NO;
       case sensitivity:                return Perm.RO;
       case hasExternalFirstScripture:  return Perm.RO;
       case locations:                  return Perm.RO;
-      case tags:                       return Perm.RO;
+case tags:                             return Perm.RO;
       }
 return Perm.NO;
   }
@@ -202,26 +202,26 @@ return Perm.NO;
   private static Perm LanguageEngagement(LanguageEngagement property){
     switch(property){
       case ceremony:                   return Perm.RW;
-      case communicationsCompleteDate: return Perm.RO;
-      case completeDate:               return Perm.RO;
-      case disbursementCompleteDate:   return Perm.RO;
-      case endDate:                    return Perm.RO;
-      case endDateOverride:            return Perm.RO;
+      case communicationsCompleteDate: return Perm.RW;
+      case completeDate:               return Perm.RW;
+      case disbursementCompleteDate:   return Perm.RW;
+      case endDate:                    return Perm.RW;
+      case endDateOverride:            return Perm.RW;
       case firstScripture:             return Perm.RW;
-      case initialEndDate:             return Perm.RO;
+      case initialEndDate:             return Perm.RW;
       case language:                   return Perm.RW;
-      case lastReactivatedAt:          return Perm.RO;
-      case lastSuspendedAt:            return Perm.RO;
+      case lastReactivatedAt:          return Perm.RW;
+      case lastSuspendedAt:            return Perm.RW;
       case lukePartnership:            return Perm.RW;
       case paraTextRegistryId:         return Perm.RW;
       case pnp:                        return Perm.RW;
       case sentPrintingDate:           return Perm.RW;
-      case startDate:                  return Perm.RO;
-      case startDateOverride:          return Perm.RO;
-      case statusModifiedAt:           return Perm.RO;
-      case modifiedAt:                 return Perm.RO;
+      case startDate:                  return Perm.RW;
+      case startDateOverride:          return Perm.RW;
+      case statusModifiedAt:           return Perm.RW;
+      case modifiedAt:                 return Perm.RW;
       case product:                    return Perm.RW;
-      case status:                     return Perm.RO;
+      case status:                     return Perm.RW;
       }
 return Perm.NO;
   }
@@ -256,15 +256,15 @@ return Perm.NO;
 
   private static Perm Partner(Partner property){
     switch(property){
-      case organization:               return Perm.RO;
-      case pointOfContact:             return Perm.RO;
-      case types:                      return Perm.RO;
-      case financialReportingTypes:    return Perm.RO;
-      case pmcEntityCode:              return Perm.RO;
-      case globalInnovationsClient:    return Perm.RO;
-      case active:                     return Perm.RO;
-      case address:                    return Perm.RO;
-      case modifiedAt:                 return Perm.RO;
+      case organization:               return Perm.RW;
+      case pointOfContact:             return Perm.RW;
+      case types:                      return Perm.RW;
+      case financialReportingTypes:    return Perm.RW;
+      case pmcEntityCode:              return Perm.RW;
+      case globalInnovationsClient:    return Perm.RW;
+      case active:                     return Perm.RW;
+      case address:                    return Perm.RW;
+      case modifiedAt:                 return Perm.RW;
       }
 return Perm.NO;
   }
@@ -273,13 +273,13 @@ return Perm.NO;
     switch(property){
       case agreement:                  return Perm.RW;
       case agreementStatus:            return Perm.RW;
-      case financialReportingType:     return Perm.RO;
-      case mou:                        return Perm.RO;
-      case mouEnd:                     return Perm.RO;
-      case mouEndOverride:             return Perm.RO;
-      case mouStart:                   return Perm.RO;
-      case mouStartOverride:           return Perm.RO;
-      case mouStatus:                  return Perm.RO;
+      case financialReportingType:     return Perm.RW;
+      case mou:                        return Perm.RW;
+      case mouEnd:                     return Perm.RW;
+      case mouEndOverride:             return Perm.RW;
+      case mouStart:                   return Perm.RW;
+      case mouStartOverride:           return Perm.RW;
+      case mouStatus:                  return Perm.RW;
       case types:                      return Perm.RW;
       case organization:               return Perm.RW;
       case partner:                    return Perm.RW;
@@ -305,8 +305,8 @@ return Perm.NO;
       case estimatedSubmission:        return Perm.RW;
       case step:                       return Perm.RW;
       case name:                       return Perm.RW;
-      case status:                     return Perm.RO;
-      case departmentId:               return Perm.RO;
+      case status:                     return Perm.RW;
+      case departmentId:               return Perm.RW;
       case mouStart:                   return Perm.RW;
       case mouEnd:                     return Perm.RW;
       case rootDirectory:              return Perm.RW;
@@ -316,7 +316,7 @@ return Perm.NO;
       case marketingLocation:          return Perm.RW;
       case partnership:                return Perm.RW;
       case budget:                     return Perm.RW;
-      case modifiedAt:                 return Perm.RO;
+      case modifiedAt:                 return Perm.RW;
       case fieldRegion:                return Perm.RW;
       case engagement:                 return Perm.RW;
       case sensitivity:                return Perm.RW;
@@ -332,7 +332,7 @@ return Perm.NO;
     switch(property){
       case roles:                      return Perm.RW;
       case user:                       return Perm.RW;
-      case modifiedAt:                 return Perm.RO;
+      case modifiedAt:                 return Perm.RW;
       }
 return Perm.NO;
   }

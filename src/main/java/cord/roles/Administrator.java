@@ -67,7 +67,7 @@ public class Administrator extends BaseRole {
       case actualDate:                 return Perm.RW;
       case estimatedDate:              return Perm.RW;
       case planned:                    return Perm.RW;
-      case type:                       return Perm.RO;
+      case type:                       return Perm.RW;
       } 
 
       return Perm.NO;
@@ -328,8 +328,8 @@ return Perm.NO;
       case estimatedSubmission:        return Perm.RW;
       case step:                       return Perm.RW;
       case name:                       return Perm.RW;
-      case status:                     return Perm.RO;
-      case departmentId:               return Perm.RO;
+      case status:                     return Perm.RW;
+      case departmentId:               return Perm.RW;
       case mouStart:                   return Perm.RW;
       case mouEnd:                     return Perm.RW;
       case rootDirectory:              return Perm.RW;
@@ -339,7 +339,7 @@ return Perm.NO;
       case marketingLocation:          return Perm.RW;
       case partnership:                return Perm.RW;
       case budget:                     return Perm.RW;
-      case modifiedAt:                 return Perm.RO;
+      case modifiedAt:                 return Perm.RW;
       case fieldRegion:                return Perm.RW;
       case engagement:                 return Perm.RW;
       case sensitivity:                return Perm.RW;
@@ -357,7 +357,7 @@ return Perm.NO;
     switch(property){
       case roles:                      return Perm.RW;
       case user:                       return Perm.RW;
-      case modifiedAt:                 return Perm.RO;
+      case modifiedAt:                 return Perm.RW;
       } 
 
 return Perm.NO;
