@@ -207,6 +207,7 @@ return Permission.None;
       case sensitivity:                return Permission.ReadWrite;
       case hasExternalFirstScripture:  return Permission.ReadWrite;
       case locations:                  return Permission.ReadWrite;
+
       case tags:                       return Permission.ReadWrite;
       } 
 
@@ -341,10 +342,11 @@ return Permission.None;
       case fieldRegion:                return Permission.ReadWrite;
       case engagement:                 return Permission.ReadWrite;
       case sensitivity:                return Permission.ReadWrite;
-      case stepChangedAt:              return Permission.ReadWrite; // new
-      case owningOrganization:         return Permission.ReadWrite; // new
-      case initialMouEnd:              return Permission.ReadWrite; // new
-      case tags:                       return Permission.ReadWrite; // new
+
+      case stepChangedAt:              return Permission.ReadWrite; 
+      case owningOrganization:         return Permission.ReadWrite; 
+      case initialMouEnd:              return Permission.ReadWrite; 
+      case tags:                       return Permission.ReadWrite; 
       } 
 
 return Permission.None;

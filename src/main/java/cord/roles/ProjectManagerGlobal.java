@@ -46,8 +46,8 @@ public class ProjectManagerGlobal extends BaseRole {
       case universalTemplateFile:      return Permission.ReadWrite;
       case records:                    return Permission.ReadWrite;
       case status:                     return Permission.ReadWrite;
-      default:                         return Permission.None;
-    }
+      }
+return Permission.None;
   }
 
   private static Permission BudgetRecord(BudgetRecord property){
@@ -55,8 +55,8 @@ public class ProjectManagerGlobal extends BaseRole {
       case amount:                     return Permission.ReadWrite;
       case fiscalYear:                 return Permission.ReadWrite;
       case organization:               return Permission.ReadWrite;
-      default:                         return Permission.None;
-    }
+      }
+return Permission.None;
   }  
   
   private static Permission Ceremony(Ceremony property){
@@ -64,8 +64,8 @@ public class ProjectManagerGlobal extends BaseRole {
       case actualDate:                 return Permission.ReadWrite;
       case estimatedDate:              return Permission.ReadWrite;
       case planned:                    return Permission.ReadWrite;
-      default:                         return Permission.None;
-    }
+      }
+return Permission.None;
   }
 
   private static Permission Directory(Directory property){
@@ -73,8 +73,8 @@ public class ProjectManagerGlobal extends BaseRole {
       case name:                       return Permission.ReadWrite;
       case createdBy:                  return Permission.ReadWrite;
       case parent:                     return Permission.ReadWrite;
-      default:                         return Permission.None;
-    }
+      }
+return Permission.None;
   }
 
   private static Permission Education(Education property){
@@ -82,8 +82,8 @@ public class ProjectManagerGlobal extends BaseRole {
       case degree:                     return Permission.ReadWrite;
       case institution:                return Permission.ReadWrite;
       case major:                      return Permission.ReadWrite;
-      default:                         return Permission.None;
-    }
+      }
+return Permission.None;
   }
 
   private static Permission EthnologueLanguage(EthnologueLanguage property){
@@ -92,8 +92,8 @@ public class ProjectManagerGlobal extends BaseRole {
       case name:                       return Permission.ReadWrite;
       case population:                 return Permission.ReadWrite;
       case provisionalCode:            return Permission.ReadWrite;
-      default:                         return Permission.None;
-    }
+      }
+return Permission.None;
   }
 
   private static Permission FieldRegion(FieldRegion property){
@@ -101,16 +101,16 @@ public class ProjectManagerGlobal extends BaseRole {
       case director:                   return Permission.ReadWrite;
       case name:                       return Permission.ReadWrite;
       case fieldZone:                  return Permission.ReadWrite;
-      default:                         return Permission.None;
-    }
+      }
+return Permission.None;
   }  
   
   private static Permission FieldZone(FieldZone property){
     switch(property){
       case director:                   return Permission.ReadWrite;
       case name:                       return Permission.ReadWrite;
-      default:                         return Permission.None;
-    }
+      }
+return Permission.None;
   }
 
   private static Permission File(File property){
@@ -119,8 +119,8 @@ public class ProjectManagerGlobal extends BaseRole {
       case createdBy:                  return Permission.ReadWrite;
       case parent:                     return Permission.ReadWrite;
       case mimeType:                   return Permission.ReadWrite;
-      default:                         return Permission.None;
-    }
+      }
+return Permission.None;
   }
 
   private static Permission FileVersion(FileVersion property){
@@ -130,24 +130,24 @@ public class ProjectManagerGlobal extends BaseRole {
       case parent:                     return Permission.ReadWrite;
       case mimeType:                   return Permission.ReadWrite;
       case size:                       return Permission.ReadWrite;
-      default:                         return Permission.None;
-    }
+      }
+return Permission.None;
   }
 
   private static Permission Film(Film property){
     switch(property){
       case name:                       return Permission.ReadWrite;
       case scriptureReferences:        return Permission.ReadWrite;
-      default:                         return Permission.None;
-    }
+      }
+return Permission.None;
   }
 
   private static Permission FundingAccount(FundingAccount property){
     switch(property){
       case name:                       return Permission.ReadWrite;
       case accountNumber:              return Permission.ReadWrite;
-      default:                         return Permission.None;
-    }
+      }
+return Permission.None;
   }  
   
   private static Permission InternshipEngagement(InternshipEngagement property){
@@ -172,8 +172,8 @@ public class ProjectManagerGlobal extends BaseRole {
       case statusModifiedAt:           return Permission.ReadWrite;
       case modifiedAt:                 return Permission.ReadWrite;
       case status:                     return Permission.ReadWrite;
-      default:                         return Permission.None;
-    }
+      }
+return Permission.None;
   }
 
   private static Permission Language(Language property){
@@ -193,8 +193,9 @@ public class ProjectManagerGlobal extends BaseRole {
       case sensitivity:                return Permission.ReadWrite;
       case hasExternalFirstScripture:  return Permission.ReadWrite;
       case locations:                  return Permission.ReadWrite;
-      default:                         return Permission.None;
-    }
+case tags:                       return Permission.ReadWrite;
+      }
+return Permission.None;
   }
 
   private static Permission LanguageEngagement(LanguageEngagement property){
@@ -220,16 +221,16 @@ public class ProjectManagerGlobal extends BaseRole {
       case modifiedAt:                 return Permission.ReadWrite;
       case product:                    return Permission.ReadWrite;
       case status:                     return Permission.ReadWrite;
-      default:                         return Permission.None;
-    }
+      }
+return Permission.None;
   }
 
   private static Permission LiteracyMaterial(LiteracyMaterial property){
     switch(property){
       case name:                       return Permission.ReadWrite;
       case scriptureReferences:        return Permission.ReadWrite;
-      default:                         return Permission.None;
-    }
+      }
+return Permission.None;
   }
 
   private static Permission Location(Location property){
@@ -239,8 +240,8 @@ public class ProjectManagerGlobal extends BaseRole {
       case sensitivity:                return Permission.ReadWrite;
       case isoAlpha3:                  return Permission.ReadWrite;
       case fundingAccount:             return Permission.ReadWrite;
-      default:                         return Permission.None;
-    }
+      }
+return Permission.None;
   }
   
   private static Permission Organization(Organization property){
@@ -248,8 +249,8 @@ public class ProjectManagerGlobal extends BaseRole {
       case name:                       return Permission.ReadWrite;
       case address:                    return Permission.ReadWrite;
       case locations:                  return Permission.ReadWrite;
-      default:                         return Permission.None;
-    }
+      }
+return Permission.None;
   }
 
   private static Permission Partner(Partner property){
@@ -263,8 +264,8 @@ public class ProjectManagerGlobal extends BaseRole {
       case active:                     return Permission.ReadWrite;
       case address:                    return Permission.ReadWrite;
       case modifiedAt:                 return Permission.ReadWrite;
-      default:                         return Permission.None;
-    }
+      }
+return Permission.None;
   }
 
   private static Permission Partnership(Partnership property){
@@ -281,8 +282,8 @@ public class ProjectManagerGlobal extends BaseRole {
       case types:                      return Permission.ReadWrite;
       case organization:               return Permission.ReadWrite;
       case partner:                    return Permission.ReadWrite;
-      default:                         return Permission.None;
-    }
+      }
+return Permission.None;
   }
 
   private static Permission Product(Product property){
@@ -294,8 +295,8 @@ public class ProjectManagerGlobal extends BaseRole {
       case produces:                   return Permission.ReadWrite;
       case scriptureReferencesOverride:return Permission.ReadWrite;
       case isOverriding:               return Permission.ReadWrite;
-      default:                         return Permission.None;
-    }
+      }
+return Permission.None;
   }
 
   private static Permission Project(Project property){
@@ -318,8 +319,12 @@ public class ProjectManagerGlobal extends BaseRole {
       case fieldRegion:                return Permission.ReadWrite;
       case engagement:                 return Permission.ReadWrite;
       case sensitivity:                return Permission.ReadWrite;
-      default:                         return Permission.None;
-    }
+      case stepChangedAt:              return Permission.ReadWrite; 
+      case owningOrganization:         return Permission.ReadWrite; 
+      case initialMouEnd:              return Permission.ReadWrite; 
+      case tags:                       return Permission.ReadWrite;
+      }
+return Permission.None;
   }
 
   private static Permission ProjectMember(ProjectMember property){
@@ -327,24 +332,24 @@ public class ProjectManagerGlobal extends BaseRole {
       case roles:                      return Permission.ReadWrite;
       case user:                       return Permission.ReadWrite;
       case modifiedAt:                 return Permission.ReadWrite;
-      default:                         return Permission.None;
-    }
+      }
+return Permission.None;
   }
 
   private static Permission Song(Song property){
     switch(property){
       case name:                       return Permission.ReadWrite;
       case scriptureReferences:        return Permission.ReadWrite;
-      default:                         return Permission.None;
-    }
+      }
+return Permission.None;
   }
 
   private static Permission Story(Story property){
     switch(property){
       case name:                       return Permission.ReadWrite;
       case scriptureReferences:        return Permission.ReadWrite;
-      default:                         return Permission.None;
-    }
+      }
+return Permission.None;
   }
 
   private static Permission Unavailability(Unavailability property){
@@ -352,8 +357,8 @@ public class ProjectManagerGlobal extends BaseRole {
       case description:                return Permission.ReadWrite;
       case end:                        return Permission.ReadWrite;
       case start:                      return Permission.ReadWrite;
-      default:                         return Permission.None;
-    }
+      }
+return Permission.None;
   }
 
   private static Permission User(User property){
@@ -373,8 +378,8 @@ public class ProjectManagerGlobal extends BaseRole {
       case organization:               return Permission.ReadWrite;
       case unavailability:             return Permission.ReadWrite;
       case locations:                  return Permission.ReadWrite;
-      default:                         return Permission.None;
-    }
+      }
+return Permission.None;
   }
 
 }
