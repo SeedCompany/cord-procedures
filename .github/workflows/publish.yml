@@ -1,4 +1,4 @@
-name: Publish Docker
+name: Publish
 
 on:
   push:
@@ -9,9 +9,26 @@ env:
   IMAGE_NAME: cord-procedures
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.11
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: cord-procedures.jar
+          path: target/cord-1.jar
+
   # Push image to GitHub Packages.
   # See also https://docs.docker.com/docker-hub/builds/
-  push:
+  docker:
     runs-on: ubuntu-latest
 
     steps:
