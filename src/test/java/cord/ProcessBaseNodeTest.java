@@ -18,62 +18,55 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import static org.neo4j.driver.Values.parameters;
 
+import java.util.Random;
+
 // look in the debug console for logging statements
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ProcessBaseNodeTest {
 
-    private static final Config driverConfig = Config.builder().withoutEncryption().build();
     private static Driver driver;
-    private Neo4j embeddedDatabaseServer;
 
     @BeforeAll
     void initializeNeo4j() {
-        this.embeddedDatabaseServer = Neo4jBuilders.newInProcessBuilder()
-                .withDisabledServer()
-                .withProcedure(Authorization.class)
-                .build();
-
-        this.driver = GraphDatabase.driver(embeddedDatabaseServer.boltURI(), driverConfig);
+        driver = GraphDatabase.driver( 
+            "bolt://localhost:7687", 
+            AuthTokens.basic( "neo4j", "reallysecurepassword" ) 
+        );
     }
 
     @AfterAll
     void closeDriver(){
         this.driver.close();
-        this.embeddedDatabaseServer.close();
-    }
-
-    @AfterEach
-    void cleanDb(){
-        try(Session session = driver.session()) {
-            session.run("MATCH (n) DETACH DELETE n");
-        }
     }
 
     @Test
     public void shouldCreateAllAdministratorPermissionsOnProjectNode() {
         try(Session session = driver.session()){
             // prepare the db
-            String creatorId = "user1";
-            String adminId = "admin1";
+            Random random = new Random();
+            String creatorId = "user" + random.nextInt(1000000);
+            String adminId = "admin" + random.nextInt(1000000);
 
-            this.createUser(session, creatorId);
-            this.createUser(session, adminId);
+            this.createUser(session, creatorId, null);
+            this.createUser(session, adminId, "Administrator");
 
-            this.createBaseNode(session, "Project", "project1");
+            String projectId = "project" + random.nextInt(1000000);
+
+            this.createBaseNode(session, "Project", projectId);
 
             // run the procedure
             session.run(
                 "CALL cord.processNewBaseNode($baseNodeId, $label, $creatorId)", 
                 parameters(
-                    "baseNodeId", "project1", 
+                    "baseNodeId", projectId, 
                     "label", "Project", 
-                    "creatorId", "user1"
+                    "creatorId", creatorId
                 )
             );
 
             // verify results
-            AllRoles allRoles = new AllRoles();
+            // AllRoles allRoles = new AllRoles();
             
             // loop through properties for the creating user, who should have the admin role
             for (Project property : Project.values()){
@@ -97,7 +90,7 @@ public class ProcessBaseNodeTest {
                     read,
                     edit, 
                     creatorId, 
-                    "project1"
+                    projectId
                 );
             }
 
@@ -123,7 +116,7 @@ public class ProcessBaseNodeTest {
                     read,
                     edit, 
                     adminId, 
-                    "project1"
+                    projectId
                 );
             }
 
@@ -131,12 +124,20 @@ public class ProcessBaseNodeTest {
         }
     }
 
-    private void createUser(Session session, String userId ){
-        session.run("CREATE (:User {id:$userId})", parameters("userId", userId));        
+    private void createUser(Session session, String userId, String role){
+        if (role == null){
+            session.run("CREATE (:User {id:$userId, createdAt: datetime()})", parameters("userId", userId));
+        } else {
+            session.run("CREATE (:User {id:$userId, createdAt: datetime()})-[:roles {active: true}]->(:Property {value:[$role]})", 
+            parameters(
+                "userId", userId,
+                "role", role
+            ));        
+        }
     }
 
     private void createBaseNode(Session session, String label, String baseNodeId){
-        session.run("CREATE (:"+label+" {id:$baseNodeId})", parameters("baseNodeId", baseNodeId));
+        session.run("CREATE (:BaseNode:"+label+" {id:$baseNodeId, createdAt: datetime()})", parameters("baseNodeId", baseNodeId));
     }
 
     private void verifyPropertyAccess(
