@@ -46,8 +46,8 @@ public class FieldOperationsDirector extends BaseRole {
       case universalTemplateFile:      return Perm.RW;
       case records:                    return Perm.RW;
       case status:                     return Perm.RW;
-      }
-return Perm.NO;
+    }
+    return Perm.NO;
   }
 
   private static Perm BudgetRecord(BudgetRecord property){
@@ -55,8 +55,8 @@ return Perm.NO;
       case amount:                     return Perm.RW;
       case fiscalYear:                 return Perm.RW;
       case organization:               return Perm.RW;
-      }
-return Perm.NO;
+    }
+    return Perm.NO;
   }  
   
   private static Perm Ceremony(Ceremony property){
@@ -65,8 +65,8 @@ return Perm.NO;
       case estimatedDate:              return Perm.RW;
       case planned:                    return Perm.RW;
       case type:                       return Perm.RW;
-      }
-return Perm.NO;
+    }
+    return Perm.NO;
   }
 
   private static Perm Directory(Directory property){
@@ -74,8 +74,8 @@ return Perm.NO;
       case name:                       return Perm.RW;
       case createdBy:                  return Perm.RW;
       case parent:                     return Perm.RW;
-      }
-return Perm.NO;
+    }
+    return Perm.NO;
   }
 
   private static Perm Education(Education property){
@@ -83,8 +83,8 @@ return Perm.NO;
       case degree:                     return Perm.RO;
       case institution:                return Perm.RO;
       case major:                      return Perm.RO;
-      }
-return Perm.NO;
+    }
+    return Perm.NO;
   }
 
   private static Perm EthnologueLanguage(EthnologueLanguage property){
@@ -93,8 +93,8 @@ return Perm.NO;
       case name:                       return Perm.RO;
       case population:                 return Perm.RO;
       case provisionalCode:            return Perm.RO;
-      }
-return Perm.NO;
+    }
+    return Perm.NO;
   }
 
   private static Perm FieldRegion(FieldRegion property){
@@ -102,16 +102,16 @@ return Perm.NO;
       case director:                   return Perm.RO;
       case name:                       return Perm.RO;
       case fieldZone:                  return Perm.RO;
-      }
-return Perm.NO;
+    }
+    return Perm.NO;
   }  
   
   private static Perm FieldZone(FieldZone property){
     switch(property){
       case director:                   return Perm.RO;
       case name:                       return Perm.RO;
-      }
-return Perm.NO;
+    }
+    return Perm.NO;
   }
 
   private static Perm File(File property){
@@ -120,8 +120,8 @@ return Perm.NO;
       case createdBy:                  return Perm.RW;
       case parent:                     return Perm.RW;
       case mimeType:                   return Perm.RW;
-      }
-return Perm.NO;
+    }
+    return Perm.NO;
   }
 
   private static Perm FileVersion(FileVersion property){
@@ -131,24 +131,24 @@ return Perm.NO;
       case parent:                     return Perm.RW;
       case mimeType:                   return Perm.RW;
       case size:                       return Perm.RW;
-      }
-return Perm.NO;
+    }
+    return Perm.NO;
   }
 
   private static Perm Film(Film property){
     switch(property){
       case name:                       return Perm.RW;
       case scriptureReferences:        return Perm.RW;
-      }
-return Perm.NO;
+    }
+    return Perm.NO;
   }
 
   private static Perm FundingAccount(FundingAccount property){
     switch(property){
       case name:                       return Perm.RO;
       case accountNumber:              return Perm.RO;
-      }
-return Perm.NO;
+    }
+    return Perm.NO;
   }  
   
   private static Perm InternshipEngagement(InternshipEngagement property){
@@ -173,8 +173,8 @@ return Perm.NO;
       case statusModifiedAt:           return Perm.RW;
       case modifiedAt:                 return Perm.RW;
       case status:                     return Perm.RW;
-      }
-return Perm.NO;
+    }
+    return Perm.NO;
   }
 
   private static Perm Language(Language property){
@@ -194,9 +194,9 @@ return Perm.NO;
       case sensitivity:                return Perm.RO;
       case hasExternalFirstScripture:  return Perm.RO;
       case locations:                  return Perm.RO;
-case tags:                             return Perm.RO;
+      case tags:                       return Perm.RO;
       }
-return Perm.NO;
+    return Perm.NO;
   }
 
   private static Perm LanguageEngagement(LanguageEngagement property){
@@ -222,16 +222,16 @@ return Perm.NO;
       case modifiedAt:                 return Perm.RW;
       case product:                    return Perm.RW;
       case status:                     return Perm.RW;
-      }
-return Perm.NO;
+    }
+    return Perm.NO;
   }
 
   private static Perm LiteracyMaterial(LiteracyMaterial property){
     switch(property){
-      case name:                       return Perm.RW;
-      case scriptureReferences:        return Perm.RW;
-      }
-return Perm.NO;
+      case name:                       return Perm.RO;
+      case scriptureReferences:        return Perm.RO;
+    }
+    return Perm.NO;
   }
 
   private static Perm Location(Location property){
@@ -241,8 +241,8 @@ return Perm.NO;
       case sensitivity:                return Perm.RO;
       case isoAlpha3:                  return Perm.RO;
       case fundingAccount:             return Perm.RO;
-      }
-return Perm.NO;
+    }
+    return Perm.NO;
   }
   
   private static Perm Organization(Organization property){
@@ -250,23 +250,23 @@ return Perm.NO;
       case name:                       return Perm.RO;
       case address:                    return Perm.RO;
       case locations:                  return Perm.RO;
-      }
-return Perm.NO;
+    }
+    return Perm.NO;
   }
 
   private static Perm Partner(Partner property){
     switch(property){
-      case organization:               return Perm.RW;
-      case pointOfContact:             return Perm.RW;
-      case types:                      return Perm.RW;
-      case financialReportingTypes:    return Perm.RW;
-      case pmcEntityCode:              return Perm.RW;
-      case globalInnovationsClient:    return Perm.RW;
-      case active:                     return Perm.RW;
-      case address:                    return Perm.RW;
-      case modifiedAt:                 return Perm.RW;
-      }
-return Perm.NO;
+      case organization:               return Perm.RO;
+      case pointOfContact:             return Perm.RO;
+      case types:                      return Perm.RO;
+      case financialReportingTypes:    return Perm.RO;
+      case pmcEntityCode:              return Perm.RO;
+      case globalInnovationsClient:    return Perm.RO;
+      case active:                     return Perm.RO;
+      case address:                    return Perm.RO;
+      case modifiedAt:                 return Perm.RO;
+    }
+    return Perm.NO;
   }
 
   private static Perm Partnership(Partnership property){
@@ -283,8 +283,8 @@ return Perm.NO;
       case types:                      return Perm.RW;
       case organization:               return Perm.RW;
       case partner:                    return Perm.RW;
-      }
-return Perm.NO;
+    }
+    return Perm.NO;
   }
 
   private static Perm Product(Product property){
@@ -296,8 +296,8 @@ return Perm.NO;
       case produces:                   return Perm.RW;
       case scriptureReferencesOverride:return Perm.RW;
       case isOverriding:               return Perm.RW;
-      }
-return Perm.NO;
+    }
+    return Perm.NO;
   }
 
   private static Perm Project(Project property){
@@ -320,12 +320,12 @@ return Perm.NO;
       case fieldRegion:                return Perm.RW;
       case engagement:                 return Perm.RW;
       case sensitivity:                return Perm.RW;
-      case stepChangedAt:              return Perm.RW; 
-      case owningOrganization:         return Perm.RW; 
-      case initialMouEnd:              return Perm.RW; 
+      case stepChangedAt:              return Perm.RW;
+      case owningOrganization:         return Perm.RW;
+      case initialMouEnd:              return Perm.RW;
       case tags:                       return Perm.RW;
-      }
-return Perm.NO;
+    }
+    return Perm.NO;
   }
 
   private static Perm ProjectMember(ProjectMember property){
@@ -333,24 +333,24 @@ return Perm.NO;
       case roles:                      return Perm.RW;
       case user:                       return Perm.RW;
       case modifiedAt:                 return Perm.RW;
-      }
-return Perm.NO;
+    }
+    return Perm.NO;
   }
 
   private static Perm Song(Song property){
     switch(property){
       case name:                       return Perm.RW;
       case scriptureReferences:        return Perm.RW;
-      }
-return Perm.NO;
+    }
+    return Perm.NO;
   }
 
   private static Perm Story(Story property){
     switch(property){
       case name:                       return Perm.RW;
       case scriptureReferences:        return Perm.RW;
-      }
-return Perm.NO;
+    }
+    return Perm.NO;
   }
 
   private static Perm Unavailability(Unavailability property){
@@ -358,8 +358,8 @@ return Perm.NO;
       case description:                return Perm.RO;
       case end:                        return Perm.RO;
       case start:                      return Perm.RO;
-      }
-return Perm.NO;
+    }
+    return Perm.NO;
   }
 
   private static Perm User(User property){
@@ -380,8 +380,8 @@ return Perm.NO;
       case unavailability:             return Perm.RO;
       case locations:                  return Perm.RO;
       case partners:                   return Perm.RO;
-      }
-return Perm.NO;
+    }
+    return Perm.NO;
   }
 
 }
