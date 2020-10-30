@@ -3,11 +3,7 @@ package cord;
 import org.junit.jupiter.api.*;
 import org.neo4j.driver.*;
 import org.neo4j.driver.exceptions.NoSuchRecordException;
-import org.neo4j.harness.Neo4j;
-import org.neo4j.harness.Neo4jBuilders;
-
 import cord.common.AllProperties;
-import cord.common.AllRoles;
 import cord.common.BaseNodeLabels;
 import cord.common.RoleNames;
 import cord.model.Perm;
@@ -37,7 +33,7 @@ public class ProcessBaseNodeTest {
 
     @AfterAll
     void closeDriver(){
-        this.driver.close();
+        ProcessBaseNodeTest.driver.close();
     }
 
     @Test
