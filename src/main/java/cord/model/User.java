@@ -5,6 +5,7 @@ public enum User {
   displayFirstName,
   displayLastName, 
   email,           
+  partners,
   phone,           
   realFirstName,   
   realLastName,    

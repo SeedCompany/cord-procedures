@@ -136,7 +136,8 @@ public enum AllProperties {
   tags,
   initialMouEnd,
   stepChangedAt,
-  owningOrganization 
+  owningOrganization,
+  partners
 }           
       
 
