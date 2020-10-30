@@ -54,22 +54,21 @@ public class ProcessBaseNodeTest {
     public void shouldCreateAllAdministratorPermissionsOnProjectNode() {
         try(Session session = driver.session()){
             // prepare the db
-            session.run(
-                "CREATE (:User {id:$userId}), (:Project {id:$projectId}), (:User {id:$adminId})", 
-                parameters(
-                    "userId", "user1", 
-                    "projectId", "project1", 
-                    "adminId", "admin1"
-                )
-            );
-            
+            String creatorId = "user1";
+            String adminId = "admin1";
+
+            this.createUser(session, creatorId);
+            this.createUser(session, adminId);
+
+            this.createBaseNode(session, "Project", "project1");
+
             // run the procedure
             session.run(
-                "CALL cord.processNewBaseNode($baseNodeId, $label, $creatorUserId)", 
+                "CALL cord.processNewBaseNode($baseNodeId, $label, $creatorId)", 
                 parameters(
                     "baseNodeId", "project1", 
                     "label", "Project", 
-                    "creatorUserId", "user1"
+                    "creatorId", "user1"
                 )
             );
 
@@ -97,7 +96,7 @@ public class ProcessBaseNodeTest {
                     RoleNames.AdministratorRole, 
                     read,
                     edit, 
-                    "user1", 
+                    creatorId, 
                     "project1"
                 );
             }
@@ -123,13 +122,21 @@ public class ProcessBaseNodeTest {
                     RoleNames.AdministratorRole, 
                     read,
                     edit, 
-                    "admin1", 
+                    adminId, 
                     "project1"
                 );
             }
 
 
         }
+    }
+
+    private void createUser(Session session, String userId ){
+        session.run("CREATE (:User {id:$userId})", parameters("userId", userId));        
+    }
+
+    private void createBaseNode(Session session, String label, String baseNodeId){
+        session.run("CREATE (:"+label+" {id:$baseNodeId})", parameters("baseNodeId", baseNodeId));
     }
 
     private void verifyPropertyAccess(
@@ -179,7 +186,7 @@ public class ProcessBaseNodeTest {
                     "edit", edit,
                     "userId", userId,
                     "baseNodeId", baseNodeId
-                    )
+                )
             ).single(); // calling single will throw if a record isn't returned
 
             if (!edit){
@@ -203,15 +210,17 @@ public class ProcessBaseNodeTest {
         String userId, 
         String baseNodeId
     ){
-        String errorMessage = "Fail\n\n" + 
-            "message: "         + message + "\n" + 
-            "base node: "       + label.name() + "\n" + 
-            "property: "        + property.name() + "\n" + 
-            "role: "            + role.name() + "\n" + 
-            "read: "            + read + "\n" +
-            "edit: "            + edit + "\n" +
-            "userId: "          + userId + "\n" +
-            "baseNodeId: "      + baseNodeId + "\n\n"
+        String errorMessage = "\n" + 
+        "-----------------------------------------------------\n" +
+            "\tmessage: "         + message + "\n" + 
+            "\tbase node: "       + label.name() + "\n" + 
+            "\tproperty: "        + property.name() + "\n" + 
+            "\trole: "            + role.name() + "\n" + 
+            "\tread: "            + read + "\n" +
+            "\tedit: "            + edit + "\n" +
+            "\tuserId: "          + userId + "\n" +
+            "\tbaseNodeId: "      + baseNodeId + "\n" +
+        "-----------------------------------------------------\n"
         ;
 
         System.out.println(errorMessage);
