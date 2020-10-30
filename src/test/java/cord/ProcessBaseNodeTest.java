@@ -18,6 +18,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import static org.neo4j.driver.Values.parameters;
 
+// look in the debug console for logging statements
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ProcessBaseNodeTest {
 
@@ -49,7 +51,7 @@ public class ProcessBaseNodeTest {
     }
 
     @Test
-    public void shouldCreateAllAdministratorPermissionsOnProjectNode() throws IllegalAccessException {
+    public void shouldCreateAllAdministratorPermissionsOnProjectNode() {
         try(Session session = driver.session()){
             // prepare the db
             session.run(
@@ -72,12 +74,9 @@ public class ProcessBaseNodeTest {
             );
 
             // verify results
-
-            // loop through properties
             AllRoles allRoles = new AllRoles();
-
             
-
+            // loop through properties for the creating user, who should have the admin role
             for (Project property : Project.values()){
 
                 Perm perm = Administrator.permission.permission(BaseNodeLabels.Project, property.name());
@@ -90,9 +89,8 @@ public class ProcessBaseNodeTest {
                     case RW: read = true; edit = true; break;
                     default: break;
                 }
-                
-                // creator should have access to all properties 
-                this.readPropertyAccess(
+
+                this.verifyPropertyAccess(
                     session, 
                     BaseNodeLabels.Project, 
                     AllProperties.valueOf(property.name()), 
@@ -104,11 +102,37 @@ public class ProcessBaseNodeTest {
                 );
             }
 
+            // loop through properties for the admin user
+            for (Project property : Project.values()){
+
+                Perm perm = Administrator.permission.permission(BaseNodeLabels.Project, property.name());
+
+                Boolean read = false;
+                Boolean edit = false;
+                
+                switch (perm) {
+                    case RO: read = true; break;
+                    case RW: read = true; edit = true; break;
+                    default: break;
+                }
+
+                this.verifyPropertyAccess(
+                    session, 
+                    BaseNodeLabels.Project, 
+                    AllProperties.valueOf(property.name()), 
+                    RoleNames.AdministratorRole, 
+                    read,
+                    edit, 
+                    "admin1", 
+                    "project1"
+                );
+            }
+
 
         }
     }
 
-    private void readPropertyAccess(
+    private void verifyPropertyAccess(
         Session session, 
         BaseNodeLabels label, 
         AllProperties property, 
@@ -117,7 +141,7 @@ public class ProcessBaseNodeTest {
         Boolean edit,
         String userId, 
         String baseNodeId
-    ) throws IllegalAccessException {
+    ) {
         try {
             session.run(
                 "MATCH (:User {id:$userId})<-[:member]-(:SecurityGroup {role:$role}) "+
@@ -134,30 +158,12 @@ public class ProcessBaseNodeTest {
             ).single(); // calling single will throw if a record isn't returned
 
             if (!read){
-                System.out.println("Access granted when it shouldn't be. " + 
-                    label.name() + " " + 
-                    property.name() + " " + 
-                    role.name() + 
-                    " read: " + read + 
-                    " edit: " + edit + 
-                    " userId: " + userId + 
-                    " baseNodeId: " + baseNodeId
-                );
-                throw new IllegalAccessException("Access granted when it shouldn't be.");
+                printError("access not granted", label, property, role, read, edit, userId, baseNodeId);
             }
                     
         } catch (NoSuchRecordException e){
             if (read){
-                System.out.println("Fail " + 
-                label.name() + " " + 
-                property.name() + " " + 
-                role.name() + 
-                " read: " + read + 
-                " edit: " + edit + 
-                " userId: " + userId + 
-                " baseNodeId: " + baseNodeId
-                );
-                throw e;
+                printError("access not granted", label, property, role, read, edit, userId, baseNodeId);
             }
         }
 
@@ -177,32 +183,39 @@ public class ProcessBaseNodeTest {
             ).single(); // calling single will throw if a record isn't returned
 
             if (!edit){
-                System.out.println("Access granted when it shouldn't be. " + 
-                    label.name() + " " + 
-                    property.name() + " " + 
-                    role.name() + 
-                    " read: " + read + 
-                    " edit: " + edit + 
-                    " userId: " + userId + 
-                    " baseNodeId: " + baseNodeId
-                );
-                throw new IllegalAccessException("Access granted when it shouldn't be.");
+                printError("access grant error", label, property, role, read, edit, userId, baseNodeId);
             }
                     
         } catch (NoSuchRecordException e){
             if (edit){
-                System.out.println("Property access failure " + 
-                label.name() + " " + 
-                property.name() + " " + 
-                role.name() + 
-                " read: " + read + 
-                " edit: " + edit + 
-                " userId: " + userId + 
-                " baseNodeId: " + baseNodeId
-                );
-                throw e;
+                printError("access not granted", label, property, role, read, edit, userId, baseNodeId);
             }
         }
+    }
+
+    private void printError(
+        String message,
+        BaseNodeLabels label, 
+        AllProperties property, 
+        RoleNames role, 
+        Boolean read,
+        Boolean edit,
+        String userId, 
+        String baseNodeId
+    ){
+        String errorMessage = "Fail\n\n" + 
+            "message: "         + message + "\n" + 
+            "base node: "       + label.name() + "\n" + 
+            "property: "        + property.name() + "\n" + 
+            "role: "            + role.name() + "\n" + 
+            "read: "            + read + "\n" +
+            "edit: "            + edit + "\n" +
+            "userId: "          + userId + "\n" +
+            "baseNodeId: "      + baseNodeId + "\n\n"
+        ;
+
+        System.out.println(errorMessage);
+        assertThat(errorMessage).isEmpty();
     }
 
 }
