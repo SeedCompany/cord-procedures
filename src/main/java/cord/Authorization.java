@@ -4,6 +4,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import org.neo4j.graphdb.*;
@@ -54,7 +55,7 @@ public class Authorization {
         for (BaseRole role: allRoles.globalRolesList()){
           Long sgNodeNeoId = this.mergeSecurityGroupForRole(role, baseNodeId, baseNodeNeoId, label, model, permMap);
           sgMap.put(role.roleName, sgNodeNeoId);
-
+          
           // global role users
           this.addRoleMembersToSg(role, sgNodeNeoId);
         }
@@ -302,40 +303,29 @@ public class Authorization {
     }
 
     private void addRoleMembersToSg(BaseRole role, Long sgNodeNeoId){
-      try ( Transaction tx = db.beginTx() )
-      {
-          Node sgNode = tx.getNodeById(sgNodeNeoId);
-          Iterator<Node> iter = tx.findNodes(Label.label(role.roleName.name()));
-          while(iter.hasNext()){
-            Node userNode = iter.next();
-            Long userNodeNeoId = userNode.getId();
-            Boolean isMember = false;
 
-            Iterable<Relationship> memberRels = userNode.getRelationships(Direction.INCOMING, 
-              RelationshipType.withName(NonPropertyRelationshipTypes.member.name()));
+      try ( Transaction tx = db.beginTx() ) {
 
-            Iterator<Relationship> memberRelsIter = memberRels.iterator();
-            
-            while (memberRelsIter.hasNext()){
-              Relationship rel = memberRelsIter.next();
+          // get all the users with a specific role in their user object
+          String feRoleName = Utility.getFrontendRoleNameFromApiRoleName(log, role.roleName);          
+          
+          tx.execute(
+            "call apoc.periodic.iterate('MATCH (sg:SecurityGroup),(user:User)-[:roles {active: true}]->(roles:Property) "+
+            "WHERE \""+feRoleName+"\" IN roles.value AND id(sg) = "+sgNodeNeoId+" RETURN user, sg', "+
+            "'MERGE (user)<-[:member]-(sg)', {batchSize:100}) yield batches, total return batches, total"
+          );
 
-              if (rel.getEndNode().getId() == userNodeNeoId){
-                isMember = true;
-              }
-            }
-
-            if (!isMember){
-              sgNode.createRelationshipTo(userNode, 
-              RelationshipType.withName(NonPropertyRelationshipTypes.member.name()));
-            }
-          }
           tx.commit();
-      } catch(Exception e){
-        this.log.error(e.getMessage());
-        throw new RuntimeException("error in adding role members to SG: " + sgNodeNeoId + " " + role.roleName.name());
-      }
-    }
 
-    
+      } catch(Exception e){
+        e.printStackTrace();
+        throw new RuntimeException("error in adding an SG to all users with a specific role");
+      }
+
+    } 
 
   }
+
+
+
+  

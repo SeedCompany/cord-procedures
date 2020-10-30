@@ -473,5 +473,34 @@ public class Utility {
     }
   }
 
+  public static String getFrontendRoleNameFromApiRoleName(Log log, RoleNames role){
+    switch (role){
+      case AdministratorRole:
+      case ConsultantManagerRole:
+      case ConsultantRole:
+      case ControllerRole:
+      case FieldOperationsDirectorRole:
+      case FundraisingRole:
+      case InternRole:
+      case LeadershipRole:
+      case LiasonRole:
+      case MarketingRole:
+      case MentorRole:
+      case RegionalCommunicationCoordinatorRole:
+      case StaffMemberRole:
+      case TranslatorRole:
+        return role.name().replace("Role", "");
+      case ProjectManagerGlobalRole:
+      case RegionalDirectorGlobalRole:
+      case FinancialAnalystGlobalRole:
+        return role.name().replace("GlobalRole", "");
+      case ProjectManagerOnProjectRole:
+      case RegionalDirectorOnProjectRole:
+      case FinancialAnalystOnProjectRole:
+        return role.name().replace("OnProjectRole", "");
+      default: 
+        log.error("frontend role name not found");
+        return null;
+    }
+  }
 }
-
