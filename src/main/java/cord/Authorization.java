@@ -309,7 +309,7 @@ public class Authorization {
           
           tx.execute(
             "call apoc.periodic.iterate('MATCH (sg:SecurityGroup),(user:User)-[:roles {active: true}]->(roles:Property) "+
-            "WHERE \""+feRoleName+"\" IN roles.value AND id(sg) = "+sgNodeNeoId+" RETURN user, sg', "+
+            "WHERE \""+feRoleName+"\" IN roles.value AND id(sg) = "+sgNodeNeoId+" AND NOT (user)<-[:member]-(sg) RETURN user, sg', "+
             "'MERGE (user)<-[:member]-(sg)', {batchSize:100}) yield batches, total return batches, total"
           );
 
