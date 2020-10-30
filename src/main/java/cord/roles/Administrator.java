@@ -408,6 +408,7 @@ return Perm.NO;
       case organization:               return Perm.RW;
       case unavailability:             return Perm.RW;
       case locations:                  return Perm.RW;
+      case partners:                   return Perm.RW;
       } 
 
 return Perm.NO;

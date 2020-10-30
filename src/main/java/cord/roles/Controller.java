@@ -379,6 +379,7 @@ return Perm.NO;
       case organization:               return Perm.RO;
       case unavailability:             return Perm.RO;
       case locations:                  return Perm.RO;
+      case partners:                   return Perm.RO;
       }
 return Perm.NO;
   }
