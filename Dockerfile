@@ -4,7 +4,7 @@ COPY pom.xml /tmp/
 COPY src /tmp/src/
 WORKDIR /tmp/
 
-RUN mvn package
+RUN mvn package -DskipTests
 
 FROM neo4j:4.1-enterprise
 
