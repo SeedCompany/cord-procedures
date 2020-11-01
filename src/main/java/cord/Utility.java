@@ -42,8 +42,7 @@ public class Utility {
       while (projectNeoId == null){
         switch (nextLabel){
           case Project:
-            projectNeoId = nextNode.getId();
-            break;
+            return nextNode.getId();
           case File:
           case FileNode:
           case FileVersion:
@@ -287,18 +286,18 @@ public class Utility {
       case "ConsultantManager":                                       return RoleNames.ConsultantManagerRole;
       case "Controller":                                              return RoleNames.ControllerRole;
       case "FieldOperationsDirector":                                 return RoleNames.FieldOperationsDirectorRole;
-      case "FinancialAnalyst":                    if (isMember)       return RoleNames.FinancialAnalystGlobalRole;
-                                                                      return RoleNames.FinancialAnalystOnProjectRole;
+      case "FinancialAnalyst":                    if (isMember)       return RoleNames.FinancialAnalystOnProjectRole;
+                                                                      return RoleNames.FinancialAnalystGlobalRole;
       case "Fundraising":                                             return RoleNames.FundraisingRole;
       case "Intern":                                                  return RoleNames.InternRole;
       case "Leadership":                                              return RoleNames.LeadershipRole;
       case "Liason":                                                  return RoleNames.LiasonRole;
       case "Marketing":                                               return RoleNames.MarketingRole;
-      case "ProjectManager":                      if (isMember)       return RoleNames.ProjectManagerGlobalRole;
-                                                                      return RoleNames.ProjectManagerOnProjectRole;
+      case "ProjectManager":                      if (isMember)       return RoleNames.ProjectManagerOnProjectRole;
+                                                                      return RoleNames.ProjectManagerGlobalRole;
       case "RegionalCommunicationCoordinator":                        return RoleNames.RegionalCommunicationCoordinatorRole;
-      case "RegionalDirector":                    if (isMember)       return RoleNames.RegionalDirectorGlobalRole;
-                                                  if (isMember)       return RoleNames.RegionalDirectorOnProjectRole;
+      case "RegionalDirector":                    if (isMember)       return RoleNames.RegionalDirectorOnProjectRole;
+                                                                      return RoleNames.RegionalDirectorGlobalRole;
       case "StaffMember":                                             return RoleNames.StaffMemberRole;
       case "Translator":                                              return RoleNames.TranslatorRole;
     }
@@ -306,22 +305,25 @@ public class Utility {
     return null;
   }
 
-  public static Boolean isProjectChildNode(BaseNodeLabels label){
+  public static Boolean isProjectContextNode(BaseNodeLabels label){
     switch (label){   
-      case Budget:                return true;
-      case BudgetRecord:          return true;
-      case Ceremony:              return true;
-      case Directory:             return true;
-      case Engagement:            return true;
-      case File:                  return true;
-      case FileNode:              return true;
-      case FileVersion:           return true;
-      case InternshipEngagement:  return true;
-      case LanguageEngagement:    return true;
-      case Partnership:           return true;
-      case Product:               return true;
-      case ProjectMember:         return true;
-      default:                    return false;
+      case Budget:                
+      case BudgetRecord:          
+      case Ceremony:              
+      case Directory:             
+      case Engagement:            
+      case File:                  
+      case FileNode:              
+      case FileVersion:           
+      case InternshipEngagement:  
+      case LanguageEngagement:    
+      case Partnership:           
+      case Product:               
+      case Project:
+      case ProjectMember:         
+        return true;
+      default:                    
+        return false;
     }
   }
 

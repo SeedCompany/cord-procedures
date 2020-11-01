@@ -60,9 +60,9 @@ public class Authorization {
 
         // determine if the creator should be added to the admin group for this node
         // and if to create project role SGs
-        Boolean isProjectNode = Utility.isProjectChildNode(label);
+        Boolean isProjectContextNode = Utility.isProjectContextNode(label);
 
-        if (isProjectNode) {
+        if (isProjectContextNode) {
 
           // get project members
           Long projectNodeNeoId = Utility.getProjectNode(db, baseNodeNeoId, label);
@@ -75,6 +75,8 @@ public class Authorization {
               Long sgNodeNeoId = this.mergeSecurityGroupForRole(role, baseNodeId, baseNodeNeoId, label, model, permMap);
               sgMap.put(role.roleName, sgNodeNeoId);
             }
+
+            System.out.println("member count:" + members.size());
 
             this.processProjectMember(members, sgMap, allRoles);
 
