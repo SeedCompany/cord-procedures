@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.neo4j.graphdb.*;
-import org.neo4j.logging.Log;
 
 import cord.common.AllProperties;
 import cord.common.BaseNodeLabels;
@@ -30,7 +29,6 @@ public class Utility {
 
   public static Long getProjectNode(
     GraphDatabaseService db, 
-    Log log, 
     Long baseNodeNeoId, 
     BaseNodeLabels label) {
 
@@ -102,7 +100,7 @@ public class Utility {
               Relationship fromFileNodeRel = nextNode.getSingleRelationship(
                 RelationshipType.withName(AllProperties.parent.name()), Direction.OUTGOING); 
                 if (fromFileNodeRel == null){
-                  log.error("file node rel is null for label " + nextLabel + " nextNodeNeoId: " + nextNode.getId());
+                  System.out.println("file node rel is null for label " + nextLabel + " nextNodeNeoId: " + nextNode.getId());
                   return null;
                 }
               nextNode = fromFileNodeRel.getEndNode();            
@@ -113,7 +111,7 @@ public class Utility {
             Relationship fromBudgetRel = nextNode.getSingleRelationship(
               RelationshipType.withName(AllProperties.budget.name()), Direction.INCOMING); 
               if (fromBudgetRel == null){
-                log.error("budget rel is null for label " + nextLabel + " nextNodeNeoId: " + nextNode.getId());
+                System.out.println("budget rel is null for label " + nextLabel + " nextNodeNeoId: " + nextNode.getId());
                 return null;
               }
             nextNode = fromBudgetRel.getStartNode();
@@ -124,7 +122,7 @@ public class Utility {
             Relationship fromBudgetRecordRel = nextNode.getSingleRelationship(
               RelationshipType.withName(AllProperties.record.name()), Direction.INCOMING); 
               if (fromBudgetRecordRel == null){
-                log.error("budget record rel is null for label " + nextLabel + " nextNodeNeoId: " + nextNode.getId());
+                System.out.println("budget record rel is null for label " + nextLabel + " nextNodeNeoId: " + nextNode.getId());
                 return null;
               }
             nextNode = fromBudgetRecordRel.getStartNode();
@@ -134,7 +132,7 @@ public class Utility {
             Relationship fromCeremonyRel = nextNode.getSingleRelationship(
               RelationshipType.withName(AllProperties.ceremony.name()), Direction.INCOMING); 
               if (fromCeremonyRel == null){
-                log.error("ceremony rel is null for label " + nextLabel + " nextNodeNeoId: " + nextNode.getId());
+                System.out.println("ceremony rel is null for label " + nextLabel + " nextNodeNeoId: " + nextNode.getId());
                 return null;
               }
             nextNode = fromCeremonyRel.getStartNode();
@@ -146,7 +144,7 @@ public class Utility {
             Relationship fromEngagementRel = nextNode.getSingleRelationship(
               RelationshipType.withName(AllProperties.engagement.name()), Direction.INCOMING); 
               if (fromEngagementRel == null){
-                log.error("engagement rel is null for label " + nextLabel + " nextNodeNeoId: " + nextNode.getId());
+                System.out.println("engagement rel is null for label " + nextLabel + " nextNodeNeoId: " + nextNode.getId());
                 return null;
               }
             nextNode = fromEngagementRel.getStartNode();
@@ -157,7 +155,7 @@ public class Utility {
             Relationship fromPartnerRel = nextNode.getSingleRelationship(
               RelationshipType.withName(AllProperties.partner.name()), Direction.INCOMING); 
               if (fromPartnerRel == null){
-                log.error("partner rel is null for label " + nextLabel + " nextNodeNeoId: " + nextNode.getId());
+                System.out.println("partner rel is null for label " + nextLabel + " nextNodeNeoId: " + nextNode.getId());
                 return null;
               }
             nextNode = fromPartnerRel.getStartNode();
@@ -167,7 +165,7 @@ public class Utility {
             Relationship fromPartnershipRel = nextNode.getSingleRelationship(
               RelationshipType.withName(AllProperties.partnership.name()), Direction.INCOMING); 
               if (fromPartnershipRel == null){
-                log.error("partnership rel is null for label " + nextLabel + " nextNodeNeoId: " + nextNode.getId());
+                System.out.println("partnership rel is null for label " + nextLabel + " nextNodeNeoId: " + nextNode.getId());
                 return null;
               }
             nextNode = fromPartnershipRel.getStartNode();
@@ -178,7 +176,7 @@ public class Utility {
             Relationship fromProductRel = nextNode.getSingleRelationship(
               RelationshipType.withName(AllProperties.product.name()), Direction.INCOMING); 
               if (fromProductRel == null){
-                log.error("product rel is null for label " + nextLabel + " nextNodeNeoId: " + nextNode.getId());
+                System.out.println("product rel is null for label " + nextLabel + " nextNodeNeoId: " + nextNode.getId());
                 return null;
               }
             nextNode = fromProductRel.getStartNode();
@@ -188,7 +186,7 @@ public class Utility {
             Relationship fromProjectMemberRel = nextNode.getSingleRelationship(
               RelationshipType.withName(AllProperties.member.name()), Direction.INCOMING); 
               if (fromProjectMemberRel == null){
-                log.error("ceremony rel is null for label " + nextLabel + " nextNodeNeoId: " + nextNode.getId());
+                System.out.println("ceremony rel is null for label " + nextLabel + " nextNodeNeoId: " + nextNode.getId());
                 return null;
               }
             nextNode = fromProjectMemberRel.getStartNode();
@@ -196,7 +194,7 @@ public class Utility {
             projectNeoId = nextNode.getId();
             break;
           default: 
-            log.error("base node label not found in project nodes switch:" + nextLabel);
+            System.out.println("base node label not found in project nodes switch:" + nextLabel);
             return null;
         }
       }
@@ -205,7 +203,7 @@ public class Utility {
 
     } catch(Exception e){
       e.printStackTrace();
-      log.info(e.getMessage());
+      System.out.println(e.getMessage());
       throw new RuntimeException("error in finding project node");
     }
 
@@ -473,7 +471,7 @@ public class Utility {
     }
   }
 
-  public static String getFrontendRoleNameFromApiRoleName(Log log, RoleNames role){
+  public static String getFrontendRoleNameFromApiRoleName(RoleNames role){
     switch (role){
       case AdministratorRole:
       case ConsultantManagerRole:
@@ -499,7 +497,7 @@ public class Utility {
       case FinancialAnalystOnProjectRole:
         return role.name().replace("OnProjectRole", "");
       default: 
-        log.error("frontend role name not found");
+        System.out.println("frontend role name not found");
         return null;
     }
   }

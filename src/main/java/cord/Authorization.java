@@ -65,7 +65,7 @@ public class Authorization {
         if (isProjectNode) {
 
           // get project members
-          Long projectNodeNeoId = Utility.getProjectNode(db, log, baseNodeNeoId, label);
+          Long projectNodeNeoId = Utility.getProjectNode(db, baseNodeNeoId, label);
           if (projectNodeNeoId == null){
             this.log.error("project id not found. skipping adding project members to new node. baseNodeNeoId: " + baseNodeNeoId + " label: " + label);
           } else {    
@@ -305,7 +305,7 @@ public class Authorization {
       try ( Transaction tx = db.beginTx() ) {
 
           // get all the users with a specific role in their user object
-          String feRoleName = Utility.getFrontendRoleNameFromApiRoleName(log, role.roleName);          
+          String feRoleName = Utility.getFrontendRoleNameFromApiRoleName(role.roleName);          
           
           tx.execute(
             "call apoc.periodic.iterate('MATCH (sg:SecurityGroup),(user:User)-[:roles {active: true}]->(roles:Property) "+
