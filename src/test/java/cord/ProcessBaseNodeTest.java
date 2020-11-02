@@ -1,8 +1,13 @@
 package cord;
 
+import apoc.periodic.PeriodicExtended;
+
 import org.junit.jupiter.api.*;
+import org.neo4j.configuration.GraphDatabaseSettings;
 import org.neo4j.driver.*;
 import org.neo4j.driver.exceptions.NoSuchRecordException;
+import org.neo4j.harness.Neo4j;
+import org.neo4j.harness.Neo4jBuilders;
 import org.neo4j.logging.Log;
 
 import cord.common.AllProperties;
@@ -18,7 +23,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import static org.neo4j.driver.Values.parameters;
 
-import java.util.Arrays;
 import java.util.Random;
 
 // look in the debug console for logging statements
@@ -27,6 +31,9 @@ import java.util.Random;
 public class ProcessBaseNodeTest {
 
     private static Driver driver;
+
+    // private static final Config driverConfig = Config.builder().withoutEncryption().build();
+    // private Neo4j embeddedDatabaseServer;
 
     private AllRoles allRoles;
 
@@ -40,12 +47,38 @@ public class ProcessBaseNodeTest {
             "bolt://localhost:7687", 
             AuthTokens.basic( "neo4j", "reallysecurepassword" ) 
         );
-    }
+    }   
 
     @AfterAll
     void closeDriver(){
         ProcessBaseNodeTest.driver.close();
     }
+
+    // @BeforeAll
+    // void initializeNeo4j() throws URISyntaxException {
+
+    //     var pluginDirContainingApocJar = new File(
+	// 		ProcessBaseNodeTest.driverConfig.getClass().getProtectionDomain().getCodeSource().getLocation().toURI())
+    //         .getParentFile().toPath();
+            
+    //     this.embeddedDatabaseServer = Neo4jBuilders.newInProcessBuilder()
+    //             .withDisabledServer()
+    //             .withConfig(GraphDatabaseSettings.plugin_dir, pluginDirContainingApocJar)
+    //             .withConfig(GraphDatabaseSettings.procedure_unrestricted, List.of("apoc.*"))
+    //             .withProcedure(apoc.periodic.PeriodicExtended.class)
+    //             .withProcedure(Authorization.class)
+    //             .build();
+
+        
+
+    //     ProcessBaseNodeTest.driver = GraphDatabase.driver(embeddedDatabaseServer.boltURI(), driverConfig);
+    // }
+
+    // @AfterAll
+    // void closeDriver(){
+    //     ProcessBaseNodeTest.driver.close();
+    //     this.embeddedDatabaseServer.close();
+    // }
 
     @Test
     public void shouldCreateAllPermissionsForAllRoles() {
