@@ -116,7 +116,9 @@ public class Authorization {
                   
                   for (String role: roles){
                     // map role string to a role object
-                    BaseRole roleObj = allRoles.getRoleByName(role);
+
+                    RoleNames dbRole = AllRoles.getRoleNameEnumFromFeString(role, true);
+                    BaseRole roleObj = allRoles.getRoleByStringName(dbRole.name());
                     
                     // get member's user node
                     Relationship toUser = memberNode.getSingleRelationship(
@@ -307,7 +309,7 @@ public class Authorization {
       try ( Transaction tx = db.beginTx() ) {
 
           // get all the users with a specific role in their user object
-          String feRoleName = Utility.getFrontendRoleNameFromApiRoleName(role.roleName);          
+          String feRoleName = AllRoles.getFrontendRoleNameFromApiRoleName(role.roleName);          
           
           tx.execute(
             "call apoc.periodic.iterate('MATCH (sg:SecurityGroup),(user:User)-[:roles {active: true}]->(roles:Property) "+

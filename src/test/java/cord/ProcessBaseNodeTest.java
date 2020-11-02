@@ -17,6 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import static org.neo4j.driver.Values.parameters;
 
+import java.util.Arrays;
 import java.util.Random;
 
 // look in the debug console for logging statements
@@ -52,23 +53,23 @@ public class ProcessBaseNodeTest {
             // prepare the db
             Random random = new Random();
 
-            String adminId = "adminId" + random.nextInt(1000000);
-            String pmOnProjectId = "pmOnProjectId" + random.nextInt(1000000);
-            String pmGlobalId = "pmGlobalId" + random.nextInt(1000000);
-            String consultantId = "consultantId" + random.nextInt(1000000);
+            String adminId =            "adminId"               + random.nextInt(1000000);
+            String pmOnProjectId =      "pmOnProjectId"         + random.nextInt(1000000);
+            String pmGlobalId =         "pmGlobalId"            + random.nextInt(1000000);
+            String consultantId =       "consultantId"          + random.nextInt(1000000);
             
-            this.createUser(session, adminId, Utility.getFrontendRoleNameFromApiRoleName(RoleNames.AdministratorRole));
-            this.createUser(session, pmOnProjectId, Utility.getFrontendRoleNameFromApiRoleName(RoleNames.ProjectManagerGlobalRole));
-            this.createUser(session, pmGlobalId, Utility.getFrontendRoleNameFromApiRoleName(RoleNames.ProjectManagerOnProjectRole));
-            this.createUser(session, consultantId, Utility.getFrontendRoleNameFromApiRoleName(RoleNames.ConsultantRole));
+            this.createUser(session, adminId,           AllRoles.getFrontendRoleNameFromApiRoleName(RoleNames.AdministratorRole));
+            this.createUser(session, pmOnProjectId,     AllRoles.getFrontendRoleNameFromApiRoleName(RoleNames.ProjectManagerGlobalRole));
+            this.createUser(session, pmGlobalId,        AllRoles.getFrontendRoleNameFromApiRoleName(RoleNames.ProjectManagerOnProjectRole));
+            this.createUser(session, consultantId,      AllRoles.getFrontendRoleNameFromApiRoleName(RoleNames.ConsultantRole));
             
             // create project
             String projectId = "project" + random.nextInt(1000000);
             this.createBaseNode(session, "Project", projectId);
 
             // add project members
-            this.addProjectMembers(session, projectId, pmOnProjectId, "ProjectManager");
-            this.addProjectMembers(session, projectId, consultantId, "Consultant");
+            this.addProjectMembers(session, projectId, pmOnProjectId,       "ProjectManager");
+            this.addProjectMembers(session, projectId, consultantId,        "Consultant");
 
             // run the procedure
             session.run(
@@ -81,94 +82,29 @@ public class ProcessBaseNodeTest {
             );
 
             // verify results
-            
-            // loop through properties for the creating user, who should have the admin role
-            // for (Project property : Project.values()){
-
-            //     Perm perm = Administrator.permission.permission(BaseNodeLabels.Project, property.name());
-
-            //     this.checkProperty(
-            //         session, 
-            //         perm,
-            //         BaseNodeLabels.Project, 
-            //         property.name(), 
-            //         RoleNames.AdministratorRole, 
-            //         projectId,
-            //         pmOnProjectId
-            //     );
-            // }
-
-            // loop through properties for the pm on project user, who is also the creator, but we may change that later
-            for (Project property : Project.values()){
-
-                Perm perm = ProjectManagerOnProject.permission.permission(BaseNodeLabels.Project, property.name());
-
-                this.checkProperty(
-                    session, 
-                    perm,
-                    BaseNodeLabels.Project, 
-                    property.name(), 
-                    RoleNames.ProjectManagerOnProjectRole, 
-                    projectId,
-                    pmOnProjectId
-                );
-            }
-
-            // loop through properties for the admin user
-            for (Project property : Project.values()){
-
-                Perm perm = Administrator.permission.permission(BaseNodeLabels.Project, property.name());
-
-                this.checkProperty(
-                    session, 
-                    perm,
-                    BaseNodeLabels.Project, 
-                    property.name(), 
-                    RoleNames.AdministratorRole, 
-                    projectId,
-                    adminId
-                );
-            }
-
-            // loop through properties for the pm global role
-            for (Project property : Project.values()){
-
-                Perm perm = Consultant.permission.permission(BaseNodeLabels.Project, property.name());
-
-                this.checkProperty(
-                    session, 
-                    perm,
-                    BaseNodeLabels.Project, 
-                    property.name(), 
-                    RoleNames.ConsultantRole, 
-                    projectId,
-                    consultantId
-                );
-            }
-
-            // loop through properties for the consultant
-            for (Project property : Project.values()){
-
-                Perm perm = ProjectManagerGlobal.permission.permission(BaseNodeLabels.Project, property.name());
-
-                this.checkProperty(
-                    session, 
-                    perm,
-                    BaseNodeLabels.Project, 
-                    property.name(), 
-                    RoleNames.ProjectManagerGlobalRole, 
-                    projectId,
-                    pmGlobalId
-                );
-            }
+            this.checkRoleAccess(session, Utility.getNames(Project.class), RoleNames.ProjectManagerOnProjectRole,   BaseNodeLabels.Project, projectId,      pmOnProjectId);
+            this.checkRoleAccess(session, Utility.getNames(Project.class), RoleNames.AdministratorRole,             BaseNodeLabels.Project, projectId,      adminId);
+            this.checkRoleAccess(session, Utility.getNames(Project.class), RoleNames.ConsultantRole,                BaseNodeLabels.Project, projectId,      consultantId);
+            this.checkRoleAccess(session, Utility.getNames(Project.class), RoleNames.ProjectManagerGlobalRole,      BaseNodeLabels.Project, projectId,      pmGlobalId);
 
         }
     }
 
-    private void loop(Session session, String[] properties, RoleNames role, BaseNodeLabels label, String baseNodeId, String userId){
+    private void checkRoleAccess(
+        Session session, 
+        String[] properties, 
+        RoleNames role, 
+        BaseNodeLabels label, 
+        String baseNodeId, 
+        String userId){
+
         for (String property : properties){
 
-            BaseRole roleObj = allRoles.getRoleByName(role.name());
+            System.out.println("role.name(): " + role.name());
+
+            BaseRole roleObj = allRoles.getRoleByStringName(role.name());
+
+            System.out.println("role name: " + roleObj.roleName.name());
 
             Perm perm = roleObj.permission.permission(label, property);
 
@@ -192,30 +128,6 @@ public class ProcessBaseNodeTest {
                 baseNodeId
             );
         }
-    }
-
-    private void checkProperty(Session session, Perm perm, BaseNodeLabels label, String property, RoleNames role, String baseNodeId, String userId){
-        
-        Boolean read = false;
-        Boolean edit = false;
-        
-        switch (perm) {
-            case RO: read = true; break;
-            case RW: read = true; edit = true; break;
-            default: break;
-        }
-
-        this.verifyPropertyAccess(
-            session, 
-            label, 
-            AllProperties.valueOf(property), 
-            role, 
-            read,
-            edit, 
-            userId, 
-            baseNodeId
-        );
-        
     }
 
     private void createUser(Session session, String userId, String role){

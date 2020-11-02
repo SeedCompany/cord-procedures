@@ -278,33 +278,6 @@ public class Utility {
     }
   }
 
-  public static RoleNames getRoleFromString(String roleName, Boolean isMember){
-
-    switch (roleName){
-      case "Administrator":                                           return RoleNames.AdministratorRole;
-      case "Consultant":                                              return RoleNames.ConsultantRole;
-      case "ConsultantManager":                                       return RoleNames.ConsultantManagerRole;
-      case "Controller":                                              return RoleNames.ControllerRole;
-      case "FieldOperationsDirector":                                 return RoleNames.FieldOperationsDirectorRole;
-      case "FinancialAnalyst":                    if (isMember)       return RoleNames.FinancialAnalystOnProjectRole;
-                                                                      return RoleNames.FinancialAnalystGlobalRole;
-      case "Fundraising":                                             return RoleNames.FundraisingRole;
-      case "Intern":                                                  return RoleNames.InternRole;
-      case "Leadership":                                              return RoleNames.LeadershipRole;
-      case "Liason":                                                  return RoleNames.LiasonRole;
-      case "Marketing":                                               return RoleNames.MarketingRole;
-      case "ProjectManager":                      if (isMember)       return RoleNames.ProjectManagerOnProjectRole;
-                                                                      return RoleNames.ProjectManagerGlobalRole;
-      case "RegionalCommunicationCoordinator":                        return RoleNames.RegionalCommunicationCoordinatorRole;
-      case "RegionalDirector":                    if (isMember)       return RoleNames.RegionalDirectorOnProjectRole;
-                                                                      return RoleNames.RegionalDirectorGlobalRole;
-      case "StaffMember":                                             return RoleNames.StaffMemberRole;
-      case "Translator":                                              return RoleNames.TranslatorRole;
-    }
-
-    return null;
-  }
-
   public static Boolean isProjectContextNode(BaseNodeLabels label){
     switch (label){   
       case Budget:                
@@ -473,34 +446,7 @@ public class Utility {
     }
   }
 
-  public static String getFrontendRoleNameFromApiRoleName(RoleNames role){
-    switch (role){
-      case AdministratorRole:
-      case ConsultantManagerRole:
-      case ConsultantRole:
-      case ControllerRole:
-      case FieldOperationsDirectorRole:
-      case FundraisingRole:
-      case InternRole:
-      case LeadershipRole:
-      case LiasonRole:
-      case MarketingRole:
-      case MentorRole:
-      case RegionalCommunicationCoordinatorRole:
-      case StaffMemberRole:
-      case TranslatorRole:
-        return role.name().replace("Role", "");
-      case ProjectManagerGlobalRole:
-      case RegionalDirectorGlobalRole:
-      case FinancialAnalystGlobalRole:
-        return role.name().replace("GlobalRole", "");
-      case ProjectManagerOnProjectRole:
-      case RegionalDirectorOnProjectRole:
-      case FinancialAnalystOnProjectRole:
-        return role.name().replace("OnProjectRole", "");
-      default: 
-        System.out.println("frontend role name not found");
-        return null;
-    }
+  public static String[] getNames(Class<? extends Enum<?>> e) {
+    return Arrays.stream(e.getEnumConstants()).map(Enum::name).toArray(String[]::new);
   }
 }

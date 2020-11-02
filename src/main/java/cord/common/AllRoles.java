@@ -48,30 +48,27 @@ public class AllRoles {
     this.Translator = new Translator();
   }
 
-  public BaseRole getRoleByName(String name){
+  public BaseRole getRoleByStringName(String name){
     switch (name){
-      case "Administrator":                       return this.Administrator;
-      case "Consultant":                          return this.Consultant;
-      case "ConsultantManager":                   return this.ConsultantManager;
-      case "Controller":                          return this.Controller;
-      case "FieldOperationsDirector":             return this.FieldOperationsDirector;
-      case "FinancialAnalyst":                    // must fall through to project
-      case "FinancialAnalystOnProject":           return this.FinancialAnalystOnProject;
-      case "FinancialAnalystGlobal":              return this.FinancialAnalystGlobal;
-      case "Fundraising":                         return this.Fundraising;
-      case "Intern":                              return this.Intern;
-      case "Leadership":                          return this.Leadership;
-      case "Liason":                              return this.Liason;
-      case "Marketing":                           return this.Marketing;
-      case "ProjectManager":                      // must fall through to project
-      case "ProjectManagerOnProject":             return this.ProjectManagerOnProject;
-      case "ProjectManagerGlobal":                return this.ProjectManagerGlobal;
-      case "RegionalCommunicationCoordinator":    return this.RegionalCommunicationCoordinator;
-      case "RegionalDirector":                    // must fall through to project
-      case "RegionalDirectorOnProject":           return this.RegionalDirectorOnProject;
-      case "RegionalDirectorGlobal":              return this.RegionalDirectorGlobal;
-      case "StaffMember":                         return this.StaffMember;
-      case "Translator":                          return this.Translator;
+      case "AdministratorRole":                       return this.Administrator;
+      case "ConsultantRole":                          return this.Consultant;
+      case "ConsultantManagerRole":                   return this.ConsultantManager;
+      case "ControllerRole":                          return this.Controller;
+      case "FieldOperationsDirectorRole":             return this.FieldOperationsDirector;
+      case "FinancialAnalystOnProjectRole":           return this.FinancialAnalystOnProject;
+      case "FinancialAnalystGlobalRole":              return this.FinancialAnalystGlobal;
+      case "FundraisingRole":                         return this.Fundraising;
+      case "InternRole":                              return this.Intern;
+      case "LeadershipRole":                          return this.Leadership;
+      case "LiasonRole":                              return this.Liason;
+      case "MarketingRole":                           return this.Marketing;
+      case "ProjectManagerOnProjectRole":             return this.ProjectManagerOnProject;
+      case "ProjectManagerGlobalRole":                return this.ProjectManagerGlobal;
+      case "RegionalCommunicationCoordinatorRole":    return this.RegionalCommunicationCoordinator;
+      case "RegionalDirectorOnProjectRole":           return this.RegionalDirectorOnProject;
+      case "RegionalDirectorGlobalRole":              return this.RegionalDirectorGlobal;
+      case "StaffMemberRole":                         return this.StaffMember;
+      case "TranslatorRole":                          return this.Translator;
 
       default:                                    return null;
     }
@@ -129,6 +126,64 @@ public class AllRoles {
       this.RegionalDirectorOnProject,
       this.Translator
     );
+  }
+
+  public static String getFrontendRoleNameFromApiRoleName(RoleNames role){
+    switch (role){
+      case AdministratorRole:
+      case ConsultantManagerRole:
+      case ConsultantRole:
+      case ControllerRole:
+      case FieldOperationsDirectorRole:
+      case FundraisingRole:
+      case InternRole:
+      case LeadershipRole:
+      case LiasonRole:
+      case MarketingRole:
+      case MentorRole:
+      case RegionalCommunicationCoordinatorRole:
+      case StaffMemberRole:
+      case TranslatorRole:
+        return role.name().replace("Role", "");
+      case ProjectManagerGlobalRole:
+      case RegionalDirectorGlobalRole:
+      case FinancialAnalystGlobalRole:
+        return role.name().replace("GlobalRole", "");
+      case ProjectManagerOnProjectRole:
+      case RegionalDirectorOnProjectRole:
+      case FinancialAnalystOnProjectRole:
+        return role.name().replace("OnProjectRole", "");
+      default: 
+        System.out.println("frontend role name not found");
+        return null;
+    }
+  }
+
+  public static RoleNames getRoleNameEnumFromFeString(String roleName, Boolean isMember){
+
+    switch (roleName){
+      case "Administrator":                                           return RoleNames.AdministratorRole;
+      case "Consultant":                                              return RoleNames.ConsultantRole;
+      case "ConsultantManager":                                       return RoleNames.ConsultantManagerRole;
+      case "Controller":                                              return RoleNames.ControllerRole;
+      case "FieldOperationsDirector":                                 return RoleNames.FieldOperationsDirectorRole;
+      case "FinancialAnalyst":                    if (isMember)       return RoleNames.FinancialAnalystOnProjectRole;
+                                                                      return RoleNames.FinancialAnalystGlobalRole;
+      case "Fundraising":                                             return RoleNames.FundraisingRole;
+      case "Intern":                                                  return RoleNames.InternRole;
+      case "Leadership":                                              return RoleNames.LeadershipRole;
+      case "Liason":                                                  return RoleNames.LiasonRole;
+      case "Marketing":                                               return RoleNames.MarketingRole;
+      case "ProjectManager":                      if (isMember)       return RoleNames.ProjectManagerOnProjectRole;
+                                                                      return RoleNames.ProjectManagerGlobalRole;
+      case "RegionalCommunicationCoordinator":                        return RoleNames.RegionalCommunicationCoordinatorRole;
+      case "RegionalDirector":                    if (isMember)       return RoleNames.RegionalDirectorOnProjectRole;
+                                                                      return RoleNames.RegionalDirectorGlobalRole;
+      case "StaffMember":                                             return RoleNames.StaffMemberRole;
+      case "Translator":                                              return RoleNames.TranslatorRole;
+    }
+
+    return null;
   }
 }
 
