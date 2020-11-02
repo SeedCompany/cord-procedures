@@ -154,24 +154,24 @@ public class FinancialAnalystOnProject extends BaseRole {
   private static Perm InternshipEngagement(InternshipEngagement property){
     switch(property){
       case ceremony:                   return Perm.RO;
-      case communicationsCompleteDate: return Perm.RO;
-      case completeDate:               return Perm.RO;
+      case communicationsCompleteDate: return Perm.RW;
+      case completeDate:               return Perm.RW;
       case countryOfOrigin:            return Perm.RO;
-      case disbursementCompleteDate:   return Perm.RO;
-      case endDate:                    return Perm.RO;
-      case endDateOverride:            return Perm.RO;
+      case disbursementCompleteDate:   return Perm.RW;
+      case endDate:                    return Perm.RW;
+      case endDateOverride:            return Perm.RW;
       case growthPlan:                 return Perm.RO;
-      case initialEndDate:             return Perm.RO;
+      case initialEndDate:             return Perm.RW;
       case intern:                     return Perm.RO;
-      case lastReactivatedAt:          return Perm.RO;
-      case lastSuspendedAt:            return Perm.RO;
+      case lastReactivatedAt:          return Perm.RW;
+      case lastSuspendedAt:            return Perm.RW;
       case mentor:                     return Perm.RO;
       case methodologies:              return Perm.RO;
       case position:                   return Perm.RO;
-      case startDate:                  return Perm.RO;
-      case startDateOverride:          return Perm.RO;
-      case statusModifiedAt:           return Perm.RO;
-      case modifiedAt:                 return Perm.RO;
+      case startDate:                  return Perm.RW;
+      case startDateOverride:          return Perm.RW;
+      case statusModifiedAt:           return Perm.RW;
+      case modifiedAt:                 return Perm.RW;
       case status:                     return Perm.RO;
     }
     return Perm.NO;
@@ -202,24 +202,24 @@ public class FinancialAnalystOnProject extends BaseRole {
   private static Perm LanguageEngagement(LanguageEngagement property){
     switch(property){
       case ceremony:                   return Perm.RO;
-      case communicationsCompleteDate: return Perm.RO;
-      case completeDate:               return Perm.RO;
-      case disbursementCompleteDate:   return Perm.RO;
-      case endDate:                    return Perm.RO;
-      case endDateOverride:            return Perm.RO;
+      case communicationsCompleteDate: return Perm.RW;
+      case completeDate:               return Perm.RW;
+      case disbursementCompleteDate:   return Perm.RW;
+      case endDate:                    return Perm.RW;
+      case endDateOverride:            return Perm.RW;
       case firstScripture:             return Perm.RO;
-      case initialEndDate:             return Perm.RO;
+      case initialEndDate:             return Perm.RW;
       case language:                   return Perm.RO;
-      case lastReactivatedAt:          return Perm.RO;
-      case lastSuspendedAt:            return Perm.RO;
+      case lastReactivatedAt:          return Perm.RW;
+      case lastSuspendedAt:            return Perm.RW;
       case lukePartnership:            return Perm.RO;
       case paraTextRegistryId:         return Perm.RO;
       case pnp:                        return Perm.RO;
-      case sentPrintingDate:           return Perm.RO;
-      case startDate:                  return Perm.RO;
-      case startDateOverride:          return Perm.RO;
-      case statusModifiedAt:           return Perm.RO;
-      case modifiedAt:                 return Perm.RO;
+      case sentPrintingDate:           return Perm.RW;
+      case startDate:                  return Perm.RW;
+      case startDateOverride:          return Perm.RW;
+      case statusModifiedAt:           return Perm.RW;
+      case modifiedAt:                 return Perm.RW;
       case product:                    return Perm.RO;
       case status:                     return Perm.RO;
     }
