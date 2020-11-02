@@ -153,26 +153,26 @@ public class FinancialAnalystOnProject extends BaseRole {
   
   private static Perm InternshipEngagement(InternshipEngagement property){
     switch(property){
-      case ceremony:                   return Perm.RO;
-      case communicationsCompleteDate: return Perm.RO;
-      case completeDate:               return Perm.RO;
-      case countryOfOrigin:            return Perm.RO;
-      case disbursementCompleteDate:   return Perm.RO;
-      case endDate:                    return Perm.RO;
-      case endDateOverride:            return Perm.RO;
-      case growthPlan:                 return Perm.RO;
-      case initialEndDate:             return Perm.RO;
-      case intern:                     return Perm.RO;
-      case lastReactivatedAt:          return Perm.RO;
-      case lastSuspendedAt:            return Perm.RO;
-      case mentor:                     return Perm.RO;
-      case methodologies:              return Perm.RO;
-      case position:                   return Perm.RO;
-      case startDate:                  return Perm.RO;
-      case startDateOverride:          return Perm.RO;
-      case statusModifiedAt:           return Perm.RO;
-      case modifiedAt:                 return Perm.RO;
-      case status:                     return Perm.RO;
+      case ceremony:                   return Perm.RW;
+      case communicationsCompleteDate: return Perm.RW;
+      case completeDate:               return Perm.RW;
+      case countryOfOrigin:            return Perm.RW;
+      case disbursementCompleteDate:   return Perm.RW;
+      case endDate:                    return Perm.RW;
+      case endDateOverride:            return Perm.RW;
+      case growthPlan:                 return Perm.RW;
+      case initialEndDate:             return Perm.RW;
+      case intern:                     return Perm.RW;
+      case lastReactivatedAt:          return Perm.RW;
+      case lastSuspendedAt:            return Perm.RW;
+      case mentor:                     return Perm.RW;
+      case methodologies:              return Perm.RW;
+      case position:                   return Perm.RW;
+      case startDate:                  return Perm.RW;
+      case startDateOverride:          return Perm.RW;
+      case statusModifiedAt:           return Perm.RW;
+      case modifiedAt:                 return Perm.RW;
+      case status:                     return Perm.RW;
     }
     return Perm.NO;
   }
@@ -201,27 +201,27 @@ public class FinancialAnalystOnProject extends BaseRole {
 
   private static Perm LanguageEngagement(LanguageEngagement property){
     switch(property){
-      case ceremony:                   return Perm.RO;
-      case communicationsCompleteDate: return Perm.RO;
-      case completeDate:               return Perm.RO;
-      case disbursementCompleteDate:   return Perm.RO;
-      case endDate:                    return Perm.RO;
-      case endDateOverride:            return Perm.RO;
-      case firstScripture:             return Perm.RO;
-      case initialEndDate:             return Perm.RO;
-      case language:                   return Perm.RO;
-      case lastReactivatedAt:          return Perm.RO;
-      case lastSuspendedAt:            return Perm.RO;
-      case lukePartnership:            return Perm.RO;
-      case paraTextRegistryId:         return Perm.RO;
-      case pnp:                        return Perm.RO;
-      case sentPrintingDate:           return Perm.RO;
-      case startDate:                  return Perm.RO;
-      case startDateOverride:          return Perm.RO;
-      case statusModifiedAt:           return Perm.RO;
-      case modifiedAt:                 return Perm.RO;
-      case product:                    return Perm.RO;
-      case status:                     return Perm.RO;
+      case ceremony:                   return Perm.RW;
+      case communicationsCompleteDate: return Perm.RW;
+      case completeDate:               return Perm.RW;
+      case disbursementCompleteDate:   return Perm.RW;
+      case endDate:                    return Perm.RW;
+      case endDateOverride:            return Perm.RW;
+      case firstScripture:             return Perm.RW;
+      case initialEndDate:             return Perm.RW;
+      case language:                   return Perm.RW;
+      case lastReactivatedAt:          return Perm.RW;
+      case lastSuspendedAt:            return Perm.RW;
+      case lukePartnership:            return Perm.RW;
+      case paraTextRegistryId:         return Perm.RW;
+      case pnp:                        return Perm.RW;
+      case sentPrintingDate:           return Perm.RW;
+      case startDate:                  return Perm.RW;
+      case startDateOverride:          return Perm.RW;
+      case statusModifiedAt:           return Perm.RW;
+      case modifiedAt:                 return Perm.RW;
+      case product:                    return Perm.RW;
+      case status:                     return Perm.RW;
     }
     return Perm.NO;
   }
