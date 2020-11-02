@@ -98,10 +98,16 @@ public class Authorization {
     }
 
     public void processProjectMember(ArrayList<Long> members, HashMap<RoleNames, Long> sgMap, AllRoles allRoles) throws RuntimeException {
+
+      System.out.println("members: " + members.size());
+
       try ( Transaction tx = db.beginTx() )
       {
         // add all project members to this base node for their correct role
         members.forEach(memberNodeNeoId -> {
+
+          System.out.println("member: " + memberNodeNeoId);
+
           Node memberNode = tx.getNodeById(memberNodeNeoId);
           // get member's roles
           Iterable<Relationship> toRolesIter = memberNode.getRelationships(Direction.OUTGOING, 
@@ -112,9 +118,14 @@ public class Authorization {
               if (rolesNode.hasProperty(AllProperties.value.name())){
 
                 String[] roles = (String[]) rolesNode.getProperty(AllProperties.value.name());
+                System.out.println("roles: " + roles.toString());
                 if (roles != null){
+
+                  System.out.println("roles is not null");
                   
                   for (String role: roles){
+
+                    System.out.println("role: " + role);
                     // map role string to a role object
 
                     RoleNames dbRole = AllRoles.getRoleNameEnumFromFeString(role, true);
@@ -130,8 +141,10 @@ public class Authorization {
                       Node roleNode = tx.getNodeById(roleNodeNeoId);
                       
                       // attach user to SG of the role
-                      roleNode.createRelationshipTo(memberUserNode, 
+                      Relationship asdf = roleNode.createRelationshipTo(memberUserNode, 
                       RelationshipType.withName(NonPropertyRelationshipTypes.member.name()));
+
+                      System.out.println("rel: " + asdf.getId());
                     }
                   } else {
                     this.log.error("roles is null");
