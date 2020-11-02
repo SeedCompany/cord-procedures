@@ -316,7 +316,7 @@ public class ConsultantManager extends BaseRole {
       case marketingLocation:          return Perm.RO;
       case partnership:                return Perm.RO;
       case budget:                     return Perm.RO;
-      case modifiedAt:                 return Perm.RO;
+      case modifiedAt:                 return Perm.RW;
       case fieldRegion:                return Perm.RO;
       case engagement:                 return Perm.RO;
       case sensitivity:                return Perm.RO;
