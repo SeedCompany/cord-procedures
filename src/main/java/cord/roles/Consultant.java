@@ -100,8 +100,8 @@ return Perm.NO;
   private static Perm FieldRegion(FieldRegion property){
     switch(property){
       case director:                   return Perm.NO;
-      case name:                       return Perm.NO;
-      case fieldZone:                  return Perm.NO;
+      case name:                       return Perm.RO;
+      case fieldZone:                  return Perm.RO;
       }
 return Perm.NO;
   }  
@@ -109,7 +109,7 @@ return Perm.NO;
   private static Perm FieldZone(FieldZone property){
     switch(property){
       case director:                   return Perm.NO;
-      case name:                       return Perm.NO;
+      case name:                       return Perm.RO;
       }
 return Perm.NO;
   }
@@ -153,26 +153,26 @@ return Perm.NO;
   
   private static Perm InternshipEngagement(InternshipEngagement property){
     switch(property){
-      case ceremony:                   return Perm.RW;
-      case communicationsCompleteDate: return Perm.RW;
-      case completeDate:               return Perm.RW;
+      case ceremony:                   return Perm.RO;
+      case communicationsCompleteDate: return Perm.NO;
+      case completeDate:               return Perm.RO;
       case countryOfOrigin:            return Perm.RW;
-      case disbursementCompleteDate:   return Perm.RW;
-      case endDate:                    return Perm.RW;
-      case endDateOverride:            return Perm.RW;
+      case disbursementCompleteDate:   return Perm.NO;
+      case endDate:                    return Perm.RO;
+      case endDateOverride:            return Perm.RO;
       case growthPlan:                 return Perm.RW;
-      case initialEndDate:             return Perm.RW;
+      case initialEndDate:             return Perm.RO;
       case intern:                     return Perm.RW;
-      case lastReactivatedAt:          return Perm.RW;
-      case lastSuspendedAt:            return Perm.RW;
+      case lastReactivatedAt:          return Perm.RO;
+      case lastSuspendedAt:            return Perm.RO;
       case mentor:                     return Perm.RW;
       case methodologies:              return Perm.RW;
       case position:                   return Perm.RW;
-      case startDate:                  return Perm.RW;
-      case startDateOverride:          return Perm.RW;
+      case startDate:                  return Perm.RO;
+      case startDateOverride:          return Perm.RO;
       case statusModifiedAt:           return Perm.RW;
       case modifiedAt:                 return Perm.RW;
-      case status:                     return Perm.RW;
+      case status:                     return Perm.RO;
       }
 return Perm.NO;
   }
@@ -199,29 +199,29 @@ case tags:                             return Perm.RO;
 return Perm.NO;
   }
 
-  private static Perm LanguageEngagement(LanguageEngagement property){
+  private static Perm LanguageEngagement(LanguageEngagement pRoperty){
     switch(property){
-      case ceremony:                   return Perm.RW;
-      case communicationsCompleteDate: return Perm.RW;
-      case completeDate:               return Perm.RW;
-      case disbursementCompleteDate:   return Perm.RW;
-      case endDate:                    return Perm.RW;
-      case endDateOverride:            return Perm.RW;
-      case firstScripture:             return Perm.RW;
-      case initialEndDate:             return Perm.RW;
+      case ceremony:                   return Perm.RO;
+      case communicationsCompleteDate: return Perm.NO;
+      case completeDate:               return Perm.RO;
+      case disbursementCompleteDate:   return Perm.NO;
+      case endDate:                    return Perm.RO;
+      case endDateOverride:            return Perm.RO;
+      case firstScripture:             return Perm.RO;
+      case initialEndDate:             return Perm.RO;
       case language:                   return Perm.RW;
-      case lastReactivatedAt:          return Perm.RW;
-      case lastSuspendedAt:            return Perm.RW;
-      case lukePartnership:            return Perm.RW;
+      case lastReactivatedAt:          return Perm.RO;
+      case lastSuspendedAt:            return Perm.RO;
+      case lukePartnership:            return Perm.RO;
       case paraTextRegistryId:         return Perm.RW;
       case pnp:                        return Perm.RW;
-      case sentPrintingDate:           return Perm.RW;
-      case startDate:                  return Perm.RW;
-      case startDateOverride:          return Perm.RW;
-      case statusModifiedAt:           return Perm.RW;
+      case sentPrintingDate:           return Perm.RO;
+      case startDate:                  return Perm.RO;
+      case startDateOverride:          return Perm.RO;
+      case statusModifiedAt:           return Perm.RO;
       case modifiedAt:                 return Perm.RW;
       case product:                    return Perm.RW;
-      case status:                     return Perm.RW;
+      case status:                     return Perm.RO;
       }
 return Perm.NO;
   }
