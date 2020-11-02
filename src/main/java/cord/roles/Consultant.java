@@ -99,17 +99,17 @@ return Perm.NO;
 
   private static Perm FieldRegion(FieldRegion property){
     switch(property){
-      case director:                   return Perm.NO;
-      case name:                       return Perm.NO;
-      case fieldZone:                  return Perm.NO;
+      case director:                   return Perm.RO;
+      case name:                       return Perm.RO;
+      case fieldZone:                  return Perm.RO;
       }
 return Perm.NO;
   }  
   
   private static Perm FieldZone(FieldZone property){
     switch(property){
-      case director:                   return Perm.NO;
-      case name:                       return Perm.NO;
+      case director:                   return Perm.RO;
+      case name:                       return Perm.RO;
       }
 return Perm.NO;
   }
@@ -302,28 +302,28 @@ return Perm.NO;
 
   private static Perm Project(Project property){
     switch(property){
-      case estimatedSubmission:        return Perm.RO;
-      case step:                       return Perm.RO;
-      case name:                       return Perm.RO;
-      case status:                     return Perm.RO;
-      case departmentId:               return Perm.RO;
-      case mouStart:                   return Perm.RO;
-      case mouEnd:                     return Perm.RO;
-      case rootDirectory:              return Perm.RO;
-      case member:                     return Perm.RO;
-      case otherLocations:             return Perm.RO;
-      case primaryLocation:            return Perm.RO;
-      case marketingLocation:          return Perm.RO;
-      case partnership:                return Perm.RO;
-      case budget:                     return Perm.RO;
-      case modifiedAt:                 return Perm.RO;
-      case fieldRegion:                return Perm.RO;
-      case engagement:                 return Perm.RO;
-      case sensitivity:                return Perm.RO;
-      case stepChangedAt:              return Perm.RO;
-      case owningOrganization:         return Perm.RO;
-      case initialMouEnd:              return Perm.RO;
-      case tags:                       return Perm.RO;
+      case estimatedSubmission:        return Perm.RW;
+      case step:                       return Perm.RW;
+      case name:                       return Perm.RW;
+      case status:                     return Perm.RW;
+      case departmentId:               return Perm.RW;
+      case mouStart:                   return Perm.RW;
+      case mouEnd:                     return Perm.RW;
+      case rootDirectory:              return Perm.RW;
+      case member:                     return Perm.RW;
+      case otherLocations:             return Perm.RW;
+      case primaryLocation:            return Perm.RW;
+      case marketingLocation:          return Perm.RW;
+      case partnership:                return Perm.RW;
+      case budget:                     return Perm.RW;
+      case modifiedAt:                 return Perm.RW;
+      case fieldRegion:                return Perm.RW;
+      case engagement:                 return Perm.RW;
+      case sensitivity:                return Perm.RW;
+      case stepChangedAt:              return Perm.RW;
+      case owningOrganization:         return Perm.RW;
+      case initialMouEnd:              return Perm.RW;
+      case tags:                       return Perm.RW;
       }
 return Perm.NO;
   }
