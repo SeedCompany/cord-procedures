@@ -264,7 +264,7 @@ public class RegionalCommunicationCoordinator extends BaseRole {
       case globalInnovationsClient:    return Perm.RO;
       case active:                     return Perm.RO;
       case address:                    return Perm.RO;
-      case modifiedAt:                 return Perm.RO;
+      case modifiedAt:                 return Perm.RW;
     }
     return Perm.NO;
   }

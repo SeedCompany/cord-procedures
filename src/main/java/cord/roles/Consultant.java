@@ -264,7 +264,7 @@ return Perm.NO;
       case globalInnovationsClient:    return Perm.NO;
       case active:                     return Perm.NO;
       case address:                    return Perm.NO;
-      case modifiedAt:                 return Perm.NO;
+      case modifiedAt:                 return Perm.RW;
       }
 return Perm.NO;
   }
@@ -332,7 +332,7 @@ return Perm.NO;
     switch(property){
       case roles:                      return Perm.RO;
       case user:                       return Perm.RO;
-      case modifiedAt:                 return Perm.RO;
+      case modifiedAt:                 return Perm.RW;
       }
 return Perm.NO;
   }
