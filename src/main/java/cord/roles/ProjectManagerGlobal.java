@@ -171,7 +171,7 @@ public class ProjectManagerGlobal extends BaseRole {
       case startDate:                  return Perm.RO;
       case startDateOverride:          return Perm.RO;
       case statusModifiedAt:           return Perm.RO;
-      case modifiedAt:                 return Perm.RO;
+      case modifiedAt:                 return Perm.RW;
       case status:                     return Perm.RO;
     }
     return Perm.NO;
@@ -219,7 +219,7 @@ public class ProjectManagerGlobal extends BaseRole {
       case startDate:                  return Perm.RO;
       case startDateOverride:          return Perm.RO;
       case statusModifiedAt:           return Perm.RO;
-      case modifiedAt:                 return Perm.RO;
+      case modifiedAt:                 return Perm.RW;
       case product:                    return Perm.RO;
       case status:                     return Perm.RO;
     }
@@ -264,7 +264,7 @@ public class ProjectManagerGlobal extends BaseRole {
       case globalInnovationsClient:    return Perm.RO;
       case active:                     return Perm.RO;
       case address:                    return Perm.RO;
-      case modifiedAt:                 return Perm.RO;
+      case modifiedAt:                 return Perm.RW;
     }
     return Perm.NO;
   }
@@ -316,7 +316,7 @@ public class ProjectManagerGlobal extends BaseRole {
       case marketingLocation:          return Perm.RO;
       case partnership:                return Perm.RO;
       case budget:                     return Perm.RO;
-      case modifiedAt:                 return Perm.RO;
+      case modifiedAt:                 return Perm.RW;
       case fieldRegion:                return Perm.RO;
       case engagement:                 return Perm.RO;
       case sensitivity:                return Perm.RO;
@@ -332,7 +332,7 @@ public class ProjectManagerGlobal extends BaseRole {
     switch(property){
       case roles:                      return Perm.RO;
       case user:                       return Perm.RO;
-      case modifiedAt:                 return Perm.RO;
+      case modifiedAt:                 return Perm.RW;
     }
     return Perm.NO;
   }
