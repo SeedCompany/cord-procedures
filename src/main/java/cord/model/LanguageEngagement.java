@@ -21,5 +21,6 @@ startDateOverride,
 statusModifiedAt,          
 modifiedAt,                
 product,
-status
+status,
+historicGoal
 }

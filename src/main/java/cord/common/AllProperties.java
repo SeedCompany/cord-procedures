@@ -137,7 +137,9 @@ public enum AllProperties {
   initialMouEnd,
   stepChangedAt,
   owningOrganization,
-  partners
+  partners,
+  financialReportReceivedAt,
+  historicGoal
 }           
       
 

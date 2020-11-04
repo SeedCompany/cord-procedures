@@ -222,6 +222,7 @@ public class ProjectManagerGlobal extends BaseRole {
       case modifiedAt:                 return Perm.RW;
       case product:                    return Perm.RO;
       case status:                     return Perm.RO;
+      case historicGoal:               return Perm.RO;
     }
     return Perm.NO;
   }
@@ -324,6 +325,7 @@ public class ProjectManagerGlobal extends BaseRole {
       case owningOrganization:         return Perm.RO;
       case initialMouEnd:              return Perm.RO; 
       case tags:                       return Perm.RO;
+      case financialReportReceivedAt:  return Perm.RO;
     }
     return Perm.NO;
   }

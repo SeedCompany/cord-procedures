@@ -9,7 +9,6 @@ import org.neo4j.graphdb.*;
 
 import cord.common.AllProperties;
 import cord.common.BaseNodeLabels;
-import cord.common.RoleNames;
 import cord.model.*;
 import cord.roles.BaseRole;
 
