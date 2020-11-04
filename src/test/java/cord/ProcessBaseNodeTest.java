@@ -27,6 +27,8 @@ import java.util.Random;
 
 // look in the debug console for logging statements
 
+// INSTALL APOC and this Plugin to test on a remote DB!!!
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ProcessBaseNodeTest {
 
