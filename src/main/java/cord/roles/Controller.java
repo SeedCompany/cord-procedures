@@ -222,6 +222,7 @@ public class Controller extends BaseRole {
       case modifiedAt:                 return Perm.RW;
       case product:                    return Perm.RO;
       case status:                     return Perm.RO;
+      case historicGoal:               return Perm.RO;
     }
     return Perm.NO;
   }

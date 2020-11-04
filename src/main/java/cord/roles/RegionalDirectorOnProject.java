@@ -222,6 +222,7 @@ public class RegionalDirectorOnProject extends BaseRole {
       case modifiedAt:                 return Perm.RW;
       case product:                    return Perm.RW;
       case status:                     return Perm.RW;
+      case historicGoal:               return Perm.RW;
     }
     return Perm.NO;
   }
