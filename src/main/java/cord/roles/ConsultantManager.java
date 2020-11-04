@@ -324,6 +324,7 @@ public class ConsultantManager extends BaseRole {
       case owningOrganization:         return Perm.RW;
       case initialMouEnd:              return Perm.RW; 
       case tags:                       return Perm.RW;
+      case financialReportReceivedAt:  return Perm.RW;
     }
     return Perm.NO;
   }

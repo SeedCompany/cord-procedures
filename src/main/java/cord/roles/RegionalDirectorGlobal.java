@@ -324,6 +324,7 @@ public class RegionalDirectorGlobal extends BaseRole {
       case owningOrganization:         return Perm.RO;
       case initialMouEnd:              return Perm.RO; 
       case tags:                       return Perm.RO;
+      case financialReportReceivedAt:  return Perm.RO;
     }
     return Perm.NO;
   }
