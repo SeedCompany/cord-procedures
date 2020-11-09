@@ -43,7 +43,8 @@ public class Administrator extends BaseRole {
   };
 
   private static Perm Budget(Budget property){
-    switch(property){
+        switch(property){
+      case canDelete:                  return Perm.RO;
       case universalTemplateFile:      return Perm.RW;
       case records:                    return Perm.RW;
       case status:                     return Perm.RW;
@@ -53,7 +54,8 @@ public class Administrator extends BaseRole {
   }
 
   private static Perm BudgetRecord(BudgetRecord property){
-    switch(property){
+        switch(property){
+      case canDelete:                  return Perm.RO;
       case amount:                     return Perm.RW;
       case fiscalYear:                 return Perm.RW;
       case organization:               return Perm.RW;
@@ -63,7 +65,8 @@ public class Administrator extends BaseRole {
   }  
   
   private static Perm Ceremony(Ceremony property){
-    switch(property){
+        switch(property){
+      case canDelete:                  return Perm.RO;
       case actualDate:                 return Perm.RW;
       case estimatedDate:              return Perm.RW;
       case planned:                    return Perm.RW;
@@ -74,7 +77,8 @@ public class Administrator extends BaseRole {
   }
 
   private static Perm Directory(Directory property){
-    switch(property){
+        switch(property){
+      case canDelete:                  return Perm.RO;
       case name:                       return Perm.RW;
       case createdBy:                  return Perm.RW;
       case parent:                     return Perm.RW;
@@ -84,7 +88,8 @@ public class Administrator extends BaseRole {
   }
 
   private static Perm Education(Education property){
-    switch(property){
+        switch(property){
+      case canDelete:                  return Perm.RO;
       case degree:                     return Perm.RW;
       case institution:                return Perm.RW;
       case major:                      return Perm.RW;
@@ -94,7 +99,8 @@ public class Administrator extends BaseRole {
   }
 
   private static Perm EthnologueLanguage(EthnologueLanguage property){
-    switch(property){
+        switch(property){
+      case canDelete:                  return Perm.RO;
       case code:                       return Perm.RW;
       case name:                       return Perm.RW;
       case population:                 return Perm.RW;
@@ -105,7 +111,8 @@ public class Administrator extends BaseRole {
   }
 
   private static Perm FieldRegion(FieldRegion property){
-    switch(property){
+        switch(property){
+      case canDelete:                  return Perm.RO;
       case director:                   return Perm.RW;
       case name:                       return Perm.RW;
       case fieldZone:                  return Perm.RW;
@@ -115,7 +122,8 @@ public class Administrator extends BaseRole {
   }  
   
   private static Perm FieldZone(FieldZone property){
-    switch(property){
+        switch(property){
+      case canDelete:                  return Perm.RO;
       case director:                   return Perm.RW;
       case name:                       return Perm.RW;
       } 
@@ -124,7 +132,8 @@ public class Administrator extends BaseRole {
   }
 
   private static Perm File(File property){
-    switch(property){
+        switch(property){
+      case canDelete:                  return Perm.RO;
       case name:                       return Perm.RW;
       case createdBy:                  return Perm.RW;
       case parent:                     return Perm.RW;
@@ -135,7 +144,8 @@ public class Administrator extends BaseRole {
   }
 
   private static Perm FileVersion(FileVersion property){
-    switch(property){
+        switch(property){
+      case canDelete:                  return Perm.RO;
       case name:                       return Perm.RW;
       case createdBy:                  return Perm.RW;
       case parent:                     return Perm.RW;
@@ -147,7 +157,8 @@ return Perm.NO;
   }
 
   private static Perm Film(Film property){
-    switch(property){
+        switch(property){
+      case canDelete:                  return Perm.RO;
       case name:                       return Perm.RW;
       case scriptureReferences:        return Perm.RW;
       } 
@@ -156,7 +167,8 @@ return Perm.NO;
   }
 
   private static Perm FundingAccount(FundingAccount property){
-    switch(property){
+        switch(property){
+      case canDelete:                  return Perm.RO;
       case name:                       return Perm.RW;
       case accountNumber:              return Perm.RW;
       } 
@@ -165,7 +177,8 @@ return Perm.NO;
   }  
   
   private static Perm InternshipEngagement(InternshipEngagement property){
-    switch(property){
+        switch(property){
+      case canDelete:                  return Perm.RO;
       case ceremony:                   return Perm.RW;
       case communicationsCompleteDate: return Perm.RW;
       case completeDate:               return Perm.RW;
@@ -192,7 +205,8 @@ return Perm.NO;
   }
 
   private static Perm Language(Language property){
-    switch(property){
+        switch(property){
+      case canDelete:                  return Perm.RO;
       case displayName:                return Perm.RW;
       case displayNamePronunciation:   return Perm.RW;
       case isDialect:                  return Perm.RW;
@@ -216,7 +230,8 @@ return Perm.NO;
   }
 
   private static Perm LanguageEngagement(LanguageEngagement property){
-    switch(property){
+        switch(property){
+      case canDelete:                  return Perm.RO;
       case ceremony:                   return Perm.RW;
       case communicationsCompleteDate: return Perm.RW;
       case completeDate:               return Perm.RW;
@@ -245,7 +260,8 @@ return Perm.NO;
   }
 
   private static Perm LiteracyMaterial(LiteracyMaterial property){
-    switch(property){
+        switch(property){
+      case canDelete:                  return Perm.RO;
       case name:                       return Perm.RW;
       case scriptureReferences:        return Perm.RW;
       } 
@@ -254,7 +270,8 @@ return Perm.NO;
   }
 
   private static Perm Location(Location property){
-    switch(property){
+        switch(property){
+      case canDelete:                  return Perm.RO;
       case name:                       return Perm.RW;
       case type:                       return Perm.RW;
       case sensitivity:                return Perm.RW;
@@ -266,7 +283,8 @@ return Perm.NO;
   }
   
   private static Perm Organization(Organization property){
-    switch(property){
+        switch(property){
+      case canDelete:                  return Perm.RO;
       case name:                       return Perm.RW;
       case address:                    return Perm.RW;
       case locations:                  return Perm.RW;
@@ -276,7 +294,8 @@ return Perm.NO;
   }
 
   private static Perm Partner(Partner property){
-    switch(property){
+        switch(property){
+      case canDelete:                  return Perm.RO;
       case organization:               return Perm.RW;
       case pointOfContact:             return Perm.RW;
       case types:                      return Perm.RW;
@@ -292,7 +311,8 @@ return Perm.NO;
   }
 
   private static Perm Partnership(Partnership property){
-    switch(property){
+        switch(property){
+      case canDelete:                  return Perm.RO;
       case agreement:                  return Perm.RW;
       case agreementStatus:            return Perm.RW;
       case financialReportingType:     return Perm.RW;
@@ -311,7 +331,8 @@ return Perm.NO;
   }
 
   private static Perm Product(Product property){
-    switch(property){
+        switch(property){
+      case canDelete:                  return Perm.RO;
       case mediums:                    return Perm.RW;
       case methodology:                return Perm.RW;
       case purposes:                   return Perm.RW;
@@ -325,7 +346,8 @@ return Perm.NO;
   }
 
   private static Perm Project(Project property){
-    switch(property){
+        switch(property){
+      case canDelete:                  return Perm.RO;
       case estimatedSubmission:        return Perm.RW;
       case step:                       return Perm.RW;
       case name:                       return Perm.RW;
@@ -356,7 +378,8 @@ return Perm.NO;
   }
 
   private static Perm ProjectMember(ProjectMember property){
-    switch(property){
+        switch(property){
+      case canDelete:                  return Perm.RO;
       case roles:                      return Perm.RW;
       case user:                       return Perm.RW;
       case modifiedAt:                 return Perm.RW;
@@ -366,7 +389,8 @@ return Perm.NO;
   }
 
   private static Perm Song(Song property){
-    switch(property){
+        switch(property){
+      case canDelete:                  return Perm.RO;
       case name:                       return Perm.RW;
       case scriptureReferences:        return Perm.RW;
       } 
@@ -375,7 +399,8 @@ return Perm.NO;
   }
 
   private static Perm Story(Story property){
-    switch(property){
+        switch(property){
+      case canDelete:                  return Perm.RO;
       case name:                       return Perm.RW;
       case scriptureReferences:        return Perm.RW;
       } 
@@ -384,7 +409,8 @@ return Perm.NO;
   }
 
   private static Perm Unavailability(Unavailability property){
-    switch(property){
+        switch(property){
+      case canDelete:                  return Perm.RO;
       case description:                return Perm.RW;
       case end:                        return Perm.RW;
       case start:                      return Perm.RW;
@@ -394,7 +420,8 @@ return Perm.NO;
   }
 
   private static Perm User(User property){
-    switch(property){
+        switch(property){
+      case canDelete:                  return Perm.RO;
       case about:                      return Perm.RW;
       case displayFirstName:           return Perm.RW;
       case displayLastName:            return Perm.RW;

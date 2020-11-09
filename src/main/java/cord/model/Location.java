@@ -1,6 +1,7 @@
 package cord.model;
 
 public enum Location {
+canDelete,
   name,          
 type,          
 sensitivity,   

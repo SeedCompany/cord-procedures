@@ -1,6 +1,7 @@
 package cord.model;
 
 public enum Project {
+canDelete,
   estimatedSubmission,
 step,               
 name,               

@@ -1,6 +1,7 @@
 package cord.model;
 
 public enum Language {
+canDelete,
   displayName,              
 displayNamePronunciation, 
 isDialect,                

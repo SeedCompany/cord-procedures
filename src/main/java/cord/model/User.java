@@ -1,6 +1,7 @@
 package cord.model;
 
 public enum User {
+canDelete,
   about,           
   displayFirstName,
   displayLastName, 
