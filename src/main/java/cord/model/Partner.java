@@ -1,6 +1,7 @@
 package cord.model;
 
 public enum Partner {
+canDelete,
   organization,            
 pointOfContact,          
 types,                   

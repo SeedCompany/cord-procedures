@@ -139,7 +139,8 @@ public enum AllProperties {
   owningOrganization,
   partners,
   financialReportReceivedAt,
-  historicGoal
+  historicGoal,
+  canDelete,
 }           
       
 

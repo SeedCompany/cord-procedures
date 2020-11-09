@@ -1,6 +1,7 @@
 package cord.model;
 
 public enum InternshipEngagement {
+canDelete,
   ceremony,                  
 communicationsCompleteDate,
 completeDate,              

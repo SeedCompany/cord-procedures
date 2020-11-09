@@ -118,6 +118,12 @@ public class Authorization {
                     // map role string to a role object
 
                     RoleNames dbRole = AllRoles.getRoleNameEnumFromFeString(role, true);
+
+                    if (dbRole == null){
+                      
+                      continue;
+                    }
+                    
                     BaseRole roleObj = allRoles.getRoleByStringName(dbRole.name());
                     
                     // get member's user node

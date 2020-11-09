@@ -1,6 +1,7 @@
 package cord.model;
 
 public enum Partnership {
+canDelete,
   agreement,             
 agreementStatus,       
 financialReportingType,
