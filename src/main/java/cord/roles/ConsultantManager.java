@@ -43,7 +43,7 @@ public class ConsultantManager extends BaseRole {
 
   private static Perm Budget(Budget property){
         switch(property){
-      case canDelete:                  return Perm.RO;
+      case canDelete:                  return Perm.NO;
       case universalTemplateFile:      return Perm.RO;
       case records:                    return Perm.RO;
       case status:                     return Perm.RO;
@@ -53,7 +53,7 @@ public class ConsultantManager extends BaseRole {
 
   private static Perm BudgetRecord(BudgetRecord property){
         switch(property){
-      case canDelete:                  return Perm.RO;
+      case canDelete:                  return Perm.NO;
       case amount:                     return Perm.RO;
       case fiscalYear:                 return Perm.RO;
       case organization:               return Perm.RO;
@@ -63,7 +63,7 @@ public class ConsultantManager extends BaseRole {
   
   private static Perm Ceremony(Ceremony property){
         switch(property){
-      case canDelete:                  return Perm.RO;
+      case canDelete:                  return Perm.NO;
       case actualDate:                 return Perm.RO;
       case estimatedDate:              return Perm.RO;
       case planned:                    return Perm.RO;
@@ -74,7 +74,7 @@ public class ConsultantManager extends BaseRole {
 
   private static Perm Directory(Directory property){
         switch(property){
-      case canDelete:                  return Perm.RO;
+      case canDelete:                  return Perm.NO;
       case name:                       return Perm.RW;
       case createdBy:                  return Perm.RW;
       case parent:                     return Perm.RW;
@@ -84,7 +84,7 @@ public class ConsultantManager extends BaseRole {
 
   private static Perm Education(Education property){
         switch(property){
-      case canDelete:                  return Perm.RO;
+      case canDelete:                  return Perm.NO;
       case degree:                     return Perm.RO;
       case institution:                return Perm.RO;
       case major:                      return Perm.RO;
@@ -94,7 +94,7 @@ public class ConsultantManager extends BaseRole {
 
   private static Perm EthnologueLanguage(EthnologueLanguage property){
         switch(property){
-      case canDelete:                  return Perm.RO;
+      case canDelete:                  return Perm.NO;
       case code:                       return Perm.RO;
       case name:                       return Perm.RO;
       case population:                 return Perm.RO;
@@ -105,7 +105,7 @@ public class ConsultantManager extends BaseRole {
 
   private static Perm FieldRegion(FieldRegion property){
         switch(property){
-      case canDelete:                  return Perm.RO;
+      case canDelete:                  return Perm.NO;
       case director:                   return Perm.RO;
       case name:                       return Perm.RO;
       case fieldZone:                  return Perm.RO;
@@ -115,7 +115,7 @@ public class ConsultantManager extends BaseRole {
   
   private static Perm FieldZone(FieldZone property){
         switch(property){
-      case canDelete:                  return Perm.RO;
+      case canDelete:                  return Perm.NO;
       case director:                   return Perm.RO;
       case name:                       return Perm.RO;
     }
@@ -124,7 +124,7 @@ public class ConsultantManager extends BaseRole {
 
   private static Perm File(File property){
         switch(property){
-      case canDelete:                  return Perm.RO;
+      case canDelete:                  return Perm.NO;
       case name:                       return Perm.RW;
       case createdBy:                  return Perm.RW;
       case parent:                     return Perm.RW;
@@ -135,7 +135,7 @@ public class ConsultantManager extends BaseRole {
 
   private static Perm FileVersion(FileVersion property){
         switch(property){
-      case canDelete:                  return Perm.RO;
+      case canDelete:                  return Perm.NO;
       case name:                       return Perm.RW;
       case createdBy:                  return Perm.RW;
       case parent:                     return Perm.RW;
@@ -147,7 +147,7 @@ public class ConsultantManager extends BaseRole {
 
   private static Perm Film(Film property){
         switch(property){
-      case canDelete:                  return Perm.RO;
+      case canDelete:                  return Perm.NO;
       case name:                       return Perm.RO;
       case scriptureReferences:        return Perm.RO;
     }
@@ -156,7 +156,7 @@ public class ConsultantManager extends BaseRole {
 
   private static Perm FundingAccount(FundingAccount property){
         switch(property){
-      case canDelete:                  return Perm.RO;
+      case canDelete:                  return Perm.NO;
       case name:                       return Perm.RO;
       case accountNumber:              return Perm.RO;
     }
@@ -165,7 +165,7 @@ public class ConsultantManager extends BaseRole {
   
   private static Perm InternshipEngagement(InternshipEngagement property){
         switch(property){
-      case canDelete:                  return Perm.RO;
+      case canDelete:                  return Perm.NO;
       case ceremony:                   return Perm.RW;
       case communicationsCompleteDate: return Perm.RW;
       case completeDate:               return Perm.RW;
@@ -192,7 +192,7 @@ public class ConsultantManager extends BaseRole {
 
   private static Perm Language(Language property){
         switch(property){
-      case canDelete:                  return Perm.RO;
+      case canDelete:                  return Perm.NO;
       case displayName:                return Perm.RO;
       case displayNamePronunciation:   return Perm.RO;
       case isDialect:                  return Perm.RO;
@@ -215,7 +215,7 @@ public class ConsultantManager extends BaseRole {
 
   private static Perm LanguageEngagement(LanguageEngagement property){
         switch(property){
-      case canDelete:                  return Perm.RO;
+      case canDelete:                  return Perm.NO;
       case ceremony:                   return Perm.RW;
       case communicationsCompleteDate: return Perm.RW;
       case completeDate:               return Perm.RW;
@@ -244,7 +244,7 @@ public class ConsultantManager extends BaseRole {
 
   private static Perm LiteracyMaterial(LiteracyMaterial property){
         switch(property){
-      case canDelete:                  return Perm.RO;
+      case canDelete:                  return Perm.NO;
       case name:                       return Perm.RO;
       case scriptureReferences:        return Perm.RO;
     }
@@ -253,7 +253,7 @@ public class ConsultantManager extends BaseRole {
 
   private static Perm Location(Location property){
         switch(property){
-      case canDelete:                  return Perm.RO;
+      case canDelete:                  return Perm.NO;
       case name:                       return Perm.RO;
       case type:                       return Perm.RO;
       case sensitivity:                return Perm.RO;
@@ -265,7 +265,7 @@ public class ConsultantManager extends BaseRole {
   
   private static Perm Organization(Organization property){
         switch(property){
-      case canDelete:                  return Perm.RO;
+      case canDelete:                  return Perm.NO;
       case name:                       return Perm.RO;
       case address:                    return Perm.RO;
       case locations:                  return Perm.RO;
@@ -275,7 +275,7 @@ public class ConsultantManager extends BaseRole {
 
   private static Perm Partner(Partner property){
         switch(property){
-      case canDelete:                  return Perm.RO;
+      case canDelete:                  return Perm.NO;
       case organization:               return Perm.RO;
       case pointOfContact:             return Perm.RO;
       case types:                      return Perm.RO;
@@ -291,7 +291,7 @@ public class ConsultantManager extends BaseRole {
 
   private static Perm Partnership(Partnership property){
         switch(property){
-      case canDelete:                  return Perm.RO;
+      case canDelete:                  return Perm.NO;
       case agreement:                  return Perm.RO;
       case agreementStatus:            return Perm.RO;
       case financialReportingType:     return Perm.RO;
@@ -310,7 +310,7 @@ public class ConsultantManager extends BaseRole {
 
   private static Perm Product(Product property){
         switch(property){
-      case canDelete:                  return Perm.RO;
+      case canDelete:                  return Perm.NO;
       case mediums:                    return Perm.RO;
       case methodology:                return Perm.RO;
       case purposes:                   return Perm.RO;
@@ -324,7 +324,7 @@ public class ConsultantManager extends BaseRole {
 
   private static Perm Project(Project property){
         switch(property){
-      case canDelete:                  return Perm.RO;
+      case canDelete:                  return Perm.NO;
       case estimatedSubmission:        return Perm.RW;
       case step:                       return Perm.RW;
       case name:                       return Perm.RW;
@@ -354,7 +354,7 @@ public class ConsultantManager extends BaseRole {
 
   private static Perm ProjectMember(ProjectMember property){
         switch(property){
-      case canDelete:                  return Perm.RO;
+      case canDelete:                  return Perm.NO;
       case roles:                      return Perm.RW;
       case user:                       return Perm.RW;
       case modifiedAt:                 return Perm.RW;
@@ -364,7 +364,7 @@ public class ConsultantManager extends BaseRole {
 
   private static Perm Song(Song property){
         switch(property){
-      case canDelete:                  return Perm.RO;
+      case canDelete:                  return Perm.NO;
       case name:                       return Perm.RO;
       case scriptureReferences:        return Perm.RO;
     }
@@ -373,7 +373,7 @@ public class ConsultantManager extends BaseRole {
 
   private static Perm Story(Story property){
         switch(property){
-      case canDelete:                  return Perm.RO;
+      case canDelete:                  return Perm.NO;
       case name:                       return Perm.RO;
       case scriptureReferences:        return Perm.RO;
     }
@@ -382,7 +382,7 @@ public class ConsultantManager extends BaseRole {
 
   private static Perm Unavailability(Unavailability property){
         switch(property){
-      case canDelete:                  return Perm.RO;
+      case canDelete:                  return Perm.NO;
       case description:                return Perm.RO;
       case end:                        return Perm.RO;
       case start:                      return Perm.RO;
@@ -392,7 +392,7 @@ public class ConsultantManager extends BaseRole {
 
   private static Perm User(User property){
         switch(property){
-      case canDelete:                  return Perm.RO;
+      case canDelete:                  return Perm.NO;
       case about:                      return Perm.RO;
       case displayFirstName:           return Perm.RO;
       case displayLastName:            return Perm.RO;

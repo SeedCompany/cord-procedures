@@ -80,6 +80,9 @@ public class Authorization {
 
           }
 
+          // if this is a project member node, we need to add the new member to all current project-context nodes
+          // TODO
+
         } else {
 
           // add creator to admin group
