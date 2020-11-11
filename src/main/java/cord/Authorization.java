@@ -3,6 +3,7 @@ package cord;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import org.neo4j.graphdb.*;
@@ -81,7 +82,9 @@ public class Authorization {
           }
 
           // if this is a project member node, we need to add the new member to all current project-context nodes
-          // TODO
+          if (label == BaseNodeLabels.ProjectMember){
+            this.addProjectContextNodesToNewProjectMember(baseNodeNeoId);
+          }
 
         } else {
 
@@ -98,6 +101,113 @@ public class Authorization {
       } 
     }
 
+    private void addProjectContextNodesToNewProjectMember(Long projectMemberNeoId){
+
+      // get roles of member and convert to DB role names
+      ArrayList<String> roles = new ArrayList<String>();
+
+      Map<String, Object> params = new HashMap<>();
+      params.put("memberId", projectMemberNeoId);
+
+      try ( Transaction tx = db.beginTx() ) {
+
+
+        Result result = tx.execute(
+          "match (member:ProjectMember)-[:roles {active: true}]->(roles:Property) " +
+          "where id(member) = $memberId " + 
+          "unwind roles.value as role " + 
+          "return role",
+          params
+        );
+
+        while(result.hasNext()){
+          Map<String, Object> row = result.next();
+          String feRole = (String) row.get("role");
+
+          if (feRole == null) continue;
+          RoleNames dbRoleName = AllRoles.getRoleNameEnumFromFeString(feRole,true);
+
+          if (dbRoleName == null) continue;
+          roles.add(dbRoleName.name());
+        }
+
+        tx.commit();
+
+      } catch(Exception e){
+        e.printStackTrace();
+        throw new RuntimeException("error in adding project nodes to new member");
+      }
+      
+      try ( Transaction tx = db.beginTx() ) {
+
+        params.put("roles", roles.toArray());
+
+        tx.execute(
+          "match (user:User)<-[:user]-(member:ProjectMember)<-[:member {active: true}]-(project:Project) " +
+          "where id(member) = $memberId " + 
+          "unwind $roles as role " +
+          "with user, project, role " +
+          "match (project)<-[:baseNode]-(sg:SecurityGroup) " +
+          "where sg.role = role " +
+          "merge (user)<-[:member]-(sg) " +
+          "with user, project, role " +
+          "optional match (project)-[:engagement]->(:Engagement)<-[:baseNode]-(sg:SecurityGroup) " +
+          "where sg.role = role " +
+          "with user, project, role, CASE sg WHEN NULL THEN [1] ELSE [] END AS makeSg " +
+          "FOREACH (it IN makeSg  | merge (user)<-[:member]-(sg) )" +
+          "with user, project, role " +
+          "optional match (project)-[:engagement]->(:Engagement)-[:ceremony]->(:Ceremony)<-[:baseNode]-(sg:SecurityGroup) " +
+          "where sg.role = role " +
+          "with user, project, role, CASE sg WHEN NULL THEN [1] ELSE [] END AS makeSg " +
+          "FOREACH (it IN makeSg  | merge (user)<-[:member]-(sg) )" +
+          "with user, project, role " +
+          "optional match (project)-[:engagement]->(:Engagement)-[:product]->(:Product)<-[:baseNode]-(sg:SecurityGroup) " +
+          "where sg.role = role " +
+          "with user, project, role, CASE sg WHEN NULL THEN [1] ELSE [] END AS makeSg " +
+          "FOREACH (it IN makeSg  | merge (user)<-[:member]-(sg) )" +
+          "with user, project, role " +
+          "optional match (project)-[:member]->(:ProjectMember)<-[:baseNode]-(sg:SecurityGroup) " +
+          "where sg.role = role " +
+          "with user, project, role, CASE sg WHEN NULL THEN [1] ELSE [] END AS makeSg " +
+          "FOREACH (it IN makeSg  | merge (user)<-[:member]-(sg) )" +
+          "with user, project, role " +
+          "optional match (project)-[:partnership]->(:Partnership)<-[:baseNode]-(sg:SecurityGroup) " +
+          "where sg.role = role " +
+          "with user, project, role, CASE sg WHEN NULL THEN [1] ELSE [] END AS makeSg " +
+          "FOREACH (it IN makeSg  | merge (user)<-[:member]-(sg) )" +
+          "with user, project, role " +
+          "optional match (project)-[:partnership]->(:Partnership)-[:partner]->(:Partner)<-[:baseNode]-(sg:SecurityGroup) " +
+          "where sg.role = role " +
+          "with user, project, role, CASE sg WHEN NULL THEN [1] ELSE [] END AS makeSg " +
+          "FOREACH (it IN makeSg  | merge (user)<-[:member]-(sg) )" +
+          "with user, project, role " +
+          "optional match (project)-[:budget]->(:Engagement)<-[:baseNode]-(sg:SecurityGroup) " +
+          "where sg.role = role " +
+          "with user, project, role, CASE sg WHEN NULL THEN [1] ELSE [] END AS makeSg " +
+          "FOREACH (it IN makeSg  | merge (user)<-[:member]-(sg) )" +
+          "with user, project, role " +
+          "optional match (project)-[:budget]->(:Engagement)-[:records]->(:BudgetRecord)<-[:baseNode]-(sg:SecurityGroup) " +
+          "where sg.role = role " +
+          "with user, project, role, CASE sg WHEN NULL THEN [1] ELSE [] END AS makeSg " +
+          "FOREACH (it IN makeSg  | merge (user)<-[:member]-(sg) )" +
+          "with user, project, role " +
+          "optional match (project)-[:rootDirectory]->(:FileNode)<-[:baseNode]-(sg:SecurityGroup) " +
+          "where sg.role = role " +
+          "with user, project, role, CASE sg WHEN NULL THEN [1] ELSE [] END AS makeSg " +
+          "FOREACH (it IN makeSg  | merge (user)<-[:member]-(sg) )" +
+          "",
+          params
+        );
+
+        tx.commit();
+
+      } catch(Exception e){
+        e.printStackTrace();
+        throw new RuntimeException("error in adding project nodes to new member");
+      }
+  
+    }
+
     public void processProjectMember(ArrayList<Long> members, HashMap<RoleNames, Long> sgMap, AllRoles allRoles) throws RuntimeException {
 
       try ( Transaction tx = db.beginTx() )
@@ -106,16 +216,25 @@ public class Authorization {
         members.forEach(memberNodeNeoId -> {
 
           Node memberNode = tx.getNodeById(memberNodeNeoId);
+          
           // get member's roles
-          Iterable<Relationship> toRolesIter = memberNode.getRelationships(Direction.OUTGOING, 
-          RelationshipType.withName(AllProperties.roles.name()));
+          Iterable<Relationship> toRolesIter = memberNode.getRelationships(
+            Direction.OUTGOING, 
+            RelationshipType.withName(AllProperties.roles.name())
+          );
+
           toRolesIter.forEach(rel -> {
+
             if ((Boolean)rel.getProperty(AllProperties.active.name()) == true){
+          
               Node rolesNode = rel.getEndNode();
+          
               if (rolesNode.hasProperty(AllProperties.value.name())){
 
                 String[] roles = (String[]) rolesNode.getProperty(AllProperties.value.name());
+          
                 if (roles != null){
+          
                   for (String role: roles){
 
                     // map role string to a role object
@@ -337,7 +456,3 @@ public class Authorization {
     } 
 
   }
-
-
-
-  
