@@ -179,7 +179,6 @@ public class ProcessBaseNodeTest {
             this.addProjectMembers(session, projectId, cmId,                FeRoleNames.ConsultantManager);
             this.addProjectMembers(session, projectId, ctrlId,              FeRoleNames.Controller);
             this.addProjectMembers(session, projectId, fieldOpsId,          FeRoleNames.FieldOperationsDirector);
-            this.addProjectMembers(session, projectId, faProjectId,         FeRoleNames.FinancialAnalyst);
             this.addProjectMembers(session, projectId, funId,               FeRoleNames.Fundraising);
             this.addProjectMembers(session, projectId, internId,            FeRoleNames.Intern);
             this.addProjectMembers(session, projectId, leadId,              FeRoleNames.Leadership);
@@ -190,13 +189,25 @@ public class ProcessBaseNodeTest {
             this.addProjectMembers(session, projectId, rdProjectId,         FeRoleNames.RegionalDirector);
             this.addProjectMembers(session, projectId, staffId,             FeRoleNames.StaffMember);
             this.addProjectMembers(session, projectId, tranId,              FeRoleNames.Translator);
-
+            
             // run the procedure
             session.run(
                 "CALL cord.processNewBaseNode($baseNodeId, $label, $creatorId)", 
                 parameters(
                     "baseNodeId", projectId, 
                     "label", "Project", 
+                    "creatorId", pmOnProjectId
+                )
+            );
+                    
+            String faProjectMemberId = this.addProjectMembers(session, projectId, faProjectId,         FeRoleNames.FinancialAnalyst);
+
+            // run the procedure
+            session.run(
+                "CALL cord.processNewBaseNode($baseNodeId, $label, $creatorId)", 
+                parameters(
+                    "baseNodeId", faProjectMemberId, 
+                    "label", "ProjectMember", 
                     "creatorId", pmOnProjectId
                 )
             );
@@ -275,7 +286,9 @@ public class ProcessBaseNodeTest {
         session.run("CREATE (:BaseNode:"+label+" {id:$baseNodeId, createdAt: datetime()})", parameters("baseNodeId", baseNodeId));
     }
 
-    private void addProjectMembers(Session session, String projectId, String userId, FeRoleNames projectRoleName){
+    private String addProjectMembers(Session session, String projectId, String userId, FeRoleNames projectRoleName){
+
+        String projectMemberId = projectId + ":" + userId;
         session.run(
             "MATCH (project:Project {id: $projectId}), (user:User {id:$userId}) "+
             "MERGE (user)<-[:user {active: true}]-(member:ProjectMember {id: $memberId, createdAt: datetime() })<-[:member {active: true}]-(project) "+
@@ -283,10 +296,12 @@ public class ProcessBaseNodeTest {
             parameters(
                 "projectId", projectId,
                 "userId", userId,
-                "memberId", projectId + ":" + userId,
+                "memberId", projectMemberId,
                 "projectRoleName", projectRoleName.name()
             )
         );
+
+        return projectMemberId;
     }
 
     private void verifyPropertyAccess( // reads the SG by role. verifies each role works.

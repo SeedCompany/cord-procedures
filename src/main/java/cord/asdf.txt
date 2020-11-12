@@ -1,0 +1,43 @@
+          match (user:User)<-[:user]-(member:ProjectMember)<-[:member {active: true}]-(project:Project)  
+          where id(member) = 1126   
+          unwind ["FinancialAnalystOnProjectRole"] as role  
+          with user, project, role  
+          match (project)<-[:baseNode]-(sg:SecurityGroup)  
+          where sg.role = role  
+          merge (user)<-[:member]-(sg)  
+          with user, project, role  
+          optional match (project)-[:engagement]->(:Engagement)<-[:baseNode]-(sg:SecurityGroup)  
+          where sg.role = role  
+          merge (user)<-[:member]-(sg)  
+          with user, project, role  
+          optional match (project)-[:engagement]->(:Engagement)-[:ceremony]->(:Ceremony)<-[:baseNode]-(sg:SecurityGroup)  
+          where sg.role = role  
+          merge (user)<-[:member]-(sg)  
+          with user, project, role  
+          optional match (project)-[:engagement]->(:Engagement)-[:product]->(:Product)<-[:baseNode]-(sg:SecurityGroup)  
+          where sg.role = role  
+          merge (user)<-[:member]-(sg)  
+          with user, project, role  
+          optional match (project)-[:member]->(:ProjectMember)<-[:baseNode]-(sg:SecurityGroup)  
+          where sg.role = role  
+          merge (user)<-[:member]-(sg)  
+          with user, project, role  
+          optional match (project)-[:partnership]->(:Partnership)<-[:baseNode]-(sg:SecurityGroup)  
+          where sg.role = role  
+          merge (user)<-[:member]-(sg)  
+          with user, project, role  
+          optional match (project)-[:partnership]->(:Partnership)-[:partner]->(:Partner)<-[:baseNode]-(sg:SecurityGroup)  
+          where sg.role = role  
+          merge (user)<-[:member]-(sg)  
+          with user, project, role  
+          optional match (project)-[:budget]->(:Engagement)<-[:baseNode]-(sg:SecurityGroup)  
+          where sg.role = role  
+          merge (user)<-[:member]-(sg)  
+          with user, project, role  
+          optional match (project)-[:budget]->(:Engagement)-[:records]->(:BudgetRecord)<-[:baseNode]-(sg:SecurityGroup)  
+          where sg.role = role  
+          merge (user)<-[:member]-(sg)  
+          with user, project, role  
+          optional match (project)-[:rootDirectory]->(:FileNode)<-[:baseNode]-(sg:SecurityGroup)  
+          where sg.role = role  
+          merge (user)<-[:member]-(sg)  
