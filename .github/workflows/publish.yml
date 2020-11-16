@@ -26,6 +26,12 @@ jobs:
           name: cord-procedures.jar
           path: target/cord-1.jar
 
+      - uses: eine/tip@master
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          files: |
+            target/cord-1.jar
+
   # Push image to GitHub Packages.
   # See also https://docs.docker.com/docker-hub/builds/
   docker:
