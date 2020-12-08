@@ -83,6 +83,7 @@ public enum AllProperties {
   organization,
   otherLocations,
   paraTextRegistryId,
+  paratextRegistryId,
   parent,
   partner,
   partnership,
