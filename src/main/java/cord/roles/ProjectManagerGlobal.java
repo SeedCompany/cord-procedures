@@ -228,6 +228,7 @@ public class ProjectManagerGlobal extends BaseRole {
       case lastReactivatedAt:          return Perm.RO;
       case lastSuspendedAt:            return Perm.RO;
       case lukePartnership:            return Perm.RO;
+      case paratextRegistryId:         return Perm.RO;
       case paraTextRegistryId:         return Perm.RO;
       case pnp:                        return Perm.RO;
       case sentPrintingDate:           return Perm.RO;

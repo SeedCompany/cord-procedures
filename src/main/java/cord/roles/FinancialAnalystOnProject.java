@@ -228,6 +228,7 @@ public class FinancialAnalystOnProject extends BaseRole {
       case lastReactivatedAt:          return Perm.RW;
       case lastSuspendedAt:            return Perm.RW;
       case lukePartnership:            return Perm.RW;
+      case paratextRegistryId:         return Perm.RW;
       case paraTextRegistryId:         return Perm.RW;
       case pnp:                        return Perm.RW;
       case sentPrintingDate:           return Perm.RW;
