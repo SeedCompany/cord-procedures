@@ -174,7 +174,7 @@ public class Controller extends BaseRole {
       case endDate:                    return Perm.RO;
       case endDateOverride:            return Perm.RO;
       case growthPlan:                 return Perm.RO;
-      case initialEndDate:             return Perm.RO;
+      case initialEndDate:             return Perm.RW;
       case intern:                     return Perm.RO;
       case lastReactivatedAt:          return Perm.RO;
       case lastSuspendedAt:            return Perm.RO;
@@ -223,7 +223,7 @@ public class Controller extends BaseRole {
       case endDate:                    return Perm.RO;
       case endDateOverride:            return Perm.RO;
       case firstScripture:             return Perm.RO;
-      case initialEndDate:             return Perm.RO;
+      case initialEndDate:             return Perm.RW;
       case language:                   return Perm.RO;
       case lastReactivatedAt:          return Perm.RO;
       case lastSuspendedAt:            return Perm.RO;
