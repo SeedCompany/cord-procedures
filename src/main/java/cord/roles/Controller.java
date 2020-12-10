@@ -183,7 +183,7 @@ public class Controller extends BaseRole {
       case position:                   return Perm.RO;
       case startDate:                  return Perm.RO;
       case startDateOverride:          return Perm.RO;
-      case statusModifiedAt:           return Perm.RO;
+      case statusModifiedAt:           return Perm.RW;
       case modifiedAt:                 return Perm.RW;
       case status:                     return Perm.RO;
     }
@@ -234,7 +234,7 @@ public class Controller extends BaseRole {
       case sentPrintingDate:           return Perm.RO;
       case startDate:                  return Perm.RO;
       case startDateOverride:          return Perm.RO;
-      case statusModifiedAt:           return Perm.RO;
+      case statusModifiedAt:           return Perm.RW;
       case modifiedAt:                 return Perm.RW;
       case product:                    return Perm.RO;
       case status:                     return Perm.RO;
