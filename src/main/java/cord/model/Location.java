@@ -6,5 +6,6 @@ canDelete,
 type,          
 sensitivity,   
 isoAlpha3,     
-fundingAccount
+fundingAccount,
+defaultFieldRegion
 }

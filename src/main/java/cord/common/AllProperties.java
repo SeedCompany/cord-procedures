@@ -142,6 +142,7 @@ public enum AllProperties {
   financialReportReceivedAt,
   historicGoal,
   canDelete,
+  defaultFieldRegion,
 }           
       
 

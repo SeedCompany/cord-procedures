@@ -278,6 +278,7 @@ return Perm.NO;
       case sensitivity:                return Perm.RW;
       case isoAlpha3:                  return Perm.RW;
       case fundingAccount:             return Perm.RW;
+      case defaultFieldRegion:         return Perm.RW;
       } 
 
 return Perm.NO;
