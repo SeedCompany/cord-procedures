@@ -99,7 +99,7 @@ public class ProcessBaseNodeTest {
             String funId =              "funId"                 + random.nextInt(1000000);
             String internId =           "internId"              + random.nextInt(1000000);
             String leadId =             "leadId"                + random.nextInt(1000000);
-            String liasonId =           "liasonId"              + random.nextInt(1000000);
+            String liaisonId =           "liaisonId"              + random.nextInt(1000000);
             String markId =             "markId"                + random.nextInt(1000000);
             String pmGlobalId =         "pmGlobalId"            + random.nextInt(1000000);
             String pmOnProjectId =      "pmOnProjectId"         + random.nextInt(1000000);
@@ -119,7 +119,7 @@ public class ProcessBaseNodeTest {
             // String funIdNotOnProject =              "funId"                 + random.nextInt(1000000);
             // String internIdNotOnProject =           "internId"              + random.nextInt(1000000);
             // String leadIdNotOnProject =             "leadId"                + random.nextInt(1000000);
-            // String liasonIdNotOnProject =           "liasonId"              + random.nextInt(1000000);
+            // String liaisonIdNotOnProject =           "liaisonId"              + random.nextInt(1000000);
             // String markIdNotOnProject =             "markId"                + random.nextInt(1000000);
             // String pmGlobalIdNotOnProject =         "pmGlobalId"            + random.nextInt(1000000);
             // String pmOnProjectIdNotOnProject =      "pmOnProjectId"         + random.nextInt(1000000);
@@ -139,7 +139,7 @@ public class ProcessBaseNodeTest {
             this.createUser(session, funId,             AllRoles.getFrontendRoleNameFromApiRoleName(RoleNames.FundraisingRole));
             this.createUser(session, internId,          AllRoles.getFrontendRoleNameFromApiRoleName(RoleNames.InternRole));
             this.createUser(session, leadId,            AllRoles.getFrontendRoleNameFromApiRoleName(RoleNames.LeadershipRole));
-            this.createUser(session, liasonId,          AllRoles.getFrontendRoleNameFromApiRoleName(RoleNames.LiasonRole));
+            this.createUser(session, liaisonId,          AllRoles.getFrontendRoleNameFromApiRoleName(RoleNames.LiaisonRole));
             this.createUser(session, markId,            AllRoles.getFrontendRoleNameFromApiRoleName(RoleNames.MarketingRole));
             this.createUser(session, pmOnProjectId,     AllRoles.getFrontendRoleNameFromApiRoleName(RoleNames.ProjectManagerOnProjectRole));
             this.createUser(session, pmGlobalId,        AllRoles.getFrontendRoleNameFromApiRoleName(RoleNames.ProjectManagerGlobalRole));
@@ -159,7 +159,7 @@ public class ProcessBaseNodeTest {
             // this.createUser(session, funIdNotOnProject,             AllRoles.getFrontendRoleNameFromApiRoleName(RoleNames.FundraisingRole));
             // this.createUser(session, internIdNotOnProject,          AllRoles.getFrontendRoleNameFromApiRoleName(RoleNames.InternRole));
             // this.createUser(session, leadIdNotOnProject,            AllRoles.getFrontendRoleNameFromApiRoleName(RoleNames.LeadershipRole));
-            // this.createUser(session, liasonIdNotOnProject,          AllRoles.getFrontendRoleNameFromApiRoleName(RoleNames.LiasonRole));
+            // this.createUser(session, liaisonIdNotOnProject,          AllRoles.getFrontendRoleNameFromApiRoleName(RoleNames.LiaisonRole));
             // this.createUser(session, markIdNotOnProject,            AllRoles.getFrontendRoleNameFromApiRoleName(RoleNames.MarketingRole));
             // this.createUser(session, pmGlobalIdNotOnProject,        AllRoles.getFrontendRoleNameFromApiRoleName(RoleNames.ProjectManagerOnProjectRole));
             // this.createUser(session, pmOnProjectIdNotOnProject,     AllRoles.getFrontendRoleNameFromApiRoleName(RoleNames.ProjectManagerGlobalRole));
@@ -182,7 +182,7 @@ public class ProcessBaseNodeTest {
             this.addProjectMembers(session, projectId, funId,               FeRoleNames.Fundraising);
             this.addProjectMembers(session, projectId, internId,            FeRoleNames.Intern);
             this.addProjectMembers(session, projectId, leadId,              FeRoleNames.Leadership);
-            this.addProjectMembers(session, projectId, liasonId,            FeRoleNames.Liason);
+            this.addProjectMembers(session, projectId, liaisonId,            FeRoleNames.Liaison);
             this.addProjectMembers(session, projectId, markId,              FeRoleNames.Marketing);
             this.addProjectMembers(session, projectId, pmOnProjectId,       FeRoleNames.ProjectManager);
             this.addProjectMembers(session, projectId, commId,              FeRoleNames.RegionalCommunicationCoordinator);
@@ -222,7 +222,7 @@ public class ProcessBaseNodeTest {
             this.checkRoleAccess(session, Utility.getNames(Project.class), RoleNames.FundraisingRole,                       BaseNodeLabels.Project, projectId,      funId);        
             this.checkRoleAccess(session, Utility.getNames(Project.class), RoleNames.InternRole,                            BaseNodeLabels.Project, projectId,      internId);     
             this.checkRoleAccess(session, Utility.getNames(Project.class), RoleNames.LeadershipRole,                        BaseNodeLabels.Project, projectId,      leadId);       
-            this.checkRoleAccess(session, Utility.getNames(Project.class), RoleNames.LiasonRole,                            BaseNodeLabels.Project, projectId,      liasonId);     
+            this.checkRoleAccess(session, Utility.getNames(Project.class), RoleNames.LiaisonRole,                            BaseNodeLabels.Project, projectId,      liaisonId);     
             this.checkRoleAccess(session, Utility.getNames(Project.class), RoleNames.MarketingRole,                         BaseNodeLabels.Project, projectId,      markId);       
             this.checkRoleAccess(session, Utility.getNames(Project.class), RoleNames.ProjectManagerOnProjectRole,           BaseNodeLabels.Project, projectId,      pmOnProjectId);
             this.checkRoleAccess(session, Utility.getNames(Project.class), RoleNames.RegionalCommunicationCoordinatorRole,  BaseNodeLabels.Project, projectId,      commId);       

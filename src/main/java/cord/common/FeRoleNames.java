@@ -10,7 +10,7 @@ public enum FeRoleNames {
   Fundraising,                   
   Intern,                        
   Leadership,                    
-  Liason,                        
+  Liaison,                        
   Marketing,                     
   ProjectManager,                
   RegionalCommunicationCoordinator,

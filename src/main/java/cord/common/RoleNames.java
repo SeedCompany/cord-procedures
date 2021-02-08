@@ -11,7 +11,7 @@ public enum RoleNames {
   FundraisingRole,
   InternRole,
   LeadershipRole,
-  LiasonRole,
+  LiaisonRole,
   MarketingRole,
   MentorRole,
   ProjectManagerGlobalRole,

@@ -16,7 +16,7 @@ public class AllRoles {
   public Fundraising Fundraising;
   public Intern Intern;
   public Leadership Leadership;
-  public Liason Liason;
+  public Liaison Liaison;
   public Marketing Marketing;
   public ProjectManagerGlobal ProjectManagerGlobal;
   public ProjectManagerOnProject ProjectManagerOnProject;
@@ -37,7 +37,7 @@ public class AllRoles {
     this.Fundraising = new Fundraising();
     this.Intern = new Intern();
     this.Leadership = new Leadership();
-    this.Liason = new Liason();
+    this.Liaison = new Liaison();
     this.Marketing = new Marketing();
     this.ProjectManagerGlobal = new ProjectManagerGlobal();
     this.ProjectManagerOnProject = new ProjectManagerOnProject();
@@ -60,7 +60,7 @@ public class AllRoles {
       case "FundraisingRole":                         return this.Fundraising;
       case "InternRole":                              return this.Intern;
       case "LeadershipRole":                          return this.Leadership;
-      case "LiasonRole":                              return this.Liason;
+      case "LiaisonRole":                              return this.Liaison;
       case "MarketingRole":                           return this.Marketing;
       case "ProjectManagerOnProjectRole":             return this.ProjectManagerOnProject;
       case "ProjectManagerGlobalRole":                return this.ProjectManagerGlobal;
@@ -86,7 +86,7 @@ public class AllRoles {
       this.Fundraising,
       this.Intern,
       this.Leadership,
-      this.Liason,
+      this.Liaison,
       this.Marketing,
       this.ProjectManagerGlobal,
       this.ProjectManagerOnProject,
@@ -120,7 +120,7 @@ public class AllRoles {
       this.Consultant,
       this.FinancialAnalystOnProject,
       this.Intern,
-      this.Liason,
+      this.Liaison,
       this.ProjectManagerOnProject,
       this.RegionalCommunicationCoordinator,
       this.RegionalDirectorOnProject,
@@ -138,7 +138,7 @@ public class AllRoles {
       case FundraisingRole:
       case InternRole:
       case LeadershipRole:
-      case LiasonRole:
+      case LiaisonRole:
       case MarketingRole:
       case MentorRole:
       case RegionalCommunicationCoordinatorRole:
@@ -172,7 +172,7 @@ public class AllRoles {
       case "Fundraising":                                             return RoleNames.FundraisingRole;
       case "Intern":                                                  return RoleNames.InternRole;
       case "Leadership":                                              return RoleNames.LeadershipRole;
-      case "Liason":                                                  return RoleNames.LiasonRole;
+      case "Liaison":                                                  return RoleNames.LiaisonRole;
       case "Marketing":                                               return RoleNames.MarketingRole;
       case "ProjectManager":                      if (isMember)       return RoleNames.ProjectManagerOnProjectRole;
                                                                       return RoleNames.ProjectManagerGlobalRole;
