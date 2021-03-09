@@ -25,7 +25,7 @@ public class Authorization {
     public Log log;
 
     @Context
-    public GraphDatabaseService db;
+    public Transaction tx;
 
     @Procedure(value = "cord.processNewBaseNode", mode = Mode.WRITE)
     @Description("Add security and grant access to new node. NOT IDEMPOTENT!")
@@ -39,7 +39,7 @@ public class Authorization {
 
         AllRoles allRoles = new AllRoles();
 
-        Long baseNodeNeoId = Utility.getNode(db, baseNodeId, baseNodeLabel);
+        Long baseNodeNeoId = Utility.getNode(tx, baseNodeId, baseNodeLabel);
         
         // get the base node's labels and model
         BaseNodeLabels label = Utility.baseNodeClassStringToEnum(baseNodeLabel);
@@ -66,11 +66,11 @@ public class Authorization {
         if (isProjectContextNode) {
 
           // get project members
-          Long projectNodeNeoId = Utility.getProjectNode(db, baseNodeNeoId, label);
+          Long projectNodeNeoId = Utility.getProjectNode(tx, baseNodeNeoId, label);
           if (projectNodeNeoId == null){
             this.log.error("project id not found. skipping adding project members to new node. baseNodeNeoId: " + baseNodeNeoId + " label: " + label);
           } else {    
-            ArrayList<Long> members = Utility.getProjectMembers(db, projectNodeNeoId);
+            ArrayList<Long> members = Utility.getProjectMembers(tx, projectNodeNeoId);
 
             for (BaseRole role: allRoles.projectRolesList()){
               Long sgNodeNeoId = this.mergeSecurityGroupForRole(role, baseNodeId, baseNodeNeoId, label, model, permMap);
@@ -109,9 +109,7 @@ public class Authorization {
       Map<String, Object> params = new HashMap<>();
       params.put("memberId", projectMemberNeoId);
 
-      try ( Transaction tx = db.beginTx() ) {
-
-
+      try {
         Result result = tx.execute(
           "match (member:ProjectMember)-[:roles {active: true}]->(roles:Property) " +
           "where id(member) = $memberId " + 
@@ -130,16 +128,12 @@ public class Authorization {
           if (dbRoleName == null) continue;
           roles.add(dbRoleName.name());
         }
-
-        tx.commit();
-
       } catch(Exception e){
         e.printStackTrace();
         throw new RuntimeException("error in adding project nodes to new member");
       }
-      
-      try ( Transaction tx = db.beginTx() ) {
 
+      try {
         params.put("roles", roles.toArray());
 
         tx.execute(
@@ -198,9 +192,6 @@ public class Authorization {
           "",
           params
         );
-
-        tx.commit();
-
       } catch(Exception e){
         e.printStackTrace();
         throw new RuntimeException("error in adding project nodes to new member");
@@ -210,8 +201,7 @@ public class Authorization {
 
     public void processProjectMember(ArrayList<Long> members, HashMap<RoleNames, Long> sgMap, AllRoles allRoles) throws RuntimeException {
 
-      try ( Transaction tx = db.beginTx() )
-      {
+      try  {
         // add all project members to this base node for their correct role
         members.forEach(memberNodeNeoId -> {
 
@@ -270,7 +260,6 @@ public class Authorization {
           });
 
         });
-        tx.commit();
       } catch(Exception e){
         e.printStackTrace();
         throw new RuntimeException("error in processing project member");
@@ -293,8 +282,7 @@ public class Authorization {
       ArrayList<String> model,
       HashMap<String, Long> permMap
     ){
-      
-      Long sgNeoId = Utility.getSecurityGroupNode(db, role, baseNodeId, label);
+      Long sgNeoId = Utility.getSecurityGroupNode(tx, role, baseNodeId, label);
       if (sgNeoId == null){
         sgNeoId = this.createSecurityGroup(role, baseNodeNeoId, label, model, permMap);
       } 
@@ -310,8 +298,7 @@ public class Authorization {
     ){
 
       final Long sgNodeNeoId;
-      try ( Transaction tx = db.beginTx() )
-      {
+      try {
         Node baseNode = tx.getNodeById(baseNodeNeoId);
         // create the security group node and connect it to the base node
         Node sgNode = tx.createNode(
@@ -356,7 +343,6 @@ public class Authorization {
           }
         });
 
-        tx.commit();
       } catch(Exception e){
         this.log.error(e.getMessage());
         throw new RuntimeException("failed to create security group");
@@ -370,9 +356,7 @@ public class Authorization {
     }
 
     private HashMap<String, Long> createAllPermissionNodes(Long baseNodeNeoId, BaseNodeLabels label, ArrayList<String> propertyList) throws RuntimeException {
-
-      try ( Transaction tx = db.beginTx() )
-      {
+      try {
         HashMap<String, Long> map = new HashMap<String, Long>();
 
         Node baseNode = tx.getNodeById(baseNodeNeoId);
@@ -406,11 +390,8 @@ public class Authorization {
             RelationshipType.withName(NonPropertyRelationshipTypes.baseNode.name()));
 
           map.put(property+"Edit", permEdit.getId());
-            
         });
-        
-        tx.commit();
-        
+
         return map;
 
       } catch(Exception e){
@@ -420,13 +401,11 @@ public class Authorization {
     }
   
     public void addMemberToSg(String userId, Long sgNodeNeoId) throws RuntimeException {
-      try ( Transaction tx = this.db.beginTx() )
-      {
+      try {
         Node sgNode = tx.getNodeById(sgNodeNeoId);
         Node userNode = tx.findNode(Label.label(BaseNodeLabels.User.name()), AllProperties.id.name(), userId);
         sgNode.createRelationshipTo(userNode, 
           RelationshipType.withName(NonPropertyRelationshipTypes.member.name()));
-        tx.commit();
       } catch(Exception e){
         this.log.error(e.getMessage());
         throw new RuntimeException("error in adding member to SG. userId, sgId: " + userId + " " + sgNodeNeoId);
@@ -434,25 +413,19 @@ public class Authorization {
     }
 
     private void addRoleMembersToSg(BaseRole role, Long sgNodeNeoId){
-
-      try ( Transaction tx = db.beginTx() ) {
-
+      try {
           // get all the users with a specific role in their user object
           String feRoleName = AllRoles.getFrontendRoleNameFromApiRoleName(role.roleName);          
-          
+
           tx.execute(
             "call apoc.periodic.iterate('MATCH (sg:SecurityGroup),(user:User)-[:roles {active: true}]->(roles:Property) "+
             "WHERE \""+feRoleName+"\" IN roles.value AND id(sg) = "+sgNodeNeoId+" AND NOT (user)<-[:member]-(sg) RETURN user, sg', "+
             "'MERGE (user)<-[:member]-(sg)', {batchSize:100}) yield batches, total return batches, total"
           );
-
-          tx.commit();
-
       } catch(Exception e){
         e.printStackTrace();
         throw new RuntimeException("error in adding an SG to all users with a specific role");
       }
-
     } 
 
-  }
+}

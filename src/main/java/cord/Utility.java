@@ -14,26 +14,22 @@ import cord.roles.BaseRole;
 
 public class Utility {
 
-  public static Long getNode(GraphDatabaseService db, String id, String label) throws RuntimeException {
-    try ( Transaction tx = db.beginTx() )
-    {
-        Node node = tx.findNode(Label.label(label), "id", id);
-        Long nodeNeoId = node.getId();
-        tx.commit();
-        return nodeNeoId;
+  public static Long getNode(Transaction tx, String id, String label) throws RuntimeException {
+    try {
+      Node node = tx.findNode(Label.label(label), "id", id);
+      return node.getId();
     } catch(Exception e){
       throw new RuntimeException("error in finding base node: " + label + " id:" + id);
     }
   }
 
   public static Long getProjectNode(
-    GraphDatabaseService db, 
+    Transaction tx,
     Long baseNodeNeoId, 
     BaseNodeLabels label) {
 
     Long projectNeoId = null;
-    try ( Transaction tx = db.beginTx() )
-    {
+    try {
       Node baseNode = tx.getNodeById(baseNodeNeoId);
       Node nextNode = baseNode;
       BaseNodeLabels nextLabel = label;
@@ -197,8 +193,6 @@ public class Utility {
         }
       }
 
-      tx.commit();
-
     } catch(Exception e){
       e.printStackTrace();
       System.out.println(e.getMessage());
@@ -208,15 +202,13 @@ public class Utility {
     return projectNeoId;
   }
 
-  public static ArrayList<Long> getProjectMembers(GraphDatabaseService db, Long projectNodeNeoId) throws RuntimeException {
+  public static ArrayList<Long> getProjectMembers(Transaction tx, Long projectNodeNeoId) throws RuntimeException {
     ArrayList<Long> members = new ArrayList<Long>();
-    try ( Transaction tx = db.beginTx() )
-    {
+    try {
       Node projectNode = tx.getNodeById(projectNodeNeoId);
       Iterable<Relationship> iter = projectNode.getRelationships(Direction.OUTGOING, 
         RelationshipType.withName(AllProperties.member.name()));
       iter.forEach(rel -> members.add(rel.getEndNode().getId()));
-      tx.commit();
     } catch(Exception e){
       e.printStackTrace();
       throw new RuntimeException("error in finding project member: " + projectNodeNeoId);
@@ -261,16 +253,14 @@ public class Utility {
     }
   }
 
-  public static ArrayList<BaseNodeLabels> getBaseNodeLabels(GraphDatabaseService db, String id) throws RuntimeException {
-    try ( Transaction tx = db.beginTx() )
-    {
+  public static ArrayList<BaseNodeLabels> getBaseNodeLabels(Transaction tx, String id) throws RuntimeException {
+    try {
         Node BaseNodeLabels = tx.findNode(Label.label("BaseNodeLabels"), "id", id);
         Iterable<Label> labels = BaseNodeLabels.getLabels();
         ArrayList<BaseNodeLabels> labelArray = new ArrayList<BaseNodeLabels>();
         labels.forEach((label) -> {
           labelArray.add(baseNodeClassStringToEnum(label.name() ));
         });
-        tx.commit();
         return labelArray;
     } catch(Exception e){
       throw new RuntimeException("error in finding base node lables: " + id);
@@ -299,7 +289,7 @@ public class Utility {
     }
   }
 
-  public static Long getSecurityGroupNode(GraphDatabaseService db, BaseRole role, String baseNodeId, BaseNodeLabels label) throws RuntimeException {
+  public static Long getSecurityGroupNode(Transaction tx, BaseRole role, String baseNodeId, BaseNodeLabels label) throws RuntimeException {
 
     Map<String, Object> params = new HashMap<>();
     // params.put("role", role);                      // todo
@@ -309,7 +299,6 @@ public class Utility {
     Long sg = null;
 
     try ( 
-      Transaction tx = db.beginTx();
       Result result = tx.execute(
         "MATCH (sg:SecurityGroup {role: $role})-[:baseNode]->(baseNode:"+label.name()+" {id:$baseNodeId}) " +
         "RETURN id(sg) as id",
