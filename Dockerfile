@@ -6,7 +6,7 @@ WORKDIR /tmp/
 
 RUN mvn package -DskipTests
 
-FROM neo4j:4.1-enterprise
+FROM neo4j:4.2-enterprise
 
 COPY --from=builder /tmp/target/cord-1.jar /var/lib/neo4j/plugins
 
