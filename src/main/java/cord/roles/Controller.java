@@ -167,7 +167,6 @@ public class Controller extends BaseRole {
         switch(property){
       case canDelete:                  return Perm.RO;
       case ceremony:                   return Perm.RO;
-      case communicationsCompleteDate: return Perm.RO;
       case completeDate:               return Perm.RO;
       case countryOfOrigin:            return Perm.RO;
       case disbursementCompleteDate:   return Perm.RO;
@@ -217,7 +216,6 @@ public class Controller extends BaseRole {
         switch(property){
       case canDelete:                  return Perm.RO;
       case ceremony:                   return Perm.RO;
-      case communicationsCompleteDate: return Perm.RO;
       case completeDate:               return Perm.RO;
       case disbursementCompleteDate:   return Perm.RO;
       case endDate:                    return Perm.RO;
