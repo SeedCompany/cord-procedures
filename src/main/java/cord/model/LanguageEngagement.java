@@ -3,7 +3,6 @@ package cord.model;
 public enum LanguageEngagement {
 canDelete,
   ceremony,                  
-communicationsCompleteDate,
 completeDate,              
 disbursementCompleteDate,  
 endDate,                   

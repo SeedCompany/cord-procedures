@@ -180,7 +180,6 @@ return Perm.NO;
         switch(property){
       case canDelete:                  return Perm.RO;
       case ceremony:                   return Perm.RW;
-      case communicationsCompleteDate: return Perm.RW;
       case completeDate:               return Perm.RW;
       case countryOfOrigin:            return Perm.RW;
       case disbursementCompleteDate:   return Perm.RW;
@@ -233,7 +232,6 @@ return Perm.NO;
         switch(property){
       case canDelete:                  return Perm.RO;
       case ceremony:                   return Perm.RW;
-      case communicationsCompleteDate: return Perm.RW;
       case completeDate:               return Perm.RW;
       case disbursementCompleteDate:   return Perm.RW;
       case endDate:                    return Perm.RW;

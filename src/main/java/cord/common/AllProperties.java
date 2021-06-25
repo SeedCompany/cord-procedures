@@ -13,7 +13,6 @@ public enum AllProperties {
   budget,
   ceremony,
   code,
-  communicationsCompleteDate,
   completeDate,
   countryOfOrigin,
   createdAt,
